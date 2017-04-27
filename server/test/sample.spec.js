@@ -10,7 +10,6 @@ describe('test', () => {
     chai.request(server)
       .get('/')
       .end((err, res) => {
-        console.log(res.body);
         res.should.have.status(200);
         done();
       });
