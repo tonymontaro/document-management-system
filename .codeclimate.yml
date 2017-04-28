@@ -1,0 +1,19 @@
+engines:
+  eslint:
+    enabled: true
+    channel: "eslint-3"
+    config:
+      config: .eslintrc.json
+    checks:
+      indent:
+        enabled: false
+  duplication:
+    enabled: false
+    config:
+      languages:
+      - javascript
+ratings:
+  paths:
+  - "server/**/*.js"
+exclude_paths:
+  - "server/test/**/*"
