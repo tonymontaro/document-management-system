@@ -1,14 +1,19 @@
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
-import configFile from '../../../config/config';
+import dotenv from 'dotenv';
+import configFile from '../config/config';
+
+// load environmental variables
+dotenv.config();
 
 const basename = path.basename(module.filename);
 const env = process.env.NODE_ENV || 'development';
 const config = configFile[env];
 
 const db = {};
-const sequelize = new Sequelize(process.env[config.use_env_variable]);
+const sequelize =
+  new Sequelize(process.env[config.use_env_variable], config);
 
 fs
   .readdirSync(__dirname)

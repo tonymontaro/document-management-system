@@ -7,8 +7,9 @@
     "start": "NODE_ENV=development nodemon lib/server/index.js",
     "dev": "babel --watch server -d lib/server",
     "build": "babel server -d lib/server",
-    "test": "NODE_ENV=test mocha lib/server/test/**/*.js",
-    "db:migrate": "sequelize db:migrate"
+    "test": "NODE_ENV=test mocha lib/server/test/**/*.js  --timeout 10000 && echo 'done'",
+    "db:migrate": "sequelize db:migrate",
+    "db:migrate:test": "NODE_ENV=test sequelize db:migrate"
   },
   "repository": {
     "type": "git",

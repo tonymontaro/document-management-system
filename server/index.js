@@ -1,17 +1,14 @@
 import express from 'express';
 import morgan from 'morgan';
-import dotenv from 'dotenv';
 import routes from './routes';
 
-if (process.env.NODE_ENV === 'development') {
-  // load environmental variables
-  dotenv.config();
-}
-
 const app = express();
-const port = process.env.PORT || 8080;
+let port = process.env.PORT || 3000;
 
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+  port = 8080;
+}
 
 routes(app);
 

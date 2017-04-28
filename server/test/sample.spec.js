@@ -14,4 +14,14 @@ describe('test', () => {
         done();
       });
   });
+  it('post to todo', (done) => {
+    chai.request(server)
+      .post('/todo')
+      .send({ title: 'tony' })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.should.have.status(201);
+        done();
+      });
+  });
 });
