@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development nodemon lib/server/index.js",
-    "dev": "babel --watch server -d lib/server",
-    "build": "babel server -d lib/server",
-    "test": "NODE_ENV=test mocha lib/server/test/**/*.js  --timeout 10000 && echo 'done'",
+    "start": "node lib/server/index.js",
+    "start:dev": "NODE_ENV=development nodemon lib/server/index.js",
+    "build:watch": "babel --watch server -d lib/server",
+    "build": "rm -rf lib/ && babel server -d lib/server",
+    "test": "NODE_ENV=test istanbul cover _mocha --timeout 10000 lib/server/test/**/*.js",
     "db:migrate": "sequelize db:migrate",
-    "db:migrate:test": "NODE_ENV=test sequelize db:migrate"
+    "db:migrate:test": "NODE_ENV=test sequelize db:migrate",
+    "postinstall": "npm run build && npm run db:migrate"
   },
   "repository": {
     "type": "git",
@@ -38,11 +40,13 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
+    "coveralls": "^2.13.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
+    "istanbul": "^0.4.5",
     "mocha": "^3.3.0",
     "nodemon": "1.10.2"
   }
