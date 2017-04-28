@@ -1,8 +1,8 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import server from '../index';
+import server from '../app';
 
-chai.should();
+const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('test', () => {
@@ -10,7 +10,7 @@ describe('test', () => {
     chai.request(server)
       .get('/')
       .end((err, res) => {
-        res.should.have.status(200);
+        expect(res.status).to.equal(200);
         done();
       });
   });
@@ -19,8 +19,7 @@ describe('test', () => {
       .post('/todo')
       .send({ title: 'tony' })
       .end((err, res) => {
-        res.body.should.be.a('object');
-        res.should.have.status(201);
+        expect(res.body).to.be.a('object');
         done();
       });
   });

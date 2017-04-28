@@ -1,4 +1,4 @@
-import todoController from '../controllers/todo';
+import todoController from '../controllers/Todo';
 
 export default (app) => {
   app.get('/todo', todoController.show);
