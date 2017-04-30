@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node lib/server/index.js",
-    "start:dev": "NODE_ENV=development nodemon lib/server/index.js",
+    "dev": "NODE_ENV=development nodemon lib/server/index.js",
     "build:watch": "babel --watch server -d lib/server",
     "build": "rm -rf lib/ && babel server -d lib/server",
     "test": "NODE_ENV=test istanbul cover _mocha --timeout 10000 lib/server/test/**/*.js",
-    "db:migrate": "sequelize db:migrate",
-    "db:migrate:test": "NODE_ENV=test sequelize db:migrate",
+    "db:migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
+    "db:migrate:test": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate",
     "postinstall": "npm run build && npm run db:migrate"
   },
   "repository": {
