@@ -16,8 +16,8 @@ describe('test', () => {
   });
   it('post to todo', (done) => {
     chai.request(server)
-      .post('/todo')
-      .send({ title: 'tony' })
+      .post('/roles')
+      .send({ name: 'admin' })
       .end((err, res) => {
         expect(res.body).to.be.a('object');
         done();

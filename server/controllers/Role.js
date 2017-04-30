@@ -1,12 +1,10 @@
 import models from '../models';
 
 export default {
-  show(req, res) {
-    res.send({ message: 'found' });
-  },
   create(req, res) {
-    return models.Todo.create({
-      title: 'title'
+    console.log(req.body.name);
+    return models.Role.create({
+      name: 'admin'
     })
     .then(todo => res.status(201).send(todo))
     .catch(error => res.status(400).send(error));

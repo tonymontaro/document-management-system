@@ -1,5 +1,5 @@
-import todo from './todos';
+import roles from './roles';
 
 export default (app) => {
-  todo(app);
+  roles(app);
 };
