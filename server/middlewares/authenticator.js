@@ -30,14 +30,11 @@ const Authenticator = {
   },
 
   permitAdmin(req, res, next) {
-    models.Role.findById(res.locals.decoded.roleId)
-      .then((role) => {
-        if (role.name === 'admin') {
-          next();
-        } else {
-          return res.status(403).send({ message: 'Permission denied' });
-        }
-      });
+    if (res.locals.decoded.roleId === 1) {
+      next();
+    } else {
+      return res.status(403).send({ message: 'Access denied' });
+    }
   },
 
   permitOwner(req, res, next) {
@@ -47,7 +44,7 @@ const Authenticator = {
 
         if (res.locals.decoded.roleId !== 1
           && res.locals.decoded.id !== user.id) {
-          return res.status(403).send({ message: 'Permission denied' });
+          return res.status(403).send({ message: 'Access denied' });
         }
 
         res.locals.user = user;

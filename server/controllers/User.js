@@ -80,7 +80,7 @@ const User = {
 
     res.locals.user.update(req.body, { fields: Object.keys(req.body) })
       .then(updatedUser =>
-        res.status(201).send(authenticator.secureUserDetails(updatedUser)))
+        res.status(200).send(authenticator.secureUserDetails(updatedUser)))
       .catch(error => res.status(400).send(error));
   },
 
@@ -119,7 +119,7 @@ const User = {
           message: 'Login successful'
         });
       } else {
-        res.status(401).send('Wrong password or username');
+        res.status(401).send({ message: 'Wrong password or username' });
       }
     })
     .catch(error => res.status(400).send(error));
