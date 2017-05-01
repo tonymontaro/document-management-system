@@ -7,7 +7,6 @@ import testData from './testData';
 const { userOne, userTwo, invalidUserDetails, adminUser, admin, regularUser } =
   testData;
 let regularToken, adminToken;
-// console.log(userOne.username, '===============');
 
 const expect = chai.expect;
 chai.use(chaiHttp);
@@ -18,7 +17,6 @@ describe('User', () => {
       .send(admin)
       .end((err, res) => {
         adminToken = res.body.token;
-        // console.log(adminToken);
         done();
       });
   });

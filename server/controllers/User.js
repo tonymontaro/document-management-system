@@ -16,7 +16,7 @@ const User = {
       limit: req.query.limit || null,
       attributes: ['id', 'username', 'fullName', 'email', 'roleId']
     })
-    .then(users => res.send(users))
+    .then(users => res.status(200).send(users))
     .catch(error => res.status(400).send(error));
   },
 

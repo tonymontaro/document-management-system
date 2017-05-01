@@ -1,14 +1,10 @@
 {
+  "root": true,
   "extends": "airbnb-base",
   "env": {
   "node": true,
   "es6": true,
-  "mocha": true,
-  "browser": true
-  },
-  "globals": {
-  "angular": true,
-  "InvertedIndex": true
+  "mocha": true
   },
    "rules": {
     "max-len":[2, 80, 2],
@@ -21,7 +17,7 @@
     "comma-dangle": 0,
     "curly": ["error", "multi-line"],
     "import/no-unresolved": 0,
-    "import/extensions": 0,
+    // "import/extensions": 0,
     "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
     "valid-jsdoc": ["error", {
       "requireReturn": true,
