@@ -4,7 +4,7 @@ module.exports = {
       title: 'DMS Welcome Message',
       content: `Hello and welcome, if this is the first time running the app,
 you can login with the following default admin settings:
-username: root
+username: admin
 password: alpine
 Please login and change the default root password.`,
       authorId: 1,
