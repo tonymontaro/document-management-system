@@ -83,11 +83,13 @@ describe('Authenticator:', () => {
     (done) => {
       chai.request(server)
       .put('/users/myid')
-      .set({ 'x-access-token': regularUser })
+      .set({ 'x-access-token': regularToken })
       .end((err, res) => {
-        expect(res.status).to.equal(403);
+        expect(res.status).to.equal(400);
         expect(res.body).to.be.a('object');
-        expect(res.body.message).to.eql('Authentication failed');
+        expect(res.body.message).to.eql(
+          'invalid input syntax for integer: "myid"'
+        );
         done();
       });
     });

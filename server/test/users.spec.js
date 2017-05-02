@@ -11,6 +11,7 @@ let regularToken, adminToken;
 
 const expect = chai.expect;
 chai.use(chaiHttp);
+
 describe('User', () => {
   before((done) => {
     chai.request(server)
@@ -185,6 +186,21 @@ describe('User', () => {
         expect(res.status).to.equal(404);
         expect(res.body).to.be.a('object');
         expect(res.body.message).to.eql('User not found');
+        done();
+      });
+    });
+
+    it('should fail if the provided id is out of range',
+    (done) => {
+      chai.request(server)
+      .get('/users/3000000000')
+      .set({ 'x-access-token': adminToken })
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.eql(
+          'value "3000000000" is out of range for type integer'
+        );
         done();
       });
     });

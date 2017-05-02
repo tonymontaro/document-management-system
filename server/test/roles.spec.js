@@ -114,6 +114,20 @@ describe('Role', () => {
         done();
       });
     });
+
+    it('should fail if the provided id is out of range',
+    (done) => {
+      chai.request(server)
+      .get('/roles/3000000000')
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.eql(
+          'value "3000000000" is out of range for type integer'
+        );
+        done();
+      });
+    });
   });
 
   // PUT /users/:id
@@ -162,10 +176,27 @@ describe('Role', () => {
       chai.request(server)
       .put('/roles/250')
       .set({ 'x-access-token': adminToken })
+      .send({ name: 'team7' })
       .end((err, res) => {
         expect(res.status).to.equal(404);
         expect(res.body).to.be.a('object');
         expect(res.body.message).to.eql('Role not found');
+        done();
+      });
+    });
+
+    it('should fail if the provided id is out of range',
+    (done) => {
+      chai.request(server)
+      .put('/roles/3000000000')
+      .set({ 'x-access-token': adminToken })
+      .send({ name: 'team7' })
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.eql(
+          'value "3000000000" is out of range for type integer'
+        );
         done();
       });
     });
@@ -193,6 +224,21 @@ describe('Role', () => {
         expect(res.status).to.equal(404);
         expect(res.body).to.be.a('object');
         expect(res.body.message).to.eql('Role not found');
+        done();
+      });
+    });
+
+    it('should fail if the provided id is out of range',
+    (done) => {
+      chai.request(server)
+      .delete('/roles/3000000000')
+      .set({ 'x-access-token': adminToken })
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.eql(
+          'value "3000000000" is out of range for type integer'
+        );
         done();
       });
     });

@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 routes(app);
 
 app.get('/', (req, res) => {
-  res.send({ message: 'Welcome to the future, yeah!' });
+  res.send({ message: 'Document Manangement System API' });
 });
 
 export default app;
