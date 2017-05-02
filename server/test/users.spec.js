@@ -109,6 +109,18 @@ describe('User', () => {
       });
     });
 
+    it('should not allow the creation of a user with admin role', (done) => {
+      userTwo.roleId = '1';
+      chai.request(server)
+      .post('/users')
+      .send(userTwo)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body.message).to.eql('Invalid roleId');
+        done();
+      });
+    });
+
     it('should return a token after creating a user', (done) => {
       chai.request(server)
       .post('/users')
@@ -218,6 +230,35 @@ describe('User', () => {
       });
     });
 
+    it('should not allow a user to use an existing email',
+    (done) => {
+      chai.request(server)
+      .put('/users/2')
+      .set({ 'x-access-token': regularToken })
+      .send({ email: userOne.email })
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        expect(res.body.errors[0].message).to.eql('email must be unique');
+        done();
+      });
+    });
+
+    it('should not allow a user to upgrade his/her role to admin', (done) => {
+      chai.request(server)
+      .put('/users/2')
+      .set({ 'x-access-token': regularToken })
+      .send({ roleId: '1' })
+      .end((err, res) => {
+        expect(res.status).to.equal(403);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.eql(
+          'Only an admin can upgrade a user to an admin role'
+        );
+        done();
+      });
+    });
+
     it("should deny access if a user tries to update another user's profile",
     (done) => {
       chai.request(server)
@@ -243,6 +284,19 @@ describe('User', () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.have.keys(['token', 'message']);
         expect(res.body.message).to.eql('Login successful');
+        done();
+      });
+    });
+
+    it('should fail for invalid user credentials', (done) => {
+      admin.password = 'montaro';
+      chai.request(server)
+      .post('/users/login')
+      .send(admin)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.eql('Wrong password or username');
         done();
       });
     });
@@ -323,6 +377,18 @@ describe('User', () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.a('object');
         expect(res.body.message).to.eql('User deleted');
+        done();
+      });
+    });
+
+    it('should send "User not found" for invalid id', (done) => {
+      chai.request(server)
+      .delete('/users/250')
+      .set({ 'x-access-token': adminToken })
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.eql('User not found');
         done();
       });
     });

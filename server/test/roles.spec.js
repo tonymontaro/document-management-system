@@ -143,6 +143,32 @@ describe('Role', () => {
         done();
       });
     });
+
+    it('should not allow a user to use an existing role name',
+    (done) => {
+      chai.request(server)
+      .put('/roles/2')
+      .set({ 'x-access-token': adminToken })
+      .send({ name: 'admin' })
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        expect(res.body.errors[0].message).to.eql('name must be unique');
+        done();
+      });
+    });
+
+    it('should send "Role not found" for invalid id', (done) => {
+      chai.request(server)
+      .put('/roles/250')
+      .set({ 'x-access-token': adminToken })
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.eql('Role not found');
+        done();
+      });
+    });
   });
 
   // DELETE /roles/:id
@@ -155,6 +181,18 @@ describe('Role', () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.a('object');
         expect(res.body.message).to.eql('Role deleted');
+        done();
+      });
+    });
+
+    it('should send "Role not found" for invalid id', (done) => {
+      chai.request(server)
+      .delete('/roles/250')
+      .set({ 'x-access-token': adminToken })
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.eql('Role not found');
         done();
       });
     });

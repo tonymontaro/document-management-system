@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import configFile from '../config/config';
 
 // load environmental variables
+process.env.NODE_ENV = 'test';
 dotenv.config();
 
 const basename = path.basename(module.filename);
