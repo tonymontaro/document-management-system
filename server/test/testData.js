@@ -2,13 +2,20 @@ import faker from 'faker';
 
 export default {
   userOne: {
+    username: 'kenpachi',
+    fullName: 'Kenpachi Zaraki',
+    email: faker.internet.email(),
+    password: 'bankai',
+    roleId: 2
+  },
+  userTwo: {
     username: faker.internet.userName(),
     fullName: faker.name.findName(),
     email: faker.internet.email(),
     password: faker.internet.password(),
     roleId: 2
   },
-  userTwo: {
+  userThree: {
     username: faker.internet.userName(),
     fullName: faker.name.findName(),
     email: faker.internet.email(),
@@ -22,12 +29,8 @@ export default {
     password: faker.internet.password(),
     roleId: 2
   },
-  adminUser: {
-    username: faker.internet.userName(),
-    fullName: faker.name.findName(),
-    email: faker.internet.email(),
-    password: faker.internet.password(),
-    roleId: 1
+  roleOne: {
+    name: 'editor'
   },
   admin: {
     username: 'admin',

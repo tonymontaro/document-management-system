@@ -4,8 +4,9 @@ import server from '../app';
 import models from '../models';
 import testData from './testData';
 
-const { userOne, userTwo, invalidUserDetails, adminUser, admin, regularUser } =
-  testData;
+const {
+  userOne, userTwo, invalidUserDetails, admin, regularUser, userThree
+ } = testData;
 let regularToken, adminToken;
 
 const expect = chai.expect;
@@ -30,6 +31,7 @@ describe('User', () => {
       });
   });
 
+  // GET /users
   describe('/GET users', () => {
     it('should return all users', (done) => {
       chai.request(server)
@@ -67,6 +69,7 @@ describe('User', () => {
     });
   });
 
+  // POST /users
   describe('/POST user', () => {
     it('can create a new user', (done) => {
       chai.request(server)
@@ -78,6 +81,7 @@ describe('User', () => {
           ['id', 'username', 'fullName', 'roleId', 'message', 'token', 'email']
         );
         expect(res.body.message).to.eql('User created');
+        userOne.userId = res.body.id;
         done();
       });
     });
@@ -105,6 +109,19 @@ describe('User', () => {
       });
     });
 
+    it('should return a token after creating a user', (done) => {
+      chai.request(server)
+      .post('/users')
+      .send(userThree)
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        expect(res.body.token).to.not.be.undefined;
+        expect(res.body.message).to.eql('User created');
+        userThree.userId = res.body.id;
+        done();
+      });
+    });
+
     it('should fail for invalid user details', (done) => {
       chai.request(server)
       .post('/users')
@@ -117,6 +134,7 @@ describe('User', () => {
     });
   });
 
+  // GET /users/:id
   describe('/GET/:id user', () => {
     it('should return a particular user given an id', (done) => {
       chai.request(server)
@@ -160,6 +178,7 @@ describe('User', () => {
     });
   });
 
+  // PUT /users/:id
   describe('/PUT/:id user', () => {
     it('should allow a user to update his/her details', (done) => {
       chai.request(server)
@@ -202,7 +221,7 @@ describe('User', () => {
     it("should deny access if a user tries to update another user's profile",
     (done) => {
       chai.request(server)
-      .put('/users/3')
+      .put(`/users/${userOne.userId}`)
       .set({ 'x-access-token': regularToken })
       .send({ fullName: 'Al Capone' })
       .end((err, res) => {
@@ -214,6 +233,7 @@ describe('User', () => {
     });
   });
 
+  // POST /users/login
   describe('/POST/login user', () => {
     it('can login a user and return a token', (done) => {
       chai.request(server)
@@ -241,6 +261,7 @@ describe('User', () => {
     });
   });
 
+  // POST /users/logout
   describe('/POST/logout user', () => {
     it('can logout a user', (done) => {
       chai.request(server)
@@ -256,11 +277,23 @@ describe('User', () => {
     });
   });
 
+  // DELETE /users/:id
   describe('/DELETE/:id user', () => {
+    let userThreeToken;
+    before((done) => {
+      chai.request(server)
+        .post('/users/login')
+        .send(userThree)
+        .end((err, res) => {
+          userThreeToken = res.body.token;
+          done();
+        });
+    });
+
     it("should deny access if a user tries to delete another user's profile",
     (done) => {
       chai.request(server)
-      .delete('/users/3')
+      .delete(`/users/${userOne.userId}`)
       .set({ 'x-access-token': regularToken })
       .end((err, res) => {
         expect(res.status).to.equal(403);
@@ -272,7 +305,7 @@ describe('User', () => {
 
     it("should allow admin to delete a user's profile", (done) => {
       chai.request(server)
-      .delete('/users/3')
+      .delete(`/users/${userOne.userId}`)
       .set({ 'x-access-token': adminToken })
       .end((err, res) => {
         expect(res.status).to.equal(200);
@@ -284,8 +317,8 @@ describe('User', () => {
 
     it('should allow a user to delete his/her profile', (done) => {
       chai.request(server)
-      .delete('/users/2')
-      .set({ 'x-access-token': regularToken })
+      .delete(`/users/${userThree.userId}`)
+      .set({ 'x-access-token': userThreeToken })
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.a('object');

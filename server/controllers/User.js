@@ -137,7 +137,6 @@ const User = {
       message: 'Success, delete user token on the client'
     });
   }
-  // End
 };
 
 export default User;
