@@ -3,7 +3,10 @@ import models from '../models';
 const Role = {
 
   getRoles(req, res) {
-    models.Role.findAll({ attributes: ['id', 'name'] })
+    return models.Role.findAll({
+      attributes: ['id', 'name'],
+      order: [['id', 'ASC']]
+    })
     .then(roles => res.status(200).send(roles))
     .catch(error => res.status(400).send(error));
   },
@@ -19,7 +22,7 @@ const Role = {
   },
 
   getRole(req, res) {
-    models.Role.findById(req.params.id)
+    return models.Role.findById(req.params.id)
       .then((role) => {
         if (!role) return res.status(404).send({ message: 'Role not found' });
 
@@ -29,7 +32,7 @@ const Role = {
   },
 
   upadte(req, res) {
-    models.Role.findById(req.params.id)
+    return models.Role.findById(req.params.id)
       .then((role) => {
         if (!role) return res.status(404).send({ message: 'Role not found' });
 
@@ -42,7 +45,7 @@ const Role = {
   },
 
   delete(req, res) {
-    models.Role.findById(req.params.id)
+    return models.Role.findById(req.params.id)
       .then((role) => {
         if (!role) return res.status(404).send({ message: 'Role not found' });
 

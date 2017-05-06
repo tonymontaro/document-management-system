@@ -13,6 +13,33 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('User', () => {
+  // POST /users/login
+  describe('/POST/login user', () => {
+    it('can login a user and return a token', (done) => {
+      chai.request(server)
+      .post('/users/login')
+      .send(admin)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.have.keys(['token', 'message']);
+        expect(res.body.message).to.eql('Login successful');
+        done();
+      });
+    });
+
+    it('should fail for invalid user credentials', (done) => {
+      chai.request(server)
+      .post('/users/login')
+      .send({ username: admin.username, password: 'montaro' })
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.eql('Wrong password or username');
+        done();
+      });
+    });
+  });
+
   before((done) => {
     chai.request(server)
       .post('/users/login')
@@ -30,44 +57,6 @@ describe('User', () => {
         regularToken = res.body.token;
         done();
       });
-  });
-
-  // GET /users
-  describe('/GET users', () => {
-    it('should return all users', (done) => {
-      chai.request(server)
-        .get('/users')
-        .set({ 'x-access-token': adminToken })
-        .end((err, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('array');
-          expect(res.body.length).to.be.greaterThan(0);
-          done();
-        });
-    });
-
-    it('should deny access if user is not admin', (done) => {
-      chai.request(server)
-      .get('/users')
-      .set({ 'x-access-token': regularToken })
-      .end((err, res) => {
-        expect(res.status).to.equal(403);
-        expect(res.body).to.be.a('object');
-        expect(res.body.message).to.eql('Access denied');
-        done();
-      });
-    });
-
-    it('should deny access if no token was provided', (done) => {
-      chai.request(server)
-      .get('/users')
-      .end((err, res) => {
-        expect(res.status).to.equal(403);
-        expect(res.body).to.be.a('object');
-        expect(res.body.message).to.eql('No token provided');
-        done();
-      });
-    });
   });
 
   // POST /users
@@ -144,6 +133,81 @@ describe('User', () => {
         expect(res.body.errors[0].message).to.eql('Validation isEmail failed');
         done();
       });
+    });
+  });
+
+  // GET /users
+  describe('/GET users', () => {
+    it('should return all users', (done) => {
+      chai.request(server)
+        .get('/users')
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.a('array');
+          expect(res.body.length).to.be.greaterThan(2);
+          done();
+        });
+    });
+
+    it('should deny access if user is not admin', (done) => {
+      chai.request(server)
+      .get('/users')
+      .set({ 'x-access-token': regularToken })
+      .end((err, res) => {
+        expect(res.status).to.equal(403);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.eql('Access denied');
+        done();
+      });
+    });
+
+    it('should deny access if no token was provided', (done) => {
+      chai.request(server)
+      .get('/users')
+      .end((err, res) => {
+        expect(res.status).to.equal(403);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.eql('No token provided');
+        done();
+      });
+    });
+
+    it('should return correct user(s) for a query', (done) => {
+      chai.request(server)
+        .get('/users?q=admin')
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.a('array');
+          expect(res.body[0].username).to.eql('admin');
+          done();
+        });
+    });
+
+    it('can limit the number of users returned', (done) => {
+      chai.request(server)
+        .get('/users?limit=2')
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.a('array');
+          expect(res.body.length).to.equal(2);
+          expect(res.body[0].id).to.eql(1);
+          done();
+        });
+    });
+
+    it('can offset the starting position of returned', (done) => {
+      chai.request(server)
+        .get('/users?offset=1')
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.a('array');
+          expect(res.body[0].id).to.eql(2);
+          done();
+        });
     });
   });
 
@@ -290,47 +354,6 @@ describe('User', () => {
     });
   });
 
-  // POST /users/login
-  describe('/POST/login user', () => {
-    it('can login a user and return a token', (done) => {
-      chai.request(server)
-      .post('/users/login')
-      .send(admin)
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.have.keys(['token', 'message']);
-        expect(res.body.message).to.eql('Login successful');
-        done();
-      });
-    });
-
-    it('should fail for invalid user credentials', (done) => {
-      admin.password = 'montaro';
-      chai.request(server)
-      .post('/users/login')
-      .send(admin)
-      .end((err, res) => {
-        expect(res.status).to.equal(401);
-        expect(res.body).to.be.a('object');
-        expect(res.body.message).to.eql('Wrong password or username');
-        done();
-      });
-    });
-
-    it('should fail for invalid user credentials', (done) => {
-      admin.password = 'montaro';
-      chai.request(server)
-      .post('/users/login')
-      .send(admin)
-      .end((err, res) => {
-        expect(res.status).to.equal(401);
-        expect(res.body).to.be.a('object');
-        expect(res.body.message).to.eql('Wrong password or username');
-        done();
-      });
-    });
-  });
-
   // POST /users/logout
   describe('/POST/logout user', () => {
     it('can logout a user', (done) => {
@@ -405,6 +428,48 @@ describe('User', () => {
         expect(res.status).to.equal(404);
         expect(res.body).to.be.a('object');
         expect(res.body.message).to.eql('User not found');
+        done();
+      });
+    });
+  });
+
+  // GET /users/:id/documents
+  describe('/GET/:id/documents user', () => {
+    it("should return a user's document(s) given the user's id", (done) => {
+      chai.request(server)
+        .get('/users/1/documents')
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.a('array');
+          expect(res.body.length).to.be.greaterThan(0);
+          done();
+        });
+    });
+
+    it('should send "User not found" for invalid id', (done) => {
+      chai.request(server)
+      .get('/users/250/documents')
+      .set({ 'x-access-token': adminToken })
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.eql('User not found');
+        done();
+      });
+    });
+
+    it('should fail if the provided id is out of range',
+    (done) => {
+      chai.request(server)
+      .get('/users/3000000000/documents')
+      .set({ 'x-access-token': adminToken })
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.eql(
+          'value "3000000000" is out of range for type integer'
+        );
         done();
       });
     });

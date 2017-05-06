@@ -94,4 +94,22 @@ describe('Authenticator:', () => {
       });
     });
   });
+
+  describe('VerifyToken', () => {
+    it("should generate a token given user's id and roleId", () => {
+      const token = authenticator.generateToken({
+        id: 1,
+        roleId: 1
+      });
+      let decoded;
+      try {
+        decoded = jwt.verify(token, 'wrong-secret');
+      } catch (err) {
+        decoded = undefined;
+      }
+      expect(authenticator.verifyToken(token))
+        .to.not.be.undefined;
+      expect(decoded).to.equal(undefined);
+    });
+  });
 });

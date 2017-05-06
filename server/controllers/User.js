@@ -11,10 +11,19 @@ const User = {
   * @returns {Response} response object
   */
   getUsers(req, res) {
-    models.User.findAll({
+    let searchKey = '%%';
+    if (req.query.q) {
+      searchKey = `%${req.query.q}%`;
+    }
+
+    return models.User.findAll({
       offset: req.query.offset || 0,
       limit: req.query.limit || null,
-      attributes: ['id', 'username', 'fullName', 'email', 'roleId']
+      attributes: ['id', 'username', 'fullName', 'email', 'roleId'],
+      where: { username: {
+        like: searchKey
+      } },
+      order: [['id', 'ASC']]
     })
     .then(users => res.status(200).send(users))
     .catch(error => res.status(400).send(error));
@@ -33,6 +42,7 @@ const User = {
     }
     req.body.password =
       bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+
     return models.User.create(req.body)
       .then((user) => {
         const token = authenticator.generateToken({
@@ -55,7 +65,7 @@ const User = {
   * @returns {Response} response object
   */
   getUser(req, res) {
-    models.User.findById(req.params.id)
+    return models.User.findById(req.params.id)
       .then((user) => {
         if (!user) return res.status(404).send({ message: 'User not found' });
 
@@ -78,7 +88,7 @@ const User = {
       });
     }
 
-    res.locals.user.update(req.body, { fields: Object.keys(req.body) })
+    return res.locals.user.update(req.body, { fields: Object.keys(req.body) })
       .then(updatedUser =>
         res.status(200).send(authenticator.secureUserDetails(updatedUser)))
       .catch(error => res.status(400).send(error));
@@ -92,8 +102,31 @@ const User = {
   * @returns {Response} response object
   */
   delete(req, res) {
-    res.locals.user.destroy()
+    return res.locals.user.destroy()
       .then(() => res.status(200).send({ message: 'User deleted' }));
+  },
+
+  /**
+  * Get a user's documents
+  * Route: GET: /users/:id/documents
+  * @param {Object} req request object
+  * @param {Object} res response object
+  * @returns {Response} response object
+  */
+  getUserDocuments(req, res) {
+    return models.User.findById(req.params.id)
+      .then((user) => {
+        if (!user) return res.status(404).send({ message: 'User not found' });
+
+        return models.Document.findAll({
+          where: { authorId: user.id }
+        })
+        .then((documents) => {
+          res.status(200).send(documents);
+        })
+        .catch(error => res.status(400).send(error));
+      })
+      .catch(error => res.status(400).send(error));
   },
 
   /**
@@ -104,7 +137,7 @@ const User = {
   * @returns {Response} response object
   */
   login(req, res) {
-    models.User.findOne({ where: {
+    return models.User.findOne({ where: {
       username: req.body.username
     } })
     .then((user) => {
@@ -133,7 +166,7 @@ const User = {
   * @returns {Response} response object
   */
   logout(req, res) {
-    res.status(200).send({
+    return res.status(200).send({
       message: 'Success, delete user token on the client'
     });
   }
