@@ -29,6 +29,14 @@ const Authenticator = {
     }
   },
 
+  verifyToken(token) {
+    try {
+      return jwt.verify(token, secret);
+    } catch (err) {
+      return false;
+    }
+  },
+
   permitAdmin(req, res, next) {
     if (res.locals.decoded.roleId === 1) {
       next();
@@ -37,7 +45,7 @@ const Authenticator = {
     }
   },
 
-  permitOwner(req, res, next) {
+  permitProfileOwner(req, res, next) {
     models.User.findById(req.params.id)
       .then((user) => {
         if (!user) return res.status(404).send({ message: 'User not found' });
@@ -48,6 +56,23 @@ const Authenticator = {
         }
 
         res.locals.user = user;
+        next();
+      })
+      .catch(error => res.status(400).send(error));
+  },
+
+  permitAuthor(req, res, next) {
+    models.Document.findById(req.params.id)
+      .then((document) => {
+        if (!document) {
+          return res.status(404).send({ message: 'Document not found' });
+        }
+        if (res.locals.decoded.roleId !== 1
+          && res.locals.decoded.id !== document.authorId) {
+          return res.status(403).send({ message: 'Access denied' });
+        }
+
+        res.locals.document = document;
         next();
       })
       .catch(error => res.status(400).send(error));
