@@ -9,6 +9,7 @@ module.exports = {
       },
       title: {
         type: Sequelize.STRING,
+        unique: true,
         allowNull: false
       },
       content: {
@@ -27,6 +28,11 @@ module.exports = {
           model: 'Users',
           key: 'id'
         }
+      },
+      authorRoleId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 2
       },
       createdAt: {
         allowNull: false,

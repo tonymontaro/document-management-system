@@ -1,15 +1,10 @@
 {
+  "root": true,
   "extends": "airbnb-base",
   "env": {
   "node": true,
   "es6": true,
-  "jquery": true,
-  "jasmine": true,
-  "browser": true
-  },
-  "globals": {
-  "angular": true,
-  "InvertedIndex": true
+  "mocha": true
   },
    "rules": {
     "max-len":[2, 80, 2],
