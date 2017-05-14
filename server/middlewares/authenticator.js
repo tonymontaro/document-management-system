@@ -85,6 +85,7 @@ const Authenticator = {
       fullName: user.fullName,
       email: user.email,
       roleId: user.roleId,
+      about: user.about
     };
   }
 };

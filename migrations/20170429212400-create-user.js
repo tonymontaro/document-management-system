@@ -15,6 +15,9 @@ module.exports = {
       fullName: {
         type: Sequelize.STRING,
       },
+      about: {
+        type: Sequelize.TEXT
+      },
       email: {
         type: Sequelize.STRING,
         unique: true,
