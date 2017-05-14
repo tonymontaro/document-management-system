@@ -68,7 +68,8 @@ describe('User', () => {
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body).to.have.keys(
-          ['id', 'username', 'fullName', 'roleId', 'message', 'token', 'email']
+          ['id', 'username', 'fullName', 'about',
+            'roleId', 'message', 'token', 'email']
         );
         expect(res.body.message).to.eql('User created');
         userOne.userId = res.body.id;
@@ -225,6 +226,7 @@ describe('User', () => {
             username: 'montaro',
             fullName: 'Tony Montaro',
             email: 'bossmontaro@gmail.com',
+            about: 'I love playing chess.',
             roleId: 2
           });
           done();
@@ -285,6 +287,7 @@ describe('User', () => {
           username: 'montaro',
           fullName: 'John Snow',
           email: 'bossmontaro@gmail.com',
+          about: 'I love playing chess.',
           roleId: 2
         });
         done();
@@ -304,6 +307,7 @@ describe('User', () => {
           username: 'montaro',
           fullName: 'Tony Montaro',
           email: 'bossmontaro@gmail.com',
+          about: 'I love playing chess.',
           roleId: 2
         });
         done();
