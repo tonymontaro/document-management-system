@@ -8,6 +8,7 @@ export default {
     email: faker.internet.email(),
     password: 'bankai',
     roleId: 2,
+    about: faker.lorem.paragraph,
     createdAt: new Date(),
     updatedAt: new Date()
   },
@@ -17,6 +18,7 @@ export default {
     email: faker.internet.email(),
     password: faker.internet.password(),
     roleId: 2,
+    about: faker.lorem.paragraph,
     createdAt: new Date(),
     updatedAt: new Date()
   },
@@ -26,6 +28,7 @@ export default {
     email: faker.internet.email(),
     password: faker.internet.password(),
     roleId: 2,
+    about: faker.lorem.paragraph,
     createdAt: new Date(),
     updatedAt: new Date()
   },

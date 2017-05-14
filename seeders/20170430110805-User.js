@@ -8,6 +8,7 @@ module.exports = {
     email: 'admin@dms.com',
     password: bcrypt.hashSync('alpine', bcrypt.genSaltSync(10)),
     roleId: '1',
+    about: 'I am the admin, better change my password and this about message.',
     createdAt: new Date(),
     updatedAt: new Date()
   }, {
@@ -16,6 +17,7 @@ module.exports = {
     email: 'bossmontaro@gmail.com',
     password: bcrypt.hashSync('montaro', bcrypt.genSaltSync(10)),
     roleId: '2',
+    about: 'I love playing chess.',
     createdAt: new Date(),
     updatedAt: new Date()
   }], {}),

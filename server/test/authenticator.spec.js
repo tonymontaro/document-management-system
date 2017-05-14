@@ -48,6 +48,7 @@ describe('Authenticator:', () => {
           username: 'montaro',
           fullName: 'Tony Montaro',
           email: 'bossmontaro@gmail.com',
+          about: 'I love playing chess.',
           roleId: 2
         });
         done();
