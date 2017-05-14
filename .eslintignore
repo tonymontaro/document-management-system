@@ -6,4 +6,4 @@ client/static-frontend/*
 webpack.config.dev.js
 webpack.config.prod.js
 server/index.js
-client/scss/*
+./client/scss/*
