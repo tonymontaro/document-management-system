@@ -1,7 +1,7 @@
 /*
 * Developed by Anthony Ngene
 */
-@import '_materialize';
+@import 'materialize';
 
 @include google-font("Lato");
 @include google-font("Courgette");
@@ -17,9 +17,7 @@ body{
   font-size: $text-size;
 }
 
-h1, h2, h3 {
-  font-family: $header-font;
-}
+@import 'extras';
 
 // HEADER
 nav{
@@ -82,7 +80,9 @@ main {
     .card {
       position: relative;
       background-color: $secondary-color;
+      min-height: 230px;
 
+      hr { margin-bottom: 15px }
       .edit-btn, .delete-btn {
         position: absolute;
         top: -15px;
@@ -123,9 +123,26 @@ main {
       }
     }
   }
+
+  .select-role {
+      width: 89%;
+      display: block;
+      margin-left: 45px;
+  }
 }
 
 // FOOTER
 .page-footer {
   padding: 10px 0px;
+}
+
+// nav control
+.guest {
+  .loggedIn, .forAdmin {display: none}
+}
+.regularUser {
+  .notLoggedIn, .forAdmin {display: none}
+}
+.administrator {
+  .notLoggedIn {display: none}
 }

@@ -1,12 +1,18 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import Header from './common/Header';
+import Footer from './common/Footer';
 
 class App extends React.Component {
   render() {
     return (
-      <main>
-        { this.props.children }
-      </main>
+      <div>
+        <Header />
+        <main>
+          { this.props.children }
+        </main>
+        <Footer />
+      </div>
     );
   }
 }
