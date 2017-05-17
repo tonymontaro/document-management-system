@@ -47,6 +47,7 @@ const User = {
       .then((user) => {
         const token = authenticator.generateToken({
           id: user.id,
+          username: user.username,
           roleId: user.roleId
         });
         const response = authenticator.secureUserDetails(user);
@@ -145,6 +146,7 @@ const User = {
       bcrypt.compareSync(req.body.password, user.password)) {
         const token = authenticator.generateToken({
           id: user.id,
+          username: user.username,
           roleId: user.roleId
         });
         res.status(200).send({
