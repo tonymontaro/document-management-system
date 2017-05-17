@@ -1,0 +1,21 @@
+.primary {
+  background-color: $primary-color;
+}
+.error {
+  background-color: $secondary-color;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  margin-top: -10px;
+}
+
+h1, h2, h3 {
+  font-family: $header-font;
+}
+
+label {
+  max-width: 100px;
+}
+
+.new-document select {
+  margin-bottom: 30px;
+}
