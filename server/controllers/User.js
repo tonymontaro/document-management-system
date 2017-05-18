@@ -18,7 +18,7 @@ const User = {
 
     return models.User.findAll({
       offset: req.query.offset || 0,
-      limit: req.query.limit || null,
+      limit: req.query.limit || 100,
       attributes: ['id', 'username', 'fullName', 'email', 'roleId', 'about'],
       where: { username: {
         like: searchKey

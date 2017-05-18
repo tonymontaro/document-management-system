@@ -7,5 +7,6 @@ export default {
   users: {
     allUsers: [],
     userProfile: {}
-  }
+  },
+  page: { currentPage: 1, offset: 0 }
 };

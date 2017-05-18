@@ -1,21 +1,22 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './components/App';
-import DocumentsPage from './components/documents/DocumentsPage';
+import HomePage from './components/documents/HomePage';
 import LoginPage from './components/access/LoginPage';
 import SignUpPage from './components/access/SignUpPage';
 import DocumentPage from './components/documents/DocumentPage';
-import NewDocument from './components/documents/NewDocument';
+import ManageDocument from './components/documents/ManageDocument';
 import ProfilePage from './components/users/ProfilePage';
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={DocumentsPage} />
+    <IndexRoute component={HomePage} />
     <Route path="login" component={LoginPage} />
     <Route path="signup" component={SignUpPage} />
     <Route path="profile" component={ProfilePage} />
-    <Route path="document/new" component={NewDocument} />
-    <Route path="document/:id" component={DocumentPage} />
-    <Route path="*" component={DocumentsPage} />
+    <Route path="document" component={ManageDocument} />
+    <Route path="document/:id" component={ManageDocument} />
+    <Route path="/:id" component={DocumentPage} />
+    <Route path="*" component={HomePage} />
   </Route>
 );

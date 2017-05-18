@@ -29,6 +29,7 @@
     "require-jsdoc": 0,
     "import/no-dynamic-require": 0,
     "import/no-unresolved": 0,
+    "no-script-url": 0,
     // "no-unused-expressions": 0,
     "jsx-quotes": 1,
     "react/display-name": [ 1, {"ignoreTranspilerName": false }],

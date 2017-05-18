@@ -19,3 +19,7 @@ label {
 .new-document select {
   margin-bottom: 30px;
 }
+
+p, span, h1, h2, h3 {
+  word-wrap: break-word;
+}

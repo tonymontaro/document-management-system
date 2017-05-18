@@ -8,7 +8,7 @@ const {
   editorOne, editorTwo, admin, regularUser,
   roleOne, privateDocument, roleDocument
  } = testData;
-let regularToken, adminToken, editorOneToken;
+let regularToken, adminToken, editorOneToken, secondId;
 
 const expect = chai.expect;
 chai.use(chaiHttp);
@@ -179,7 +179,7 @@ describe('Documents', () => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.a('array');
           expect(res.body.length).to.equal(2);
-          expect(res.body[0].id).to.eql(1);
+          secondId = res.body[1].id;
           done();
         });
     });
@@ -191,7 +191,7 @@ describe('Documents', () => {
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.a('array');
-          expect(res.body[0].id).to.eql(2);
+          expect(res.body[0].id).to.eql(secondId);
           done();
         });
     });

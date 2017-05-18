@@ -6,14 +6,13 @@ import TinyMCE from 'react-tinymce';
 import TextInput from '../common/TextInput';
 import SelectInput from '../common/SelectInput';
 import { login } from '../../actions/accessActions';
-import { createDocument, getDocuments } from '../../actions/documentActions';
-import { validateLogin } from '../../utilities/validator';
+import { saveDocument, getDocuments } from '../../actions/documentActions';
+import { validateSaveDocument } from '../../utilities/validator';
 
 class NewDocument extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = { title: '', content: '', access: 'null', errors: {} };
+    this.state = Object.assign({ errors: {} }, props.document);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.getContent = this.getContent.bind(this);
@@ -21,26 +20,16 @@ class NewDocument extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    // const { valid, errors } = validateLogin(this.state);
-    // if (valid) {
-    //   this.setState({ errors: {} });
-    //   this.props.login(this.state)
-    //     .then(() => {
-    //       this.props.createDocument()
-    //         .then(() => {
-    //           this.context.router.push('/');
-    //         });
-    //     });
-    // } else {
-    //   this.setState({ errors });
-    // }
-    this.props.createDocument(this.state)
+    const { valid, errors } = validateSaveDocument(this.state);
+    if (valid) {
+      this.setState({ errors: {} });
+      this.props.saveDocument(this.state)
       .then(() => {
-        this.props.getDocuments()
-          .then(() => {
-            this.context.router.push('/');
-          });
+        this.context.router.push('/');
       });
+    } else {
+      this.setState({ errors });
+    }
   }
   onChange(event) {
     const field = event.target.name;
@@ -52,16 +41,11 @@ class NewDocument extends React.Component {
     this.setState({ content: event.target.getContent() });
   }
 
-  // componentDidMount() {
-  //   console.log('mounted');
-  //   CKEDITOR.replace( 'contentField' );
-  // }
-
   render() {
     const options = [
     { value: 'public', text: 'Public' },
-    { value: 'private', text: 'private' },
-    { value: 'role ', text: 'role' }];
+    { value: 'private', text: 'Private' },
+    { value: 'role', text: 'Role' }];
 
     return (
       <div className="form-div new-document">
@@ -95,9 +79,11 @@ class NewDocument extends React.Component {
               }}
               onChange={this.getContent}
             />
+            {this.state.errors.content &&
+              <div className="card-panel error white-text">{this.state.errors.content}</div>}
 
             <div className="input-field center">
-              <button className="waves-effect btn">Create</button>
+              <button className="waves-effect btn">Save</button>
             </div>
 
           </form>
@@ -111,4 +97,30 @@ NewDocument.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-export default connect(null, { createDocument, getDocuments })(NewDocument);
+function mapStateTopProps(state, ownProps) {
+  let currentDocument = { title: '', content: '', access: 'null' };
+  const documentId = ownProps.params.id;
+  if (documentId) {
+    state.documents.forEach((document) => {
+      if (Number(documentId) === document.id) {
+        currentDocument = {
+          title: document.title,
+          content: document.content,
+          access: document.access,
+          updateId: document.id
+        };
+      }
+    });
+  }
+
+  // const formatedAuthors = state.authors.map(author => ({
+  //   value: author.id,
+  //   text: `${author.firstName} ${author.lastName}`
+  // }));
+  return {
+    document: currentDocument,
+    // authors: formatedAuthors,
+  };
+}
+
+export default connect(mapStateTopProps, { saveDocument, getDocuments })(NewDocument);

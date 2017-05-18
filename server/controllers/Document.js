@@ -25,9 +25,9 @@ const Document = {
 
     return models.Document.findAll({
       offset: req.query.offset || 0,
-      limit: req.query.limit || null,
+      limit: req.query.limit || 100,
       where: queryOptions,
-      order: [['id', 'ASC']]
+      order: [['createdAt', 'DESC']]
     })
     .then(documents => res.status(200).send(documents))
     .catch(error => res.status(400).send(error));

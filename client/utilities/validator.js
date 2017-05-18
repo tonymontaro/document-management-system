@@ -1,40 +1,43 @@
 import validator from 'validator';
 
-export function validateLogin({ username = '', password = '' }) {
+function validateRequiredFields(inputFields = [], requiredFields = []) {
   const errors = {};
   let valid = true;
-  const requiredFields = ['username', 'password'];
-
-  [username, password].forEach((field, index) => {
+  inputFields.forEach((field, index) => {
     if (validator.isEmpty(field)) {
       errors[requiredFields[index]] = `Please enter your ${requiredFields[index]}`;
       valid = false;
     }
   });
-
   return { errors, valid };
 }
 
-export function validateSignUp({ username = '', password = '', about = '', fullName = '', email = '', roleId = '' }) {
-  const errors = {};
-  let valid = true;
-  const requiredFields = ['username', 'password', 'fullName', 'email', 'roleId'];
+export function validateLogin({ username = '', password = '' }) {
+  return validateRequiredFields([username, password], ['username', 'password']);
+}
 
-  [username, password, fullName, email, roleId].forEach((field, index) => {
-    if (validator.isEmpty(field)) {
-      errors[requiredFields[index]] = `Please enter your ${requiredFields[index]}`;
-      valid = false;
-    }
-  });
+export function validateSignUp({ username = '', password = '', about = '', fullName = '', email = '', roleId = '' }) {
+  const status = validateRequiredFields(
+    [username, password, fullName, email, roleId],
+    ['username', 'password', 'fullName', 'email', 'roleId']);
 
   if (!validator.isEmail(email)) {
-    errors.email = 'Please enter a valid email';
-    valid = false;
+    status.errors.email = 'Please enter a valid email';
+    status.valid = false;
   }
   if (roleId === 'null') {
-    errors.roleId = 'Please choose a role';
-    valid = false;
+    status.errors.roleId = 'Please choose a role';
+    status.valid = false;
   }
 
-  return { errors, valid };
+  return status;
+}
+
+export function validateSaveDocument({ title = '', access = '', content = '' }) {
+  const status = validateRequiredFields([title, access, content], ['title', 'access', 'content']);
+
+  if (access === 'null') {
+    status.errors.access = 'Please choose an access control';
+  }
+  return status;
 }

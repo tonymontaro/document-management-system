@@ -3,16 +3,19 @@ import { Link } from 'react-router';
 import truncate from 'html-truncate';
 import renderHTML from 'react-render-html';
 
-const DocumentList = ({ document }) =>
+const DocumentList = ({ document, user }) =>
   <div className="col s12 m4">
     <div className="card">
-      <a href="#" className="btn-floating waves-effect waves-light edit-btn">
+
+    {}
+      <Link to={`document/${document.id}`} className="btn-floating waves-effect waves-light edit-btn">
         <i className="material-icons">edit</i>
-      </a>
+      </Link>
       <a href="#" className="btn-floating waves-effect waves-light delete-btn">
         <i className="material-icons">delete</i>
       </a>
-      <Link to={`document/${document.id}`}>
+
+      <Link to={`/${document.id}`} className="view-document">
         <div className="card-content white-text">
           <span className="card-title">{truncate(document.title, 50)}</span>
           <hr />
