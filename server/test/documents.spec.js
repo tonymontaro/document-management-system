@@ -71,7 +71,7 @@ describe('Documents', () => {
         expect(res.status).to.equal(201);
         expect(res.body).to.have.keys(
           ['id', 'title', 'content', 'access', 'authorId',
-            'authorRoleId', 'createdAt', 'message']
+            'authorRoleId', 'createdAt', 'message', 'author']
         );
         expect(res.body.authorId).to.equal(2);
         expect(res.body.title).to.equal(privateDocument.title);
@@ -102,7 +102,7 @@ describe('Documents', () => {
         expect(res.status).to.equal(201);
         expect(res.body).to.have.keys(
           ['id', 'title', 'content', 'access', 'authorId',
-            'authorRoleId', 'createdAt', 'message']
+            'authorRoleId', 'createdAt', 'message', 'author']
         );
         expect(res.body.authorRoleId).to.equal(editorOne.roleId);
         expect(res.body.message).to.eql('Document created');
@@ -198,7 +198,7 @@ describe('Documents', () => {
   });
 
   // GET /documents/:id
-  describe('/GET/:id user', () => {
+  describe('/GET/:id document', () => {
     let editorTwoToken;
     before((done) => {
       chai.request(server)
@@ -218,7 +218,7 @@ describe('Documents', () => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.keys(['id', 'title', 'content', 'access',
-            'authorId', 'authorRoleId', 'createdAt', 'updatedAt']);
+            'authorId', 'authorRoleId', 'createdAt', 'updatedAt', 'author']);
           expect(res.body.title).to.equal('DMS Welcome Message');
           done();
         });
@@ -257,7 +257,7 @@ describe('Documents', () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.a('object');
         expect(res.body).to.have.keys(['id', 'title', 'content', 'access',
-          'authorId', 'authorRoleId', 'createdAt', 'updatedAt']);
+          'authorId', 'authorRoleId', 'createdAt', 'updatedAt', 'author']);
         expect(res.body.authorRoleId).to.equal(editorTwo.roleId);
         done();
       });
@@ -292,7 +292,7 @@ describe('Documents', () => {
   });
 
   // PUT /documents/:id
-  describe('/PUT/:id user', () => {
+  describe('/PUT/:id document', () => {
     it('should allow a user to update his/her document', (done) => {
       chai.request(server)
       .put('/documents/2')

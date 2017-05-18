@@ -7,19 +7,20 @@ const DocumentList = ({ document, user }) =>
   <div className="col s12 m4">
     <div className="card">
 
-    {}
-      <Link to={`document/${document.id}`} className="btn-floating waves-effect waves-light edit-btn">
-        <i className="material-icons">edit</i>
-      </Link>
-      <a href="#" className="btn-floating waves-effect waves-light delete-btn">
-        <i className="material-icons">delete</i>
-      </a>
+      {(user.id === document.authorId || user.roleId === 1) &&
+      <span>
+        <Link to={`document/${document.id}`} className="btn-floating waves-effect waves-light edit-btn">
+          <i className="material-icons">edit</i>
+        </Link>
+        <a href="#" className="btn-floating waves-effect waves-light delete-btn">
+          <i className="material-icons">delete</i>
+        </a>
+      </span>}
 
       <Link to={`/${document.id}`} className="view-document">
         <div className="card-content white-text">
           <span className="card-title">{truncate(document.title, 50)}</span>
           <hr />
-          {/*<p>{truncate(document.content, 150)}</p>*/}
            <div>{renderHTML(truncate(document.content, 150))}</div>
         </div>
       </Link>

@@ -25,7 +25,7 @@ class DocumentPage extends React.Component {
         <div className="document container">
           <h3>{document.title}</h3>
           <p className="meta-info">posted on: {new Date(document.createdAt).toDateString()},
-            by: <Link to="document/sdfafd">tonymontaro</Link></p>
+            by: <Link to="document/sdfafd">{document.author}</Link></p>
           <div>{renderHTML(document.content)}</div>
         </div>
       </div>

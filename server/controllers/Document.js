@@ -34,22 +34,28 @@ const Document = {
   },
 
   create(req, res) {
-    req.body.authorId = res.locals.decoded.id;
-    req.body.authorRoleId = res.locals.decoded.roleId;
+    return models.User.findById(res.locals.decoded.id)
+      .then((user) => {
+        req.body.authorId = user.id;
+        req.body.authorRoleId = user.roleId;
+        req.body.author = user.username;
 
-    return models.Document.create(req.body)
-      .then((document) => {
-        const response = {
-          id: document.id,
-          title: document.title,
-          content: document.content,
-          access: document.access,
-          authorId: document.authorId,
-          authorRoleId: document.authorRoleId,
-          createdAt: document.createdAt,
-          message: 'Document created'
-        };
-        return res.status(201).send(response);
+        return models.Document.create(req.body)
+          .then((document) => {
+            const response = {
+              id: document.id,
+              title: document.title,
+              content: document.content,
+              access: document.access,
+              authorId: document.authorId,
+              author: document.author,
+              authorRoleId: document.authorRoleId,
+              createdAt: document.createdAt,
+              message: 'Document created'
+            };
+            return res.status(201).send(response);
+          })
+          .catch(error => res.status(400).send(error));
       })
       .catch(error => res.status(400).send(error));
   },
