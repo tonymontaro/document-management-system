@@ -12,4 +12,6 @@ export default (app) => {
   authenticator.permitAuthor, documentController.update);
   app.delete('/documents/:id', authenticator.verifyUser,
   authenticator.permitAuthor, documentController.delete);
+
+  app.get('/search/documents', documentController.getDocuments);
 };

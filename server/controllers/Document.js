@@ -8,19 +8,19 @@ const Document = {
       searchKey = `%${req.query.q}%`;
     }
 
-    let queryOptions = { access: 'public', title: { like: searchKey } };
+    let queryOptions = { access: 'public', title: { $iLike: searchKey } };
     const token = req.body.token
       || req.query.token
       || req.headers['x-access-token'];
     const decoded = authenticator.verifyToken(token);
     if (decoded) {
-      queryOptions = (decoded.roleId === 1) ? { title: { like: searchKey } } : {
+      queryOptions = (decoded.roleId === 1) ? { title: { $iLike: searchKey } } : {
         $or: [
           { access: 'public' },
           { authorId: decoded.id },
           { $and: [{ authorRoleId: decoded.roleId }, { access: 'role' }] }
         ],
-        title: { like: searchKey } };
+        title: { $iLike: searchKey } };
     }
 
     return models.Document.findAll({

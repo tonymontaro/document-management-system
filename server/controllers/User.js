@@ -21,7 +21,7 @@ const User = {
       limit: req.query.limit || 100,
       attributes: ['id', 'username', 'fullName', 'email', 'roleId', 'about'],
       where: { username: {
-        like: searchKey
+        $iLike: searchKey
       } },
       order: [['id', 'ASC']]
     })

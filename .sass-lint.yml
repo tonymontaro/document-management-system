@@ -1,0 +1,10 @@
+severity: error
+
+linters:
+
+  BorderZero:
+    enabled: true
+    convention: zero
+
+  BemDepth:
+    enabled: true

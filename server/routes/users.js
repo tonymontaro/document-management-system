@@ -16,5 +16,7 @@ export default (app) => {
   app.post('/users/logout', userController.logout);
 
   app.get('/users/:id/documents', authenticator.verifyUser,
-    userController.getUserDocuments);
+    authenticator.permitProfileOwner, userController.getUserDocuments);
+  app.get('/search/users', authenticator.verifyUser, authenticator.permitAdmin,
+    userController.getUsers);
 };

@@ -1,11 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import { bindActionCreators } from 'redux';
 
 class ProfilePage extends React.Component {
   render() {
-    const { profile, loggedIn } = this.props;
+    const { profile, access } = this.props;
     return (
       <div className="form-div">
         <div className="container">
@@ -22,7 +20,7 @@ class ProfilePage extends React.Component {
             </div>
           </div>
 
-          {loggedIn && <div className="input-field center">
+          {(access.user.id === profile.id) && <div className="input-field center">
             <button className="waves-effect btn">Edit</button>
           </div>}
         </div>
@@ -31,7 +29,12 @@ class ProfilePage extends React.Component {
   }
 }
 
+ProfilePage.propTypes = {
+  profile: PropTypes.object.isRequired,
+  access: PropTypes.object.isRequired
+};
+
 export default connect(state => ({
   profile: state.users.userProfile,
-  loggedIn: state.access.loggedIn
+  access: state.access
 }))(ProfilePage);

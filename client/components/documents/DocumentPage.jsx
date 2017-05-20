@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { bindActionCreators } from 'redux';
 import renderHTML from 'react-render-html';
 
 class DocumentPage extends React.Component {
@@ -26,15 +25,12 @@ class DocumentPage extends React.Component {
           <h3>{document.title}</h3>
           <p className="meta-info">posted on: {new Date(document.createdAt).toDateString()},
             by: <Link to="document/sdfafd">{document.author}</Link></p>
-          <div>{renderHTML(document.content)}</div>
+          <div>{document.content && renderHTML(document.content)}</div>
         </div>
       </div>
     );
   }
 }
-
-
-
 
 function mapStateTopProps(state, ownProps) {
   let document = {};
@@ -51,6 +47,10 @@ function mapStateTopProps(state, ownProps) {
     document,
   };
 }
+
+DocumentPage.propTypes = {
+  document: PropTypes.object.isRequired
+};
 
 DocumentPage.contextTypes = {
   router: PropTypes.object.isRequired

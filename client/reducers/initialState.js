@@ -8,5 +8,5 @@ export default {
     allUsers: [],
     userProfile: {}
   },
-  page: { currentPage: 1, offset: 0 }
+  page: { currentPage: 1, offset: 0, query: '' }
 };
