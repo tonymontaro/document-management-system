@@ -32,9 +32,8 @@ class SignUpPage extends React.Component {
   }
 
   render() {
-    const options = [
-      { value: '2', text: 'Regular' },
-      { value: '3 ', text: 'Editor' }];
+    const options = [];
+    this.props.roles.forEach(role => options.push({ value: role.id, text: role.name }));
 
     return (
       <SignUpForm
@@ -47,11 +46,12 @@ class SignUpPage extends React.Component {
 }
 
 SignUpPage.propTypes = {
-  signup: PropTypes.func.isRequired
+  signup: PropTypes.func.isRequired,
+  roles: PropTypes.array.isRequired
 };
 
 SignUpPage.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-export default connect(null, { signup })(SignUpPage);
+export default connect(state => ({ roles: state.roles }), { signup })(SignUpPage);

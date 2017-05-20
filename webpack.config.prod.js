@@ -29,7 +29,7 @@ module.exports = {
   ],
   module: {
     loaders: [
-      {test: /\.js$/, include: path.join(__dirname, 'client'), loaders: ['babel']},
+      {test: /\.(js|jsx)$/, include: path.join(__dirname, 'client'), loaders: ['babel']},
       {test: /\.scss$/i, loader: ExtractTextPlugin.extract(['css', 'autoprefixer', 'sass'])},
       {test: /\.json$/, loader: 'json'},
     ]

@@ -7,6 +7,7 @@ import SignUpPage from './components/access/SignUpPage';
 import DocumentPage from './components/documents/DocumentPage';
 import ManageDocument from './components/documents/ManageDocument';
 import ProfilePage from './components/users/ProfilePage';
+import ManageRoles from './components/roles/ManageRoles';
 
 export default (
   <Route path="/" component={App}>
@@ -14,6 +15,7 @@ export default (
     <Route path="login" component={LoginPage} />
     <Route path="signup" component={SignUpPage} />
     <Route path="profile" component={ProfilePage} />
+    <Route path="role" component={ManageRoles} />
     <Route path="document" component={ManageDocument} />
     <Route path="document/:id" component={ManageDocument} />
     <Route path="/:id" component={DocumentPage} />

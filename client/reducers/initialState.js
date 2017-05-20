@@ -1,5 +1,6 @@
 export default {
   documents: [],
+  roles: [],
   access: {
     loggedIn: false,
     user: {}
@@ -8,5 +9,5 @@ export default {
     allUsers: [],
     userProfile: {}
   },
-  page: { currentPage: 1, offset: 0, query: '' }
+  pagination: { currentPage: 1, offset: 0, query: '' }
 };

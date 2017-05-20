@@ -14,7 +14,7 @@ const DocumentList = ({ document, user, deleteDocument, editMode }) =>
           <i className="material-icons">edit</i>
         </Link>
         <button
-          onClick={() => { if (confirm(`Delete ${document.title}?`)) deleteDocument(document.id); }}
+          onClick={() => { if (confirm(`Delete: ${document.title}?`)) deleteDocument(document.id); }}
           className="btn-floating waves-effect waves-light delete-btn">
           <i className="material-icons">delete</i>
         </button>

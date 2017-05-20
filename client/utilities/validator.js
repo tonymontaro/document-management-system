@@ -1,11 +1,11 @@
 import validator from 'validator';
 
-function validateRequiredFields(inputFields = [], requiredFields = []) {
+export function validateRequiredFields(inputFields = [], requiredFields = []) {
   const errors = {};
   let valid = true;
   inputFields.forEach((field, index) => {
     if (validator.isEmpty(field)) {
-      errors[requiredFields[index]] = `Please enter your ${requiredFields[index]}`;
+      errors[requiredFields[index]] = `Please enter the ${requiredFields[index]}`;
       valid = false;
     }
   });

@@ -1,0 +1,144 @@
+
+// MAIN
+main {
+  position: relative;
+  .preloader-wrapper {
+    position: fixed;
+    top: 80px;
+    left: 15px;
+    z-index: 999;
+  }
+  .documents-div,
+  .document-div,
+  .form-div {
+    padding: 50px 0;
+    min-height: 85vh;
+    background: rgba(0,0,0, 0.6);
+  }
+  .documents-div {
+    position: relative;
+
+    .edit-mode {
+      display: inline-block;
+      position: absolute;
+      top: 20px;
+      right: 30px;
+    }
+  }
+  .fixed-action-btn {
+    bottom: 100px;
+    i,
+    ul {
+      color: $white;
+      .input-field,
+      label {
+        color: #fff;
+      }
+    }
+  }
+  .documents {
+    .card {
+      position: relative;
+      background-color: $white;
+      height: 250px;
+      color: $text-color;
+      .view-document {
+        display: block;
+        height: 250px;
+      }
+      hr {
+        margin-bottom: 15px
+      }
+      .edit-btn,
+      .delete-btn {
+        position: absolute;
+        top: -15px;
+        background-color: $primary-color;
+      }
+      .edit-btn {
+        right: 50px;
+      }
+      .delete-btn {
+        right: 0px;
+      }
+      .card-content {
+        max-height: 250px;
+        overflow: auto;
+        color: $text-color;
+      }
+
+      .document-access {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        padding: 3px 10px;
+        background-color:  darken($white, 15%);
+        border-radius: 5px;
+        color: $text-color;
+      }
+    }
+    .recent-documents {
+      text-align: center;
+      font-size: 25px;
+      margin: 0 0 10px 0;
+    }
+    .pagination {
+      .waves-effect .material-icons {
+        color: $white;
+      }
+    }
+  }
+  .document-div {
+    .document {
+      background-color: #fff;
+      padding: 30px 25px;
+      font-size: 20px;
+      letter-spacing: 0.8px;
+      word-spacing: 2px;
+      color: $text-color;
+      border-radius: 10px;
+      h1,
+      h2,
+      h3,
+      h4 {
+        margin-bottom: 3px;
+      }
+      .meta-info {
+        margin-bottom: 20px;
+        font-size: 16px;
+        color: lighten($text-color, 15%);
+      }
+      img {
+        max-width: 100%;
+        margin: 10px 0;
+      }
+    }
+  }
+  .select-role {
+    width: 89%;
+    display: block;
+    margin-left: 45px;
+  }
+
+  .search-form {
+    padding-left: 15px;
+
+    input {
+      background: rgba(0,0,0,0.6);
+      border-radius: 5px;
+      padding-left: 15px;
+    }
+
+    label {
+      margin-left: 15px;
+    }
+  }
+
+  .edit-role { margin-right: 20px; }
+}
+
+#roleModal {
+  .modal-content {
+    background: $text-color;
+  }
+}

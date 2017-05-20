@@ -1,13 +1,16 @@
 import { combineReducers } from 'redux';
-import { documents, page } from './documentReducer';
+import documents from './documentReducer';
 import access from './accessReducer';
 import users from './userReducer';
+import roles from './roleReducer';
+import pagination from './paginationReducer';
 
 const rootReducer = combineReducers({
   documents,
   access,
   users,
-  page
+  roles,
+  pagination
 });
 
 export default rootReducer;

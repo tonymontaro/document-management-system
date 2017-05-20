@@ -1,13 +1,14 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { getDocuments, updatePage, deleteDocument, searchDocument } from '../../actions/documentActions';
+import { getDocuments, deleteDocument, searchDocument } from '../../actions/documentActions';
+import updatePage from '../../actions/paginationActions';
 import HomePageDiv from './HomePageDiv';
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = Object.assign({ editMode: false, search: '' }, props.page);
+    this.state = Object.assign({ editMode: false, search: '' }, props.pagination);
     this.prevPage = this.prevPage.bind(this);
     this.nextPage = this.nextPage.bind(this);
     this.deleteDocument = this.deleteDocument.bind(this);
@@ -16,14 +17,35 @@ class HomePage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.page.offset !== nextProps.page.offset) {
-      this.setState(Object.assign({}, nextProps.page));
+    if (this.props.pagination.offset !== nextProps.pagination.offset ||
+    this.props.pagination.query !== nextProps.pagination.query) {
+      this.setState(Object.assign({}, nextProps.pagination));
     }
+  }
+
+  nextPage() {
+    if (this.props.documents.length < 9) return;
+    if (this.state.query) {
+      return this.props.searchDocument(this.state.search, this.state.offset + 9)
+        .then(() => {
+          this.props.updatePage('next');
+        });
+    }
+    return this.props.getDocuments(this.state.offset + 9)
+      .then(() => {
+        this.props.updatePage('next');
+      });
   }
 
   prevPage() {
     if (this.state.offset < 1) return;
-    this.props.getDocuments(this.state.offset - 9)
+    if (this.state.query) {
+      return this.props.searchDocument(this.state.search, this.state.offset - 9)
+        .then(() => {
+          if (this.state.offset > 0) this.props.updatePage('prev');
+        });
+    }
+    return this.props.getDocuments(this.state.offset - 9)
     .then(() => {
       if (this.state.offset > 0) this.props.updatePage('prev');
     });
@@ -42,14 +64,6 @@ class HomePage extends React.Component {
       return this.setState({ editMode: event.target.checked });
     }
     return this.setState({ [event.target.name]: event.target.value });
-  }
-
-  nextPage() {
-    if (this.props.documents.length < 9) return;
-    this.props.getDocuments(this.state.offset + 9)
-      .then(() => {
-        this.props.updatePage();
-      });
   }
 
   onSearch(event) {
@@ -78,7 +92,7 @@ class HomePage extends React.Component {
 }
 
 HomePage.propTypes = {
-  page: PropTypes.object.isRequired,
+  pagination: PropTypes.object.isRequired,
   documents: PropTypes.array.isRequired,
   access: PropTypes.object.isRequired,
   getDocuments: PropTypes.func.isRequired,
@@ -94,5 +108,5 @@ HomePage.contextTypes = {
 export default connect(state => ({
   documents: state.documents,
   access: state.access,
-  page: state.page
+  pagination: state.pagination
 }), { getDocuments, updatePage, deleteDocument, searchDocument })(HomePage);

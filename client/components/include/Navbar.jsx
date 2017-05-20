@@ -16,7 +16,7 @@ const Navbar = ({ username, logout, accessClass, getDocuments, getProfile }) =>
           </span>
           <span className="forAdmin">
             <li><Link to="">Users</Link></li>
-            <li><Link to="">Roles</Link></li>
+            <li><Link to="role">Roles</Link></li>
           </span>
           <span className="loggedIn">
             <li><Link className="dropdown-button" to="" data-activates="documents-dropdown">
@@ -38,7 +38,7 @@ const Navbar = ({ username, logout, accessClass, getDocuments, getProfile }) =>
       </ul>
 
       <ul id="documents-dropdown" className="dropdown-content">
-        <li><Link to="/document/new"><i className="fa fa-plus-circle" />New Document</Link></li>
+        <li><Link to="document/new"><i className="fa fa-plus-circle" />New Document</Link></li>
         <li className="divider" />
         <li><Link to="" onClick={getDocuments} >
           <i className="fa fa-folder-open" />View Documents

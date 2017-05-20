@@ -80,8 +80,8 @@ const SignUpForm = ({ onSubmit, onChange, userDetails, options }) =>
 SignUpForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  userDetails: PropTypes.object.isReuired,
-  options: PropTypes.object.isRequired,
+  userDetails: PropTypes.object,
+  options: PropTypes.array,
 };
 
 export default SignUpForm;

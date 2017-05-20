@@ -34,6 +34,9 @@ const DocumentForm = ({ accessOptions, getContent, onChange, document, onSubmit 
           }}
           onChange={getContent}
         />
+        {document.errors.content &&
+          <div className="card-panel error white-text">{document.errors.content}</div>}
+
 
         <div className="input-field center">
           <button className="waves-effect btn">Create</button>

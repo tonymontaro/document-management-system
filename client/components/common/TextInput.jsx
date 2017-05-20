@@ -5,8 +5,10 @@ const TextInput = ({ name, label, onChange, value, error, icon = 'user', type = 
     <i className={`fa fa-${icon} prefix`} />
     <input
       placeholder={label}
-      type={type} name={name}
-      id={name} onChange={onChange}
+      type={type}
+      name={name}
+      id={name}
+      onChange={onChange}
       value={value} />
     {error && <div className="card-panel error white-text">{error}</div>}
   </div>;

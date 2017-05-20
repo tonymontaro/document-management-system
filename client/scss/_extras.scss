@@ -2,7 +2,7 @@
   background-color: $primary-color;
 }
 .error {
-  background-color: $secondary-color;
+  background-color: $primary-color;
   padding-top: 12px;
   padding-bottom: 12px;
   margin-top: -10px;
@@ -14,6 +14,16 @@ h1, h2, h3 {
 select {
   background: transparent;
 }
+
+table tr{
+  color: $white;
+  a { color: $white; }
+}
+tbody tr:hover {
+  color: $text-color;
+  a { color: $text-color; }
+}
+
 strong {
   font-weight: bold;
 }
@@ -27,4 +37,8 @@ label {
 
 p, span, h1, h2, h3 {
   word-wrap: break-word;
+}
+.collection .collection-item {
+  background-color: transparent;
+  color: $white;
 }
