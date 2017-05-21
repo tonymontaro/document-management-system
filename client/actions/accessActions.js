@@ -3,34 +3,61 @@ import jwt from 'jsonwebtoken';
 import * as types from './types';
 import setHeaderToken from '../utilities/setHeaderToken';
 import { getDocuments } from './documentActions';
+import { beginAjaxCall } from './ajaxStatusActions';
+import { throwError } from '../utilities/errorHandler';
 
-export function loginSuccess(token) {
+export function clientLogin(token) {
   setHeaderToken(token);
-
   return {
-    type: types.LOGIN_SUCCESS,
+    type: types.CLIENT_LOGIN,
     user: jwt.decode(token)
   };
 }
 
 export function login(userDetails) {
-  return dispatch =>
-    axios.post('/users/login', userDetails)
+  return (dispatch) => {
+    dispatch(beginAjaxCall());
+    return axios.post('/users/login', userDetails)
       .then((res) => {
         const token = res.data.token;
         localStorage.setItem('jwToken', token);
-        dispatch(loginSuccess(token));
-      });
+        setHeaderToken(token);
+        dispatch({
+          type: types.LOGIN_SUCCESS,
+          user: jwt.decode(token)
+        });
+      })
+      .catch(error => throwError(error, dispatch));
+  };
 }
 
 export function signup(userDetails) {
-  return dispatch =>
-    axios.post('/users', userDetails)
+  if (userDetails.id) {
+    return (dispatch) => {
+      dispatch(beginAjaxCall());
+      return axios.put(`/users/${userDetails.id}`, userDetails)
+        .then(() => {
+          dispatch({
+            type: types.PROFILE_UPDATE_SUCCESS
+          });
+        })
+        .catch(error => throwError(error, dispatch));
+    };
+  }
+  return (dispatch) => {
+    dispatch(beginAjaxCall());
+    return axios.post('/users', userDetails)
       .then((res) => {
         const token = res.data.token;
         localStorage.setItem('jwToken', token);
-        dispatch(loginSuccess(token));
-      });
+        setHeaderToken(token);
+        dispatch({
+          type: types.LOGIN_SUCCESS,
+          user: jwt.decode(token)
+        });
+      })
+      .catch(error => throwError(error, dispatch));
+  };
 }
 
 export function logout() {

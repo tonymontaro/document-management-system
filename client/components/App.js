@@ -1,13 +1,17 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Header from './include/Header';
 import Footer from './include/Footer';
+import Spinner from './common/Spinner';
 
 class App extends React.Component {
+
   render() {
     return (
       <div>
         <Header />
         <main>
+          {(this.props.loading > 0) && <Spinner />}
           { this.props.children }
         </main>
         <Footer />
@@ -20,4 +24,6 @@ App.propTypes = {
   children: PropTypes.object.isRequired,
 };
 
-export default App;
+export default connect(state => ({
+  loading: state.ajaxCallsInProgress
+}))(App);

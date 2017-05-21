@@ -4,7 +4,7 @@ export function validateRequiredFields(inputFields = [], requiredFields = []) {
   const errors = {};
   let valid = true;
   inputFields.forEach((field, index) => {
-    if (validator.isEmpty(field)) {
+    if (validator.isEmpty(String(field))) {
       errors[requiredFields[index]] = `Please enter the ${requiredFields[index]}`;
       valid = false;
     }

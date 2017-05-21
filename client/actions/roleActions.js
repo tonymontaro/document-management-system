@@ -1,78 +1,52 @@
 import axios from 'axios';
 import * as types from './types';
+import { beginAjaxCall } from './ajaxStatusActions';
+import { handleError, throwError } from '../utilities/errorHandler';
 
 export function getRoles() {
   return (dispatch) => {
+    dispatch(beginAjaxCall());
     return axios.get('/roles')
       .then((res) => {
         dispatch({
           type: types.LOAD_ROLES_SUCCESS,
           roles: res.data,
         });
-      });
+      })
+      .catch(error => handleError(error, dispatch));
   };
 }
 
 export function saveRole(role) {
   if (role.id) {
-    return dispatch => axios.put(`/roles/${role.id}`, role)
-    .then((res) => {
-      dispatch({ type: types.UPDATE_ROLE_SUCCESS, role: res.data });
-    });
+    return (dispatch) => {
+      dispatch(beginAjaxCall());
+      return axios.put(`/roles/${role.id}`, role)
+        .then((res) => {
+          dispatch({ type: types.UPDATE_ROLE_SUCCESS, role: res.data });
+        })
+        .catch(error => throwError(error, dispatch));
+    };
   }
-  return dispatch => axios.post('/roles', role)
-  .then((res) => {
-    dispatch({ type: types.CREATE_ROLE_SUCCESS, role: res.data });
-  });
+  return (dispatch) => {
+    dispatch(beginAjaxCall());
+    return axios.post('/roles', role)
+      .then((res) => {
+        dispatch({ type: types.CREATE_ROLE_SUCCESS, role: res.data });
+      })
+      .catch(error => throwError(error, dispatch));
+  };
 }
 
 export function deleteRole(id) {
   return (dispatch) => {
+    dispatch(beginAjaxCall());
     return axios.delete(`/roles/${id}`)
       .then(() => {
         dispatch({
           type: types.DELETE_ROLE_SUCCESS,
         });
-      });
-  };
-}
-
-// ===========================================
-
-export function searchDocument(query, offset = 0, limit = 9) {
-  return (dispatch) => {
-    return axios.get(`/search/documents?q=${query}&limit=${limit}&offset=${offset}`)
-      .then((res) => {
-        dispatch({
-          type: types.SEARCH_SUCCESS,
-          searchResult: res.data,
-          query,
-          offset
-        });
-      });
-  };
-}
-
-export function saveDocument(document) {
-  if (document.updateId) {
-    return dispatch => axios.put(`/documents/${document.updateId}`, document)
-    .then((res) => {
-      dispatch({ type: types.UPDATE_DOCUMENT_SUCCESS, document: res.data });
-    });
-  }
-  return dispatch => axios.post('/documents', document)
-  .then((res) => {
-    dispatch({ type: types.CREATE_DOCUMENT_SUCCESS, document: res.data });
-  });
-}
-
-export function deleteDocument(id) {
-  return (dispatch) => {
-    return axios.delete(`/documents/${id}`)
-      .then(() => {
-        dispatch({
-          type: types.DELETE_DOCUMENTS_SUCCESS,
-        });
-      });
+      })
+      .catch(error => handleError(error, dispatch));
   };
 }
