@@ -58,9 +58,7 @@
     "redux-thunk": "2.0.1",
     "sequelize": "^3.30.4",
     "sequelize-cli": "^2.7.0",
-    "validator": "^7.0.0"
-  },
-  "devDependencies": {
+    "validator": "^7.0.0",
     "autoprefixer-loader": "^3.2.0",
     "babel-cli": "6.8.0",
     "babel-core": "6.8.0",
@@ -103,5 +101,8 @@
     "webpack": "1.13.0",
     "webpack-dev-middleware": "1.6.1",
     "webpack-hot-middleware": "2.10.0"
+  },
+  "devDependencies": {
+
   }
 }
