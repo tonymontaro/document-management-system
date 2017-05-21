@@ -39,14 +39,13 @@ const Authenticator = {
 
   permitAdmin(req, res, next) {
     if (res.locals.decoded.roleId === 1) {
-      next();
-    } else {
-      return res.status(403).send({ message: 'Access denied' });
+      return next();
     }
+    return res.status(403).send({ message: 'Access denied' });
   },
 
   permitProfileOwner(req, res, next) {
-    models.User.findById(req.params.id)
+    return models.User.findById(req.params.id)
       .then((user) => {
         if (!user) return res.status(404).send({ message: 'User not found' });
 
@@ -62,7 +61,7 @@ const Authenticator = {
   },
 
   permitAuthor(req, res, next) {
-    models.Document.findById(req.params.id)
+    return models.Document.findById(req.params.id)
       .then((document) => {
         if (!document) {
           return res.status(404).send({ message: 'Document not found' });

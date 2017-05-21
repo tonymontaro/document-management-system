@@ -224,13 +224,13 @@ describe('Documents', () => {
         });
     });
 
-    it('should deny access to an anonymous user', (done) => {
+    it('should allow an anonymous user to view a public document', (done) => {
       chai.request(server)
-      .get('/documents/2')
+      .get('/documents/1')
       .end((err, res) => {
-        expect(res.status).to.equal(403);
+        expect(res.status).to.equal(200);
         expect(res.body).to.be.a('object');
-        expect(res.body.message).to.eql('No token provided');
+        expect(res.body.title).to.equal('DMS Welcome Message');
         done();
       });
     });

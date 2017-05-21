@@ -9,9 +9,7 @@ const Document = {
     }
 
     let queryOptions = { access: 'public', title: { $iLike: searchKey } };
-    const token = req.body.token
-      || req.query.token
-      || req.headers['x-access-token'];
+    const token = req.body.token || req.query.token || req.headers['x-access-token'];
     const decoded = authenticator.verifyToken(token);
     if (decoded) {
       queryOptions = (decoded.roleId === 1) ? { title: { $iLike: searchKey } } : {
@@ -66,9 +64,10 @@ const Document = {
         if (!document) {
           return res.status(404).send({ message: 'Document not found' });
         }
-
-        const userId = res.locals.decoded.id;
-        const userRoleId = res.locals.decoded.roleId;
+        const token = req.body.token || req.query.token || req.headers['x-access-token'];
+        const decoded = authenticator.verifyToken(token);
+        const userId = decoded ? decoded.id : null;
+        const userRoleId = decoded ? decoded.roleId : null;
         if (document.access !== 'public'
           && userRoleId !== 1
           && userId !== document.authorId

@@ -88,6 +88,10 @@ const User = {
         message: 'Only an admin can upgrade a user to an admin role'
       });
     }
+    if (req.body.password) {
+      req.body.password =
+      bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+    }
 
     return res.locals.user.update(req.body, { fields: Object.keys(req.body) })
       .then(updatedUser =>
