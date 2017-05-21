@@ -7,21 +7,24 @@
   padding-bottom: 12px;
   margin-top: -10px;
 }
+.toast {
+  background-color: $primary-color;
+}
 
 h1, h2, h3 {
   font-family: $header-font;
 }
+
+a {
+  cursor: pointer;
+}
+
 select {
   background: transparent;
 }
 
 table tr{
   color: $white;
-  a { color: $white; }
-}
-tbody tr:hover {
-  color: $text-color;
-  a { color: $text-color; }
 }
 
 strong {

@@ -82,11 +82,6 @@ main {
       font-size: 25px;
       margin: 0 0 10px 0;
     }
-    .pagination {
-      .waves-effect .material-icons {
-        color: $white;
-      }
-    }
   }
   .document-div {
     .document {
@@ -114,6 +109,13 @@ main {
       }
     }
   }
+
+  .pagination {
+    .waves-effect .material-icons {
+      color: $white;
+    }
+  }
+
   .select-role {
     width: 89%;
     display: block;
@@ -134,10 +136,10 @@ main {
     }
   }
 
-  .edit-role { margin-right: 20px; }
+  .edit-role, .edit-user { margin-right: 20px; }
 }
 
-#roleModal {
+#roleModal, #userModal {
   .modal-content {
     background: $text-color;
   }
