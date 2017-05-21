@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const TextInput = ({ name, onChange, value, error, icon = 'user', options, label }) =>
+const SelectInput = ({ name, onChange, value, error, icon = 'user', options, label }) =>
   <div className="input-field">
     <i className={`fa fa-${icon} prefix`} />
     <select
@@ -17,14 +17,17 @@ const TextInput = ({ name, onChange, value, error, icon = 'user', options, label
     </div>}
   </div>;
 
-TextInput.propTypes = {
+SelectInput.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
   error: PropTypes.string,
   icon: PropTypes.string,
   label: PropTypes.string,
 };
 
-export default TextInput;
+export default SelectInput;

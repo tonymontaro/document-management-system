@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 class ProfilePage extends React.Component {
   render() {
@@ -7,7 +8,8 @@ class ProfilePage extends React.Component {
     return (
       <div className="form-div">
         <div className="container">
-          <h3 className="center">{profile.fullName}</h3>
+          <h3>{profile.fullName}</h3>
+          <p>username: {profile.username}</p>
 
           <div className="row">
             <div className="col s12">
@@ -21,7 +23,7 @@ class ProfilePage extends React.Component {
           </div>
 
           {(access.user.id === profile.id) && <div className="input-field center">
-            <button className="waves-effect btn">Edit</button>
+            <Link to="/user/edit" className="waves-effect btn">Edit</Link>
           </div>}
         </div>
       </div>

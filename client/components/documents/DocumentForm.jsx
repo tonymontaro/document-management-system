@@ -39,7 +39,7 @@ const DocumentForm = ({ accessOptions, getContent, onChange, document, onSubmit 
 
 
         <div className="input-field center">
-          <button className="waves-effect btn">Create</button>
+          <button className="waves-effect btn">Save</button>
         </div>
 
       </form>

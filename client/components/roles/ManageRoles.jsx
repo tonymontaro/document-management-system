@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import RolesPage from './RolesPage';
 import { saveRole, deleteRole, getRoles } from '../../actions/roleActions';
 import { validateRequiredFields } from '../../utilities/validator';
+import { handleError } from '../../utilities/errorHandler';
 
 class ManageRoles extends React.Component {
   constructor(props) {
@@ -57,37 +58,39 @@ class ManageRoles extends React.Component {
           .then(() => {
             this.setState({ newRole: { name: '' } });
             Materialize.toast('Role created', 2000);
-          });
+          })
+          .catch(error => handleError(error));
       }
       return this.setState({ newRole: { name: '', error: errors.name } });
     }
+
     const { valid, errors } = validateRequiredFields([this.state.editRole.name], ['name']);
     if (valid) {
       return this.props.saveRole(this.state.editRole)
         .then(() => {
           $('#roleModal').modal('close');
           Materialize.toast('Role updated', 2000);
-        });
+        })
+        .catch(error => handleError(error));
     }
+
     return this.setState({
       editRole: Object.assign({}, this.state.editRole, { error: errors.name })
     });
   }
 
   render() {
-    // const { documents, access } = this.props;
-    // const { currentPage, editMode, search } = this.state;
     const { roles, editRole, newRole } = this.state;
 
     return (
       <RolesPage
-      roles={roles}
-      editRole={editRole}
-      onClick={this.onClick}
-      onChange={this.onChange}
-      newRole={newRole}
-      onSave={this.onSave}
-      deleteRole={this.deleteRole} />
+        roles={roles}
+        editRole={editRole}
+        onClick={this.onClick}
+        onChange={this.onChange}
+        newRole={newRole}
+        onSave={this.onSave}
+        deleteRole={this.deleteRole} />
     );
   }
 }

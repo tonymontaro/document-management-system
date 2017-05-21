@@ -4,6 +4,7 @@ import { login } from '../../actions/accessActions';
 import { getDocuments } from '../../actions/documentActions';
 import { validateLogin } from '../../utilities/validator';
 import LoginForm from './LoginForm';
+import { handleError } from '../../utilities/errorHandler';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -25,7 +26,8 @@ class LoginPage extends React.Component {
             .then(() => {
               this.context.router.push('/');
             });
-        });
+        })
+        .catch(error => handleError(error));
     } else {
       this.setState({ errors });
     }

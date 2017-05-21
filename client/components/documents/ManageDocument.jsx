@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { saveDocument } from '../../actions/documentActions';
 import { validateSaveDocument } from '../../utilities/validator';
 import DocumentForm from './DocumentForm';
+import { handleError } from '../../utilities/errorHandler';
 
 class ManageDocument extends React.Component {
   constructor(props) {
@@ -21,16 +22,14 @@ class ManageDocument extends React.Component {
       this.props.saveDocument(this.state)
       .then(() => {
         this.context.router.push('/');
-      });
+      })
+      .catch(error => handleError(error));
     } else {
       this.setState({ errors });
     }
   }
   onChange(event) {
-    const field = event.target.name;
-    const state = this.state;
-    state[field] = event.target.value;
-    this.setState(state);
+    return this.setState({ [event.target.name]: event.target.value });
   }
   getContent(event) {
     this.setState({ content: event.target.getContent() });

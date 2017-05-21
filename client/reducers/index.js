@@ -1,16 +1,19 @@
 import { combineReducers } from 'redux';
-import documents from './documentReducer';
+import { documents, document } from './documentReducer';
 import access from './accessReducer';
 import users from './userReducer';
 import roles from './roleReducer';
 import pagination from './paginationReducer';
+import ajaxCallsInProgress from './ajaxStatusReducer';
 
 const rootReducer = combineReducers({
   documents,
   access,
   users,
   roles,
-  pagination
+  document,
+  pagination,
+  ajaxCallsInProgress
 });
 
 export default rootReducer;

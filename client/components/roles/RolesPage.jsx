@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import TextInput from '../common/TextInput';
 
-const Pagination = ({ roles, editRole, newRole, onClick, onChange, onSave, deleteRole }) =>
+const RolesPage = ({ roles, editRole, newRole, onClick, onChange, onSave, deleteRole }) =>
   <div className="form-div">
     <div className="container">
       <h3 className="center">Roles</h3>
@@ -68,7 +68,7 @@ const Pagination = ({ roles, editRole, newRole, onClick, onChange, onSave, delet
 
   </div>;
 
-Pagination.propTypes = {
+RolesPage.propTypes = {
   roles: PropTypes.array.isRequired,
   newRole: PropTypes.object.isRequired,
   editRole: PropTypes.object.isRequired,
@@ -78,4 +78,4 @@ Pagination.propTypes = {
   deleteRole: PropTypes.func.isRequired,
 };
 
-export default Pagination;
+export default RolesPage;

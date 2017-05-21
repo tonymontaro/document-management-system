@@ -12,7 +12,8 @@ const HomePageDiv = ({
   editMode,
   nextPage,
   prevPage,
-  currentPage }) =>
+  currentPage,
+  query }) =>
     <div className="documents-div">
 
       <div className="fixed-action-btn horizontal click-to-toggle">
@@ -48,7 +49,9 @@ const HomePageDiv = ({
       </div>}
 
       <div className="container documents">
-        <h3 className="recent-documents">Recently Added Documents</h3>
+        {query ? <h3 className="recent-documents">
+          Search result for: <span className="teal-text">{query}</span></h3> :
+        <h3 className="recent-documents">Recently Added Documents</h3>}
         <div className="row">
 
           {documents.map(document =>
@@ -63,7 +66,7 @@ const HomePageDiv = ({
         </div>
 
         <Pagination
-          documents={documents}
+          collection={documents}
           nextPage={nextPage}
           prevPage={prevPage}
           currentPage={currentPage} />

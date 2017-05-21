@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import { getDocuments } from './actions//documentActions';
 import { getRoles } from './actions/roleActions';
-import { loginSuccess } from './actions/accessActions';
+import { clientLogin } from './actions/accessActions';
 import configureStore from './store/configureStore';
 import routes from './routes';
 import './scss/style.scss';
@@ -13,7 +13,7 @@ import './scss/style.scss';
 const store = configureStore();
 const token = localStorage.getItem('jwToken');
 if (token) {
-  store.dispatch(loginSuccess(token));
+  store.dispatch(clientLogin(token));
 }
 store.dispatch(getDocuments());
 store.dispatch(getRoles());

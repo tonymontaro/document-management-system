@@ -47,13 +47,13 @@ const SignUpForm = ({ onSubmit, onChange, userDetails, options }) =>
         />
 
         <SelectInput
-        value={userDetails.roleId}
-        name="roleId"
-        label="Choose Role"
-        onChange={onChange}
-        error={userDetails.errors.roleId}
-        options={options}
-        icon="user-plus" />
+          value={userDetails.roleId}
+          name="roleId"
+          label="Choose Role"
+          onChange={onChange}
+          error={userDetails.errors.roleId}
+          options={options}
+          icon="user-plus" />
 
         <div className="input-field">
           <i className="fa fa-comments-o prefix" />
@@ -62,15 +62,12 @@ const SignUpForm = ({ onSubmit, onChange, userDetails, options }) =>
             id="textarea1"
             className="materialize-textarea"
             onChange={onChange}
-            value={userDetails.about} />
-          <label htmlFor="textarea1">About</label>
-          {userDetails.errors.about && <div className="card-panel error white-text">
-            {userDetails.errors.about}
-          </div>}
+            value={userDetails.about}
+            placeholder="About" />
         </div>
 
         <div className="input-field center">
-          <button className="waves-effect btn">Sign Up</button>
+          <button className="waves-effect btn">Save</button>
         </div>
 
       </form>

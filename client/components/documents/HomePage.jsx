@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { getDocuments, deleteDocument, searchDocument } from '../../actions/documentActions';
+import { getDocuments, deleteDocument, searchDocument, getUserDocuments } from '../../actions/documentActions';
 import updatePage from '../../actions/paginationActions';
 import HomePageDiv from './HomePageDiv';
 
@@ -18,7 +18,7 @@ class HomePage extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.pagination.offset !== nextProps.pagination.offset ||
-    this.props.pagination.query !== nextProps.pagination.query) {
+      this.props.pagination.query !== nextProps.pagination.query) {
       this.setState(Object.assign({}, nextProps.pagination));
     }
   }
@@ -42,12 +42,12 @@ class HomePage extends React.Component {
     if (this.state.query) {
       return this.props.searchDocument(this.state.search, this.state.offset - 9)
         .then(() => {
-          if (this.state.offset > 0) this.props.updatePage('prev');
+          this.props.updatePage('prev');
         });
     }
     return this.props.getDocuments(this.state.offset - 9)
     .then(() => {
-      if (this.state.offset > 0) this.props.updatePage('prev');
+      this.props.updatePage('prev');
     });
   }
 
@@ -73,7 +73,7 @@ class HomePage extends React.Component {
 
   render() {
     const { documents, access } = this.props;
-    const { currentPage, editMode, search } = this.state;
+    const { currentPage, editMode, search, query } = this.state;
 
     return (
       <HomePageDiv
@@ -86,7 +86,8 @@ class HomePage extends React.Component {
       editMode={editMode}
       nextPage={this.nextPage}
       prevPage={this.prevPage}
-      currentPage={currentPage} />
+      currentPage={currentPage}
+      query={query} />
     );
   }
 }
@@ -109,4 +110,4 @@ export default connect(state => ({
   documents: state.documents,
   access: state.access,
   pagination: state.pagination
-}), { getDocuments, updatePage, deleteDocument, searchDocument })(HomePage);
+}), { getDocuments, updatePage, deleteDocument, searchDocument, getUserDocuments })(HomePage);

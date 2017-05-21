@@ -5,9 +5,17 @@ export default function documentReducer(state = initialState.users, action) {
   let newState;
   switch (action.type) {
     case types.GET_PROFILE_SUCCESS:
-      newState = Object.assign({}, state);
-      newState.userProfile = action.profile;
-      return newState;
+      return Object.assign({}, state, { userProfile: action.profile });
+
+    case types.LOAD_USERS_SUCCESS:
+      return Object.assign({}, state, { users: action.users });
+
+    case types.UPDATE_USER_SUCCESS:
+      newState = [...state.users.filter(item => item.id !== action.user.id), action.user];
+      return Object.assign({}, state, { users: newState });
+
+    case types.SEARCH_USERS_SUCCESS:
+      return Object.assign({}, state, { users: action.searchResult });
 
     default:
       return state;
