@@ -21,7 +21,8 @@ export function getDocuments(offset = 0, limit = 9) {
 export function searchDocument(query, offset = 0, limit = 9) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
-    return axios.get(`/search/documents?q=${query}&limit=${limit}&offset=${offset}`)
+    return axios
+      .get(`/search/documents?q=${query}&limit=${limit}&offset=${offset}`)
       .then((res) => {
         dispatch({
           type: types.SEARCH_SUCCESS,
