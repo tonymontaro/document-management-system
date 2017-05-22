@@ -59,7 +59,10 @@
     "redux-thunk": "2.0.1",
     "sequelize": "^3.30.4",
     "sequelize-cli": "^2.7.0",
-    "validator": "^7.0.0"
+    "validator": "^7.0.0",
+    "webpack": "1.13.0",
+    "webpack-dev-middleware": "1.6.1",
+    "webpack-hot-middleware": "2.10.0"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
@@ -100,9 +103,6 @@
     "redux-mock-store": "1.0.2",
     "sass-loader": "^6.0.5",
     "style-loader": "0.13.1",
-    "url-loader": "0.5.7",
-    "webpack": "1.13.0",
-    "webpack-dev-middleware": "1.6.1",
-    "webpack-hot-middleware": "2.10.0"
+    "url-loader": "0.5.7"
   }
 }

@@ -16,7 +16,7 @@ export function validateLogin({ username = '', password = '' }) {
   return validateRequiredFields([username, password], ['username', 'password']);
 }
 
-export function validateSignUp({ username = '', password = '', about = '', fullName = '', email = '', roleId = '' }) {
+export function validateSignUp({ username = '', password = '', fullName = '', email = '', roleId = '' }) {
   const status = validateRequiredFields(
     [username, password, fullName, email, roleId],
     ['username', 'password', 'fullName', 'email', 'roleId']);

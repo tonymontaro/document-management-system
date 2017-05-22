@@ -78,6 +78,7 @@ HomePageDiv.propTypes = {
   search: PropTypes.string.isRequired,
   onSearch: PropTypes.func.isRequired,
   access: PropTypes.object.isRequired,
+  query: PropTypes.string.isRequired,
   documents: PropTypes.array.isRequired,
   deleteDocument: PropTypes.func.isRequired,
   editMode: PropTypes.bool.isRequired,

@@ -22,6 +22,7 @@ class App extends React.Component {
 
 App.propTypes = {
   children: PropTypes.object.isRequired,
+  loading: PropTypes.number.isRequired,
 };
 
 export default connect(state => ({
