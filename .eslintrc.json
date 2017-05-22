@@ -8,6 +8,9 @@
     "browser": true,
     "jquery": true
   },
+  "globals": {
+    "Materialize": true
+  },
   "rules": {
     "one-var": 0,
     "one-var-declaration-per-line": 0,
@@ -25,10 +28,10 @@
     }],
     "require-jsdoc": 0,
     "import/no-dynamic-require": 0,
-    "no-unused-vars": 0,
     "import/no-unresolved": 0,
-    "no-unused-expressions": 0,
+    "no-script-url": 0,
     "jsx-quotes": 1,
+    "jsx-a11y/label-has-for": 0,
     "react/display-name": [ 1, {"ignoreTranspilerName": false }],
     "react/forbid-prop-types": [1, {"forbid": ["any"]}],
     "react/jsx-boolean-value": 1,

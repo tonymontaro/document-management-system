@@ -18,10 +18,10 @@ const User = {
 
     return models.User.findAll({
       offset: req.query.offset || 0,
-      limit: req.query.limit || null,
+      limit: req.query.limit || 100,
       attributes: ['id', 'username', 'fullName', 'email', 'roleId', 'about'],
       where: { username: {
-        like: searchKey
+        $iLike: searchKey
       } },
       order: [['id', 'ASC']]
     })
@@ -47,6 +47,7 @@ const User = {
       .then((user) => {
         const token = authenticator.generateToken({
           id: user.id,
+          username: user.username,
           roleId: user.roleId
         });
         const response = authenticator.secureUserDetails(user);
@@ -86,6 +87,10 @@ const User = {
       return res.status(403).send({
         message: 'Only an admin can upgrade a user to an admin role'
       });
+    }
+    if (req.body.password) {
+      req.body.password =
+      bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
     }
 
     return res.locals.user.update(req.body, { fields: Object.keys(req.body) })
@@ -145,6 +150,7 @@ const User = {
       bcrypt.compareSync(req.body.password, user.password)) {
         const token = authenticator.generateToken({
           id: user.id,
+          username: user.username,
           roleId: user.roleId
         });
         res.status(200).send({

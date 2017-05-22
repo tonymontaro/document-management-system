@@ -1,45 +1,64 @@
 /*
 * Developed by Anthony Ngene
 */
-@import '_materialize';
 
-@include google-font("Lato");
-@include google-font("Courgette");
+@import 'common/mixins';
+@import 'common/variables';
+@include google-font('Lato');
+@include google-font('Montserrat');
+
 * {
   margin: 0;
 }
-html, body {
+
+html,
+body {
   height: 100%;
 }
-body{
-  font-family: $text-font;
+
+@import 'extras';
+
+body {
   color: $text-color;
+  font-family: $text-font;
   font-size: $text-size;
 }
-
-h1, h2, h3 {
-  font-family: $header-font;
+#app {
+  background-image: url('http://i.imgur.com/cPfWKzY.jpg');
+  background-color: $text-color;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: fixed;
+  color: $white;
 }
 
 // HEADER
-nav{
-  .brand-logo{
+nav {
+  background-color: $primary-color;
+
+  .brand-logo {
     font-family: $header-font;
   }
-  .dropdown-content{
+
+  .dropdown-content {
     margin-top: 64px;
     min-width: 140px;
-    li a {
-      text-align: center;
-      color: $primary-color;
+
+    li {
+      a {
+        color: $primary-color;
+        text-align: center;
+      }
     }
-    li .fa{margin-right: 0;}
-  }
-  #documents-dropdown{
-    min-width: 200px;
+    li .fa {
+      margin-right: 0;
+    }
   }
 
-  @include small-screen(){
+  #documents-dropdown {
+    min-width: 200px;
+  }
+  @include small-screen() {
     li a {
       font-size: 13px;
     }
@@ -49,83 +68,31 @@ nav{
   }
 }
 
-// MAIN
-main {
-  position: relative;
-
-  .preloader-wrapper {
-    position: fixed;
-    top: 80px;
-    left: 15px;
-    z-index: 999;
-  }
-
-  .documents-div, .document-div, .form-div {
-    padding: 50px 0px;
-    min-height: 85vh;
-  }
-
-  .documents-div {
-    background-color: $body-color;
-  }
-  .fixed-action-btn{
-    bottom: 100px;
-    i,
-    ul {
-      background-color: $primary-color;
-      color: #fff;
-
-      .input-field, label { color: #fff; }
-    }
-  }
-  .documents {
-    .card {
-      position: relative;
-      background-color: $secondary-color;
-
-      .edit-btn, .delete-btn {
-        position: absolute;
-        top: -15px;
-        background-color: $primary-color;
-      }
-      .edit-btn{
-        right: 50px;
-      }
-      .delete-btn{
-        right: 0px;
-      }
-    }
-    .recent-documents {
-      text-align: center;
-      font-size: 25px;
-      margin: 0 0 10px 0;
-    }
-  }
-
-  .document-div {
-    background-color: $post-background;
-
-    .document {
-      background-color: #fff;
-      padding: 30px 25px;
-      font-size: 20px;
-      letter-spacing: 0.8px;
-      word-spacing: 2px;
-      h1, h2, h3, h4 {
-        margin-bottom: 3px;
-      }
-      .meta-info{
-        margin-bottom: 20px;
-      }
-      img {
-        max-width: 100%;
-        margin: 10px 0;
-      }
-    }
-  }
-}
+@import 'content';
 
 // FOOTER
 .page-footer {
+  background-color: $primary-color;
   padding: 10px 0px;
+}
+
+// nav control
+.guest {
+  .loggedIn,
+  .forAdmin {
+    display: none
+  }
+}
+
+.regularUser {
+  .notLoggedIn,
+  .forAdmin {
+    display: none
+  }
+}
+
+.administrator {
+  .notLoggedIn {
+    display: none
+  }
 }

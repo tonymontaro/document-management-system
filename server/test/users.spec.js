@@ -7,7 +7,7 @@ import testData from './testData';
 const {
   userOne, userTwo, invalidUserDetails, admin, regularUser, userThree
  } = testData;
-let regularToken, adminToken;
+let regularToken, adminToken, secondId;
 
 const expect = chai.expect;
 chai.use(chaiHttp);
@@ -194,19 +194,19 @@ describe('User', () => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.a('array');
           expect(res.body.length).to.equal(2);
-          expect(res.body[0].id).to.eql(1);
+          secondId = res.body[1].id;
           done();
         });
     });
 
-    it('can offset the starting position of returned', (done) => {
+    it('can offset the starting position of returned data', (done) => {
       chai.request(server)
         .get('/users?offset=1')
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.a('array');
-          expect(res.body[0].id).to.eql(2);
+          expect(res.body[0].id).to.eql(secondId);
           done();
         });
     });

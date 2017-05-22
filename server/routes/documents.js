@@ -6,10 +6,11 @@ export default (app) => {
   app.post('/documents', authenticator.verifyUser,
   documentController.create);
 
-  app.get('/documents/:id', authenticator.verifyUser,
-  documentController.getDocument);
+  app.get('/documents/:id', documentController.getDocument);
   app.put('/documents/:id', authenticator.verifyUser,
   authenticator.permitAuthor, documentController.update);
   app.delete('/documents/:id', authenticator.verifyUser,
   authenticator.permitAuthor, documentController.delete);
+
+  app.get('/search/documents', documentController.getDocuments);
 };

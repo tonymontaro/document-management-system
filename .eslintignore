@@ -2,6 +2,7 @@
 lib/*
 seeders/*
 server/test/*
+client/test/**
 client/static-frontend/*
 webpack.config.dev.js
 webpack.config.prod.js

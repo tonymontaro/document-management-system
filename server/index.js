@@ -1,3 +1,5 @@
+/* eslint no-console: "off", global-require: "off" */
+
 import path from 'path';
 import morgan from 'morgan';
 import app from './app';
