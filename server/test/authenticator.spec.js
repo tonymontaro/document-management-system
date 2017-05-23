@@ -1,12 +1,11 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../app';
-import models from '../models';
 import testData from './testData';
 import authenticator from '../middlewares/authenticator';
 
-const { admin, regularUser, roleOne, invalidToken } = testData;
-let regularToken, adminToken;
+const { regularUser, invalidToken } = testData;
+let regularToken;
 
 const expect = chai.expect;
 chai.use(chaiHttp);
@@ -66,18 +65,6 @@ describe('Authenticator:', () => {
         expect(res.body.message).to.eql('Authentication failed');
         done();
       });
-    });
-  });
-
-  describe('VerifyUser', () => {
-    before((done) => {
-      chai.request(server)
-        .post('/users/login')
-        .send(regularUser)
-        .end((err, res) => {
-          regularToken = res.body.token;
-          done();
-        });
     });
 
     it('should send an error when an input type other than integer is provided',

@@ -6,6 +6,11 @@ import { getDocuments } from './documentActions';
 import { beginAjaxCall } from './ajaxStatusActions';
 import { throwError } from '../utilities/errorHandler';
 
+/**
+* Dispatch action to login a user via the client
+* @param {String} token
+* @returns {Object} dispatch object
+*/
 export function clientLogin(token) {
   setHeaderToken(token);
   return {
@@ -13,7 +18,11 @@ export function clientLogin(token) {
     user: jwt.decode(token)
   };
 }
-
+/**
+* Dispatch action to login a user
+* @param {Object} userDetails
+* @returns {Object} dispatch object
+*/
 export function login(userDetails) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -26,11 +35,14 @@ export function login(userDetails) {
           type: types.LOGIN_SUCCESS,
           user: jwt.decode(token)
         });
-      })
-      .catch(error => throwError(error, dispatch));
+      });
   };
 }
-
+/**
+* Dispatch action to register or update a user
+* @param {Object} userDetails
+* @returns {Object} dispatch object
+*/
 export function signup(userDetails) {
   if (userDetails.id) {
     return (dispatch) => {
@@ -60,6 +72,10 @@ export function signup(userDetails) {
   };
 }
 
+/**
+* Dispatch action to logout a user
+* @returns {Object} dispatch object
+*/
 export function logout() {
   return (dispatch) => {
     localStorage.removeItem('jwToken');

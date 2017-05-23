@@ -3,6 +3,10 @@ import * as types from './types';
 import { beginAjaxCall } from './ajaxStatusActions';
 import { handleError, throwError } from '../utilities/errorHandler';
 
+/**
+* get roles
+* @returns {Object} dispatch object
+*/
 export function getRoles() {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -17,6 +21,11 @@ export function getRoles() {
   };
 }
 
+/**
+* Save a role
+* @param {String} role
+* @returns {Object} dispatch object
+*/
 export function saveRole(role) {
   if (role.id) {
     return (dispatch) => {
@@ -38,6 +47,11 @@ export function saveRole(role) {
   };
 }
 
+/**
+* Delete a role
+* @param {String} id role id
+* @returns {Object} dispatch object
+*/
 export function deleteRole(id) {
   return (dispatch) => {
     dispatch(beginAjaxCall());

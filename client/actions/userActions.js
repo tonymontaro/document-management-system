@@ -3,6 +3,11 @@ import * as types from './types';
 import { beginAjaxCall } from './ajaxStatusActions';
 import { handleError, throwError } from '../utilities/errorHandler';
 
+/**
+* Get user profile
+* @param {String} id user id
+* @returns {Object} dispatch object
+*/
 export function getProfile(id) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -17,6 +22,12 @@ export function getProfile(id) {
   };
 }
 
+/**
+* get users
+* @param {Number} offset
+* @param {Number} limit
+* @returns {Object} dispatch object
+*/
 export function getUsers(offset = 0, limit = 9) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -32,6 +43,13 @@ export function getUsers(offset = 0, limit = 9) {
   };
 }
 
+/**
+* search users
+* @param {String} query
+* @param {Number} offset
+* @param {Number} limit
+* @returns {Object} dispatch object
+*/
 export function searchUsers(query, offset = 0, limit = 9) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -48,6 +66,11 @@ export function searchUsers(query, offset = 0, limit = 9) {
   };
 }
 
+/**
+* update user details
+* @param {String} user
+* @returns {Object} dispatch object
+*/
 export function saveUser(user) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -59,6 +82,11 @@ export function saveUser(user) {
   };
 }
 
+/**
+* Delete a user
+* @param {String} id user id
+* @returns {Object} dispatch object
+*/
 export function deleteUser(id) {
   return (dispatch) => {
     dispatch(beginAjaxCall());

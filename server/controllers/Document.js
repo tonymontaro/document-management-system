@@ -2,6 +2,13 @@ import models from '../models';
 import authenticator from '../middlewares/authenticator';
 
 const Document = {
+  /**
+  * Get documents
+  * Route: GET: /documents or GET: /documents/?limit=[integer]&offset=[integer]&q=[title]
+  * @param {Object} req request object
+  * @param {Object} res response object
+  * @returns {Response} response object
+  */
   getDocuments(req, res) {
     let searchKey = '%%';
     if (req.query.q) {
@@ -31,6 +38,13 @@ const Document = {
     .catch(error => res.status(400).send(error));
   },
 
+  /**
+  * Create a document
+  * Route: POST: /documents
+  * @param {Object} req request object
+  * @param {Object} res response object
+  * @returns {Response} response object
+  */
   create(req, res) {
     return models.User.findById(res.locals.decoded.id)
       .then((user) => {
@@ -58,6 +72,13 @@ const Document = {
       .catch(error => res.status(400).send(error));
   },
 
+  /**
+  * Get a document
+  * Route: GET: /documents/:id
+  * @param {Object} req request object
+  * @param {Object} res response object
+  * @returns {Response} response object
+  */
   getDocument(req, res) {
     return models.Document.findById(req.params.id)
       .then((document) => {
@@ -81,6 +102,13 @@ const Document = {
       .catch(error => res.status(400).send(error));
   },
 
+  /**
+  * Update a document
+  * Route: PUT: /documents/:id
+  * @param {Object} req request object
+  * @param {Object} res response object
+  * @returns {Response} response object
+  */
   update(req, res) {
     return res.locals.document
       .update(req.body, { fields: Object.keys(req.body) })
@@ -88,6 +116,13 @@ const Document = {
       .catch(error => res.status(400).send(error));
   },
 
+  /**
+  * Delete a document
+  * Route: DELETE: /documents/:id
+  * @param {Object} req request object
+  * @param {Object} res response object
+  * @returns {Response} response object
+  */
   delete(req, res) {
     res.locals.document.destroy()
       .then(() => res.status(200).send({ message: 'Document deleted' }));

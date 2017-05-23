@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { getDocuments, deleteDocument, searchDocument, getUserDocuments } from '../../actions/documentActions';
+import { getDocuments, deleteDocument, searchDocument, getUserDocuments }
+  from '../../actions/documentActions';
 import updatePage from '../../actions/paginationActions';
 import HomePageDiv from './HomePageDiv';
 

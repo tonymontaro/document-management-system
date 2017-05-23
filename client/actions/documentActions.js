@@ -3,6 +3,12 @@ import * as types from './types';
 import { beginAjaxCall } from './ajaxStatusActions';
 import { handleError, throwError } from '../utilities/errorHandler';
 
+/**
+* get accessible documents
+* @param {Number} offset
+* @param {Number} limit
+* @returns {Object} dispatch object
+*/
 export function getDocuments(offset = 0, limit = 9) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -18,10 +24,18 @@ export function getDocuments(offset = 0, limit = 9) {
   };
 }
 
+/**
+* search for accessible documents
+* @param {String} query
+* @param {Number} offset
+* @param {Number} limit
+* @returns {Object} dispatch object
+*/
 export function searchDocument(query, offset = 0, limit = 9) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
-    return axios.get(`/search/documents?q=${query}&limit=${limit}&offset=${offset}`)
+    return axios
+      .get(`/search/documents?q=${query}&limit=${limit}&offset=${offset}`)
       .then((res) => {
         dispatch({
           type: types.SEARCH_SUCCESS,
@@ -33,7 +47,11 @@ export function searchDocument(query, offset = 0, limit = 9) {
       .catch(error => handleError(error, dispatch));
   };
 }
-
+/**
+* Save a document
+* @param {String} document
+* @returns {Object} dispatch object
+*/
 export function saveDocument(document) {
   if (document.updateId) {
     return (dispatch) => {
@@ -56,6 +74,11 @@ export function saveDocument(document) {
   };
 }
 
+/**
+* Delete a document
+* @param {String} id document id
+* @returns {Object} dispatch object
+*/
 export function deleteDocument(id) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -69,6 +92,11 @@ export function deleteDocument(id) {
   };
 }
 
+/**
+* retrieve a document
+* @param {String} id document id
+* @returns {Object} dispatch object
+*/
 export function getDocument(id) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -83,6 +111,11 @@ export function getDocument(id) {
   };
 }
 
+/**
+* retrieve a user's documents
+* @param {String} id user id
+* @returns {Object} dispatch object
+*/
 export function getUserDocuments(id) {
   return (dispatch) => {
     dispatch(beginAjaxCall());

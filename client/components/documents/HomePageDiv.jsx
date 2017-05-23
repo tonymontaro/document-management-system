@@ -21,7 +21,7 @@ const HomePageDiv = ({
           <i className="large material-icons">search</i>
         </a>
         <ul>
-          <form className="search-form" onSubmit={onSearch}>
+          <form id="searchForm" className="search-form" onSubmit={onSearch}>
             <div className="input-field">
               <input
                 id="search"

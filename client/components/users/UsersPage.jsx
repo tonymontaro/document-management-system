@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import SelectInput from '../common/SelectInput';
 import Pagination from '../common/Pagination';
-// { roles, editRole, newRole, onClick, onChange, onSave, deleteRole }
+
 const UsersPage = ({
   users,
   nextPage,
@@ -61,7 +61,9 @@ const UsersPage = ({
                     <a
                       href="#!"
                       className="secondary-content"
-                      onClick={() => { if (confirm(`Delete: ${currentUser.username}?`)) deleteUser(currentUser.id); }}>
+                      onClick={() => {
+                        if (confirm(`Delete: ${currentUser.username}?`)) deleteUser(currentUser.id);
+                      }}>
                       <i className="material-icons">delete</i>
                     </a>
                     <a

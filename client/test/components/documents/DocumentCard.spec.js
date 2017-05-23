@@ -1,7 +1,7 @@
 import expect from 'expect';
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import DocumentCard from '../../components/documents/DocumentCard';
+import { shallow } from 'enzyme';
+import DocumentCard from '../../../components/documents/DocumentCard';
 
 function setup() {
   const props = {
@@ -9,27 +9,27 @@ function setup() {
       id: '1',
       title: 'Things fall apart',
       content: 'content',
-      authorId: '1'
+      authorId: 1
     },
-    editMode: false,
+    editMode: true,
     deleteDocument: () => {},
     user: { id: 1, roleId: 1 }
   };
 
-  return mount(<DocumentCard {...props} />);
+  return shallow(<DocumentCard {...props} />);
 }
 
 describe('DocumentCard', () => {
   it('renders a card div', () => {
     const wrapper = setup();
-    expect(wrapper.find('.card')).toExist;
+    expect(wrapper.find('.card').length).toEqual(1);
   });
 
-  it('renders edit button', () => {
+  it('renders edit button when in edit mode', () => {
     const wrapper = setup();
-    expect(wrapper.find('.edit-btn')).toExist;
+    expect(wrapper.find('.edit-btn').length).toEqual(1);
   });
-  it('receives the correct props', () => {
+  it('receives the title from props', () => {
     const wrapper = setup();
     expect(wrapper.find('.card-title').text()).toEqual('Things fall apart');
   });

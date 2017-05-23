@@ -10,14 +10,17 @@
     "build:watch": "babel --watch server -d lib/server",
     "build": "rm -rf lib/ && babel server -d lib/server && npm run build:client",
     "build:server": "rm -rf lib/ && babel server -d lib/server",
-    "test": "NODE_ENV=test istanbul cover _mocha lib/server/test/**/*.js client/test/testSetup.js client/test/**/*.spec.js --timeout 20000",
-    "client:test": "_mocha --reporter spec testSetup.js client/test/**/*.spec.js",
+    "test": "NODE_ENV=test istanbul cover _mocha lib/server/test/**/*.js client/test/testSetup.js client/test/**/* --timeout 20000",
+    "client:test": "_mocha --reporter spec client/test/testSetup.js client/test/**/*",
+    "client:test:watch": "npm run client:test -- --watch",
     "db:migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "db:seed": "sequelize db:seed:all",
     "db:migrate:test": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate",
     "setup:test": "npm run db:migrate:test && NODE_ENV=test sequelize db:seed:all",
     "build:client": "NODE_ENV=production webpack --config webpack.config.prod.js && cat client/index.html > lib/client/index.html",
-    "postinstall": "npm run build && npm run db:migrate && npm run db:seed"
+    "postinstall": "npm run build && npm run db:migrate && npm run db:seed",
+    "e2e-setup": "selenium-standalone install",
+    "e2e-test": "nightwatch"
   },
   "repository": {
     "type": "git",
@@ -91,9 +94,10 @@
     "extract-text-webpack-plugin": "1.0.1",
     "file-loader": "0.8.5",
     "istanbul": "^0.4.5",
-    "jsdom": "8.5.0",
+    "jsdom": "^9.12.0",
     "json-loader": "^0.5.4",
     "mocha": "^3.3.0",
+    "nightwatch": "0.9.9",
     "nock": "8.0.0",
     "node-sass": "^4.5.2",
     "nodemon": "1.10.2",
@@ -102,7 +106,8 @@
     "redux-immutable-state-invariant": "^2.0.0",
     "redux-mock-store": "1.0.2",
     "sass-loader": "^6.0.5",
+    "selenium-standalone": "5.9.0",
     "style-loader": "0.13.1",
-    "url-loader": "0.5.7"
+    "url-loader": "^0.5.7"
   }
 }

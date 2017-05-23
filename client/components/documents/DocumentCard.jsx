@@ -10,11 +10,15 @@ const DocumentList = ({ document, user, deleteDocument, editMode }) =>
 
       {(user.id === document.authorId || user.roleId === 1) && editMode &&
       <span>
-        <Link to={`document/${document.id}`} className="btn-floating waves-effect waves-light edit-btn">
+        <Link
+          to={`document/${document.id}`}
+          className="btn-floating waves-effect waves-light edit-btn">
           <i className="material-icons">edit</i>
         </Link>
         <button
-          onClick={() => { if (confirm(`Delete: ${document.title}?`)) deleteDocument(document.id); }}
+          onClick={() => {
+            if (confirm(`Delete: ${document.title}?`)) deleteDocument(document.id);
+          }}
           className="btn-floating waves-effect waves-light delete-btn">
           <i className="material-icons">delete</i>
         </button>
