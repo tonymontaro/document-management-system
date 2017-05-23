@@ -5,6 +5,7 @@ const SelectInput = ({ name, onChange, value, error, icon = 'user', options, lab
     <i className={`fa fa-${icon} prefix`} />
     <select
       className="select-role"
+      id="selectInput"
       name={name}
       onChange={onChange}
       value={value} >

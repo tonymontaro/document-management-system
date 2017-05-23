@@ -15,8 +15,8 @@ const Navbar = ({
           <ul className="right">
             <li><Link to="/1">About</Link></li>
             <span className="notLoggedIn">
-              <li><Link to="login">Login</Link></li>
-              <li><Link to="signup">SignUp</Link></li>
+              <li><Link id="login" to="login">Login</Link></li>
+              <li><Link id="signup" to="signup">SignUp</Link></li>
             </span>
             <span className="forAdmin">
               <li><Link to="" onClick={getUsers}>Users</Link></li>

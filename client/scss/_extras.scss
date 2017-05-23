@@ -38,6 +38,10 @@ label {
   margin-bottom: 30px;
 }
 
+#hiddenContentArea {
+  opacity: 0;
+}
+
 p, span, h1, h2, h3 {
   word-wrap: break-word;
 }
