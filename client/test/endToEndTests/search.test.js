@@ -1,7 +1,7 @@
 import config from './config';
 
 export default {
-  'Create role': browser =>
+  'Search for a document': browser =>
     browser
       .url(config.url)
       .waitForElementVisible('body')

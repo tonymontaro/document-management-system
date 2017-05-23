@@ -6,26 +6,26 @@ export function documents(state = initialState.documents, action) {
   let newState;
 
   switch (action.type) {
-    case types.LOAD_DOCUMENTS_SUCCESS:
-      return action.documents;
+  case types.LOAD_DOCUMENTS_SUCCESS:
+    return action.documents;
 
-    case types.CREATE_DOCUMENT_SUCCESS:
-      newState = [Object.assign({}, newDocument), ...state];
-      if (newState.length > 9) newState.pop();
-      return newState;
+  case types.CREATE_DOCUMENT_SUCCESS:
+    newState = [Object.assign({}, newDocument), ...state];
+    if (newState.length > 9) newState.pop();
+    return newState;
 
-    case types.UPDATE_DOCUMENT_SUCCESS:
-      return [Object.assign({}, newDocument), ...state.filter(item => item.id !== newDocument.id)];
+  case types.UPDATE_DOCUMENT_SUCCESS:
+    return [Object.assign({}, newDocument), ...state.filter(item => item.id !== newDocument.id)];
 
-    case types.SEARCH_SUCCESS:
-      return action.searchResult;
+  case types.SEARCH_SUCCESS:
+    return action.searchResult;
 
-    case types.GET_USER_DOCUMENTS_SUCCESS:
-      return action.documents;
+  case types.GET_USER_DOCUMENTS_SUCCESS:
+    return action.documents;
 
 
-    default:
-      return state;
+  default:
+    return state;
   }
 }
 
