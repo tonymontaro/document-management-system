@@ -1,7 +1,13 @@
 import models from '../models';
 
 const Role = {
-
+  /**
+  * Get roles
+  * Route: GET: /roles or GET: /roles
+  * @param {Object} req request object
+  * @param {Object} res response object
+  * @returns {Response} response object
+  */
   getRoles(req, res) {
     return models.Role.findAll({
       attributes: ['id', 'name'],
@@ -11,6 +17,13 @@ const Role = {
     .catch(error => res.status(400).send(error));
   },
 
+  /**
+  * Create a role
+  * Route: POST: /roles
+  * @param {Object} req request object
+  * @param {Object} res response object
+  * @returns {Response} response object
+  */
   create(req, res) {
     return models.Role.create(req.body)
     .then(role => res.status(201).send({
@@ -31,6 +44,13 @@ const Role = {
       .catch(error => res.status(400).send(error));
   },
 
+  /**
+  * Update a role
+  * Route: PUT: /roles/:id
+  * @param {Object} req request object
+  * @param {Object} res response object
+  * @returns {Response} response object
+  */
   upadte(req, res) {
     return models.Role.findById(req.params.id)
       .then((role) => {
@@ -44,6 +64,13 @@ const Role = {
       .catch(error => res.status(400).send(error));
   },
 
+  /**
+  * Delete a role
+  * Route: DELETE: /roles/:id
+  * @param {Object} req request object
+  * @param {Object} res response object
+  * @returns {Response} response object
+  */
   delete(req, res) {
     return models.Role.findById(req.params.id)
       .then((role) => {

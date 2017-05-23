@@ -5,7 +5,7 @@ import authenticator from '../middlewares/authenticator';
 const User = {
   /**
   * Get users
-  * Route: GET: /users or GET: /users/?limit=[integer]&offset=[integer]
+  * Route: GET: /users or GET: /users/?limit=[integer]&offset=[integer]&q=[username]
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
