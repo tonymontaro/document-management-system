@@ -1,11 +1,10 @@
 import { endAjaxCall } from '../actions/ajaxStatusActions';
 
 /**
- *
- * @export
+ * Handle ajax call errors
  * @param {Object} error
  * @param {Function} dispatch
- * @returns {Function} error message
+ * @returns {Function} function that displays an error message
  */
 export function handleError(error, dispatch) {
   if (dispatch) dispatch(endAjaxCall());
@@ -16,7 +15,12 @@ export function handleError(error, dispatch) {
   }
   return Materialize.toast('Something went wrong', 2000);
 }
-
+/**
+* Throw an ajax call error to be handle else where
+* @param {Object} error
+* @param {Function} dispatch
+* @returns {Object} error
+*/
 export function throwError(error, dispatch) {
   dispatch(endAjaxCall());
   throw error;
