@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     username: {
@@ -24,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     roleId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       defaultValue: 2
     }
   }, {
@@ -33,10 +35,6 @@ module.exports = (sequelize, DataTypes) => {
         User.hasMany(models.Document, {
           foreignKey: 'authorId',
           as: 'documents',
-        });
-        User.belongsTo(models.Role, {
-          foreignKey: 'roleId',
-          onDelete: 'CASCADE'
         });
       }
     }

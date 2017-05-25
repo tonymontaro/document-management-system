@@ -28,13 +28,7 @@ module.exports = {
         allowNull: false
       },
       roleId: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Roles',
-          key: 'id',
-          as: 'roleId'
-        }
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -45,5 +39,5 @@ module.exports = {
         type: Sequelize.DATE
       }
     }),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Users')
+  down: queryInterface => queryInterface.dropTable('Users')
 };
