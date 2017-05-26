@@ -320,25 +320,12 @@ describe('Documents', () => {
       });
     });
 
-    it("should allow admin to update a user's document", (done) => {
-      chai.request(server)
-      .put('/documents/2')
-      .set({ 'x-access-token': adminToken })
-      .send({ title: 'A Song of Ice and Fire III' })
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.be.a('object');
-        expect(res.body.title).to.eql('A Song of Ice and Fire III');
-        done();
-      });
-    });
-
     it('should not allow a user to use an existing document title',
     (done) => {
       chai.request(server)
       .put(`/documents/${privateDocument.docId}`)
-      .set({ 'x-access-token': adminToken })
-      .send({ title: 'A Song of Ice and Fire III' })
+      .set({ 'x-access-token': regularToken })
+      .send({ title: 'Chess GrandMaster from Mars' })
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.be.a('object');
@@ -359,18 +346,6 @@ describe('Documents', () => {
         expect(res.status).to.equal(403);
         expect(res.body).to.be.a('object');
         expect(res.body.message).to.eql('Access denied');
-        done();
-      });
-    });
-
-    it("should allow admin to delete a user's document", (done) => {
-      chai.request(server)
-      .delete(`/documents/${roleDocument.docId}`)
-      .set({ 'x-access-token': adminToken })
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.be.a('object');
-        expect(res.body.message).to.eql('Document deleted');
         done();
       });
     });

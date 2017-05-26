@@ -100,8 +100,7 @@ const Authenticator = {
         if (!document) {
           return res.status(404).send({ message: 'Document not found' });
         }
-        if (res.locals.decoded.roleId !== 1
-          && res.locals.decoded.id !== document.authorId) {
+        if (res.locals.decoded.id !== document.authorId) {
           return res.status(403).send({ message: 'Access denied' });
         }
 
