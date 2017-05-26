@@ -35,7 +35,8 @@ export function login(userDetails) {
           type: types.LOGIN_SUCCESS,
           user: jwt.decode(token)
         });
-      });
+      })
+      .catch(error => throwError(error, dispatch));
   };
 }
 /**
