@@ -2,7 +2,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../app';
 import testData from './testData';
-import authenticator from '../middlewares/authenticator';
+import Authenticator from '../helper/Authenticator';
 
 const { regularUser, invalidToken } = testData;
 let regularToken;
@@ -13,7 +13,7 @@ describe('Authenticator:', () => {
   // GenerateToken
   describe('GenerateToken', () => {
     it("should generate a token given user's id and roleId", () => {
-      const token = authenticator.generateToken({
+      const token = Authenticator.generateToken({
         id: 1,
         roleId: 1
       });
@@ -85,7 +85,7 @@ describe('Authenticator:', () => {
 
   describe('VerifyToken', () => {
     it("should generate a token given user's id and roleId", () => {
-      const token = authenticator.generateToken({
+      const token = Authenticator.generateToken({
         id: 1,
         roleId: 1
       });
@@ -95,7 +95,7 @@ describe('Authenticator:', () => {
       } catch (err) {
         decoded = undefined;
       }
-      expect(authenticator.verifyToken(token))
+      expect(Authenticator.verifyToken(token))
         .to.not.be.undefined;
       expect(decoded).to.equal(undefined);
     });

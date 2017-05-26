@@ -1,7 +1,7 @@
 import models from '../models';
-import authenticator from '../middlewares/authenticator';
+import Authenticator from '../helper/Authenticator';
 
-const Document = {
+const DocumentController = {
   /**
   * Get documents
   * Route: GET: /documents or GET: /documents/?limit=[integer]&offset=[integer]&q=[title]
@@ -17,7 +17,7 @@ const Document = {
 
     let queryOptions = { access: 'public', title: { $iLike: searchKey } };
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
-    const decoded = authenticator.verifyToken(token);
+    const decoded = Authenticator.verifyToken(token);
     if (decoded) {
       queryOptions = (decoded.roleId === 1) ? { title: { $iLike: searchKey } } : {
         $or: [
@@ -86,7 +86,7 @@ const Document = {
           return res.status(404).send({ message: 'Document not found' });
         }
         const token = req.body.token || req.query.token || req.headers['x-access-token'];
-        const decoded = authenticator.verifyToken(token);
+        const decoded = Authenticator.verifyToken(token);
         const userId = decoded ? decoded.id : null;
         const userRoleId = decoded ? decoded.roleId : null;
         if (document.access !== 'public'
@@ -130,4 +130,4 @@ const Document = {
 
 };
 
-export default Document;
+export default DocumentController;

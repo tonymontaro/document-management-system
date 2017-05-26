@@ -1,6 +1,6 @@
 import models from '../models';
 
-const Role = {
+const RoleController = {
   /**
   * Get roles
   * Route: GET: /roles or GET: /roles
@@ -83,4 +83,4 @@ const Role = {
   }
 };
 
-export default Role;
+export default RoleController;

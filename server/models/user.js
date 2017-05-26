@@ -1,3 +1,6 @@
+/* eslint no-underscore-dangle: 0 */
+const bcrypt = require('bcrypt');
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     username: {
@@ -37,6 +40,27 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'roleId',
           onDelete: 'SET NULL'
         });
+      }
+    },
+
+    instanceMethods: {
+      verifyPassword(password) {
+        return bcrypt.compareSync(password, this.password);
+      },
+      encryptPassword() {
+        this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10));
+      }
+    },
+
+    hooks: {
+      beforeCreate(user) {
+        user.encryptPassword();
+      },
+
+      beforeUpdate(user) {
+        if (user._changed.password) {
+          user.encryptPassword();
+        }
       }
     }
   });
