@@ -22,8 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     author: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.STRING
     },
     authorRoleId: {
       type: DataTypes.INTEGER,
@@ -34,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       associate(models) {
         Document.belongsTo(models.User, {
           foreignKey: 'authorId',
-          onDelete: 'CASCADE'
+          onDelete: 'SET NULL'
         });
       }
     }
