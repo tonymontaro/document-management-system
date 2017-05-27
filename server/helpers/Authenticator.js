@@ -15,7 +15,8 @@ const Authenticator = {
   },
 
   /**
-  * Verify user token
+  * Verify user
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @param {Function} next next function
@@ -39,7 +40,10 @@ const Authenticator = {
       });
     }
   },
-  /**
+
+ /**
+  * Verify user token
+  *
   * @param {String} token the token
   * @returns {Object|Boolean} decoded token or false
   */
@@ -50,8 +54,9 @@ const Authenticator = {
       return false;
     }
   },
-  /**
+/**
   * Allow access for an admin only
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @param {Function} next next function
@@ -66,6 +71,7 @@ const Authenticator = {
 
   /**
   * Allow access for an admin or profile owner
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @param {Function} next next function
@@ -88,7 +94,8 @@ const Authenticator = {
   },
 
   /**
-  * Allow access for an admin or document owner
+  * Allow access for the document author
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @param {Function} next next function
@@ -110,7 +117,9 @@ const Authenticator = {
       .catch(error => res.status(400).send(error));
   },
 
-  /** Return secure user details
+  /**
+  * Return secure user details
+  *
   * @param {String} user user details
   * @returns {Object} secure data
   */

@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import server from '../app';
-import testData from './testData';
+import server from '../../app';
+import testData from '../testData';
 
 const {
   userOne, userTwo, invalidUserDetails, admin, regularUser, userThree
@@ -130,7 +130,7 @@ describe('User', () => {
       .send(invalidUserDetails)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.message).to.eql('Validation isEmail failed');
+        expect(res.body.message).to.eql('Use a valid email');
         done();
       });
     });

@@ -1,8 +1,8 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import server from '../app';
-import models from '../models';
-import testData from './testData';
+import server from '../../app';
+import models from '../../models';
+import testData from '../testData';
 
 const {
   editorOne, editorTwo, admin, regularUser,

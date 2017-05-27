@@ -8,7 +8,7 @@ export default {
     email: faker.internet.email(),
     password: 'bankai',
     roleId: 2,
-    about: faker.lorem.paragraph,
+    about: faker.lorem.paragraph(),
     createdAt: new Date(),
     updatedAt: new Date()
   },
@@ -18,7 +18,7 @@ export default {
     email: faker.internet.email(),
     password: faker.internet.password(),
     roleId: 2,
-    about: faker.lorem.paragraph,
+    about: faker.lorem.paragraph(),
     createdAt: new Date(),
     updatedAt: new Date()
   },
@@ -28,7 +28,7 @@ export default {
     email: faker.internet.email(),
     password: faker.internet.password(),
     roleId: 2,
-    about: faker.lorem.paragraph,
+    about: faker.lorem.paragraph(),
     createdAt: new Date(),
     updatedAt: new Date()
   },
@@ -43,6 +43,14 @@ export default {
     title: 'check role document',
     content: 'check role document1',
     access: 'role',
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  simpleDocument: {
+    title: faker.lorem.words(),
+    content: faker.lorem.paragraph(),
+    access: 'public',
+    authorId: 1,
     createdAt: new Date(),
     updatedAt: new Date()
   },
