@@ -1,4 +1,5 @@
 import models from '../models';
+import handleError from '../helpers/handleError';
 
 const RoleController = {
   /**
@@ -14,7 +15,7 @@ const RoleController = {
       order: [['id', 'ASC']]
     })
     .then(roles => res.status(200).send(roles))
-    .catch(error => res.status(400).send(error));
+    .catch(error => handleError(error, res));
   },
 
   /**
@@ -31,7 +32,7 @@ const RoleController = {
       name: role.name,
       message: 'Role created'
     }))
-    .catch(error => res.status(400).send(error));
+    .catch(error => handleError(error, res));
   },
 
   getRole(req, res) {
@@ -41,7 +42,7 @@ const RoleController = {
 
         res.status(200).send({ id: role.id, name: role.name });
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => handleError(error, res));
   },
 
   /**
@@ -59,9 +60,9 @@ const RoleController = {
         role.update(req.body)
           .then(updatedRole =>
           res.status(200).send({ id: updatedRole.id, name: updatedRole.name }))
-          .catch(error => res.status(400).send(error));
+          .catch(error => handleError(error, res));
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => handleError(error, res));
   },
 
   /**
@@ -79,7 +80,7 @@ const RoleController = {
         role.destroy(req.body)
           .then(() => res.status(200).send({ message: 'Role deleted' }));
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => handleError(error, res));
   }
 };
 

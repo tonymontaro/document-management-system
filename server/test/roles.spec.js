@@ -68,7 +68,7 @@ describe('Role', () => {
       .send(roleOne)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.errors[0].message).to.eql('name must be unique');
+        expect(res.body.message).to.eql('Role already exist');
         done();
       });
     });
@@ -166,7 +166,7 @@ describe('Role', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.be.a('object');
-        expect(res.body.errors[0].message).to.eql('name must be unique');
+        expect(res.body.message).to.eql('Role already exist');
         done();
       });
     });

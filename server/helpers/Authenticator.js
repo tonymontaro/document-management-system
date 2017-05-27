@@ -10,7 +10,7 @@ const Authenticator = {
    */
   generateToken(userDetails) {
     return jwt.sign(userDetails, secret, {
-      expiresIn: 60 * 60 * 24
+      expiresIn: 60 * 60 * 24 * 7
     });
   },
 
@@ -82,7 +82,7 @@ const Authenticator = {
         }
 
         res.locals.user = user;
-        next();
+        return next();
       })
       .catch(error => res.status(400).send(error));
   },
@@ -105,7 +105,7 @@ const Authenticator = {
         }
 
         res.locals.document = document;
-        next();
+        return next();
       })
       .catch(error => res.status(400).send(error));
   },

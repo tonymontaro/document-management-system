@@ -2,7 +2,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../app';
 import testData from './testData';
-import Authenticator from '../helper/Authenticator';
+import Authenticator from '../helpers/Authenticator';
 
 const { regularUser, invalidToken } = testData;
 let regularToken;

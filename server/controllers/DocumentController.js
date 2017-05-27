@@ -1,5 +1,7 @@
 import models from '../models';
-import Authenticator from '../helper/Authenticator';
+import Authenticator from '../helpers/Authenticator';
+import handleError from '../helpers/handleError';
+import paginate from '../helpers/paginate';
 
 const DocumentController = {
   /**
@@ -28,14 +30,27 @@ const DocumentController = {
         title: { $iLike: searchKey } };
     }
 
-    return models.Document.findAll({
-      offset: req.query.offset || 0,
-      limit: req.query.limit || 100,
+    const offset = Number(req.query.offset) || 0;
+    const limit = Number(req.query.limit) || 20;
+
+    return models.Document.findAndCount({
+      offset,
+      limit,
       where: queryOptions,
+      include: [{
+        model: models.User,
+        attributes: ['username', 'roleId'] }],
       order: [['createdAt', 'DESC']]
     })
-    .then(documents => res.status(200).send(documents))
-    .catch(error => res.status(400).send(error));
+    .then((documents) => {
+      const response = {
+        rows: documents.rows,
+        metaData: paginate(documents.count, limit, offset)
+      };
+
+      res.status(200).send(response);
+    })
+    .catch(error => handleError(error, res));
   },
 
   /**
@@ -49,8 +64,6 @@ const DocumentController = {
     return models.User.findById(res.locals.decoded.id)
       .then((user) => {
         req.body.authorId = user.id;
-        req.body.authorRoleId = user.roleId;
-        req.body.author = user.username;
 
         return models.Document.create(req.body)
           .then((document) => {
@@ -59,17 +72,16 @@ const DocumentController = {
               title: document.title,
               content: document.content,
               access: document.access,
+              User: { username: user.username, roleId: user.roleId },
               authorId: document.authorId,
-              author: document.author,
-              authorRoleId: document.authorRoleId,
               createdAt: document.createdAt,
               message: 'Document created'
             };
             return res.status(201).send(response);
           })
-          .catch(error => res.status(400).send(error));
+          .catch(error => handleError(error, res));
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => handleError(error, res));
   },
 
   /**
@@ -80,7 +92,11 @@ const DocumentController = {
   * @returns {Response} response object
   */
   getDocument(req, res) {
-    return models.Document.findById(req.params.id)
+    return models.Document.findById(req.params.id, {
+      include: [{
+        model: models.User,
+        attributes: ['username', 'roleId'] }]
+    })
       .then((document) => {
         if (!document) {
           return res.status(404).send({ message: 'Document not found' });
@@ -93,13 +109,13 @@ const DocumentController = {
           && userRoleId !== 1
           && userId !== document.authorId
           && !(document.access === 'role'
-            && userRoleId === document.authorRoleId)) {
+            && userRoleId === document.User.roleId)) {
           return res.status(403).send({ message: 'Access denied' });
         }
 
         return res.status(200).send(document);
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => handleError(error, res));
   },
 
   /**
@@ -112,8 +128,15 @@ const DocumentController = {
   update(req, res) {
     return res.locals.document
       .update(req.body, { fields: Object.keys(req.body) })
-      .then(updatedDocument => res.status(200).send(updatedDocument))
-      .catch(error => res.status(400).send(error));
+      .then((updatedDocument) => {
+        return models.Document.findById(updatedDocument.id, {
+          include: [{
+            model: models.User,
+            attributes: ['username', 'roleId'] }]
+        })
+        .then(document => res.status(200).send(document));
+      })
+      .catch(error => handleError(error, res));
   },
 
   /**

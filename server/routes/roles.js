@@ -1,5 +1,5 @@
 import RoleController from '../controllers/RoleController';
-import Authenticator from '../helper/Authenticator';
+import Authenticator from '../helpers/Authenticator';
 
 export default (app) => {
   app.get('/roles', RoleController.getRoles);

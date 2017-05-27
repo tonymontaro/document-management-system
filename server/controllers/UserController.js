@@ -1,5 +1,7 @@
 import models from '../models';
-import Authenticator from '../helper/Authenticator';
+import Authenticator from '../helpers/Authenticator';
+import handleError from '../helpers/handleError';
+import paginate from '../helpers/paginate';
 
 const UserController = {
   /**
@@ -15,17 +17,27 @@ const UserController = {
       searchKey = `%${req.query.q}%`;
     }
 
-    return models.User.findAll({
-      offset: req.query.offset || 0,
-      limit: req.query.limit || 100,
+    const offset = Number(req.query.offset) || 0;
+    const limit = Number(req.query.limit) || 20;
+
+    return models.User.findAndCount({
+      offset,
+      limit,
       attributes: ['id', 'username', 'fullName', 'email', 'roleId', 'about'],
       where: { username: {
         $iLike: searchKey
       } },
       order: [['id', 'ASC']]
     })
-    .then(users => res.status(200).send(users))
-    .catch(error => res.status(400).send(error));
+    .then((users) => {
+      const response = {
+        rows: users.rows,
+        metaData: paginate(users.count, limit, offset)
+      };
+
+      res.status(200).send(response);
+    })
+    .catch(error => handleError(error, res));
   },
 
   /**
@@ -52,7 +64,7 @@ const UserController = {
         response.token = token;
         return res.status(201).send(response);
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => handleError(error, res));
   },
 
   /**
@@ -69,7 +81,7 @@ const UserController = {
 
         res.status(200).send(Authenticator.secureUserDetails(user));
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => handleError(error, res));
   },
 
   /**
@@ -89,7 +101,7 @@ const UserController = {
     return res.locals.user.update(req.body, { fields: Object.keys(req.body) })
       .then(updatedUser =>
         res.status(200).send(Authenticator.secureUserDetails(updatedUser)))
-      .catch(error => res.status(400).send(error));
+      .catch(error => handleError(error, res));
   },
 
   /**
@@ -122,9 +134,9 @@ const UserController = {
         .then((documents) => {
           res.status(200).send(documents);
         })
-        .catch(error => res.status(400).send(error));
+        .catch(error => handleError(error, res));
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => handleError(error, res));
   },
 
   /**
@@ -153,7 +165,7 @@ const UserController = {
         res.status(401).send({ message: 'Wrong password or username' });
       }
     })
-    .catch(error => res.status(400).send(error));
+    .catch(error => handleError(error, res));
   },
 
   /**

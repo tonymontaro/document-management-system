@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     username: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
-      validate: { not: ['\\s+'] }
+      unique: { args: true, msg: 'Username already exist' },
+      validate: { not: { args: ['\\s+'], msg: 'Use a valid username' } }
     },
     fullName: {
       type: DataTypes.STRING
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: { args: true, msg: 'Email already exist' },
       validate: { isEmail: true }
     },
     password: {

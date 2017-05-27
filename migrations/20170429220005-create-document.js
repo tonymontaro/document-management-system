@@ -29,15 +29,6 @@ module.exports = {
           key: 'id'
         }
       },
-      author: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      authorRoleId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 2
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

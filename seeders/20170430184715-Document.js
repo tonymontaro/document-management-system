@@ -1,5 +1,5 @@
 module.exports = {
-  up: (queryInterface, Sequelize) =>
+  up: queryInterface =>
     queryInterface.bulkInsert('Documents', [{
       title: 'DMS Welcome Message',
       content: `Hello and welcome, if this is the first time running the app,
@@ -8,8 +8,6 @@ username: admin
 password: alpine
 Please login and change the default root password.`,
       authorId: 1,
-      author: 'admin',
-      authorRoleId: 1,
       access: 'public',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -23,12 +21,10 @@ It was too bloody cold for man or beast, but here they were. His mouth twisted, 
 I should be safe back at the Wall, tending the bloody ravens and making fires for old Maester Aemon. It was the bastard Jon Snow who had taken that from him, him and his fat friend Sam Tarly.
 It was their fault he was here, freezing his bloody balls off with a pack of hounds deep in the haunted forest.`,
       authorId: 2,
-      author: 'montaro',
-      authorRoleId: 2,
       access: 'public',
       createdAt: new Date(),
       updatedAt: new Date()
     }], {}),
-  down: (queryInterface, Sequelize) =>
+  down: queryInterface =>
   queryInterface.bulkDelete('Documents', null, {})
 };

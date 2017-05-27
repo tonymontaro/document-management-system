@@ -1,5 +1,5 @@
 import DocumentController from '../controllers/DocumentController';
-import Authenticator from '../helper/Authenticator';
+import Authenticator from '../helpers/Authenticator';
 
 export default (app) => {
   app.get('/documents', DocumentController.getDocuments);

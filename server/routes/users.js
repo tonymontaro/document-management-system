@@ -1,5 +1,5 @@
 import UserController from '../controllers/UserController';
-import Authenticator from '../helper/Authenticator';
+import Authenticator from '../helpers/Authenticator';
 
 export default (app) => {
   app.post('/users', UserController.create);
