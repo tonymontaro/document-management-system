@@ -14,9 +14,9 @@ export default {
       .pause(1000)
       .click('a.btn-floating')
       .pause(1000)
-      .setValue('Input#search', 'DMS Welcome Message')
+      .setValue('Input#search', 'Doc-Mage Welcome Message')
       .keys(browser.Keys.ENTER)
       .pause(1000)
-      .assert.containsText('span.card-title', 'DMS Welcome Message')
+      .assert.containsText('span.card-title', 'Doc-Mage Welcome Message')
       .end(),
 };

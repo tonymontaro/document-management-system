@@ -12,7 +12,7 @@ function setup() {
     options: [],
     onClick: () => {},
     onChange: () => {},
-    search: 'dms',
+    search: 'Doc-Mage',
     nextPage: () => {},
     prevPage: () => {},
     onSearch: () => {},

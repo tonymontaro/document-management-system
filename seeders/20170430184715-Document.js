@@ -1,7 +1,7 @@
 module.exports = {
   up: queryInterface =>
     queryInterface.bulkInsert('Documents', [{
-      title: 'DMS Welcome Message',
+      title: 'Doc-Mage Welcome Message',
       content: `Hello and welcome, if this is the first time running the app,
 you can login with the following default admin settings:
 username: admin

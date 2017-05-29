@@ -4,7 +4,7 @@
 
 DOC-MAGE is an application that helps users manage their documents in an organized way. A User can be able to upload a document, edit it and share it with other users. Aside from enabling users to properly document their work.
 
-Fullstack-dms API.
+Fullstack Document Management System
 ------------------------------
 Document Management System provides a restful API for users to create and manage documents. Employing token-based authentication to identify users and Role-based authorisation to grant users different level of access.
 

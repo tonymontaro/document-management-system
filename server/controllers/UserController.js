@@ -112,6 +112,10 @@ const UserController = {
   * @returns {Response} response object
   */
   delete(req, res) {
+    if (res.locals.decoded.id !== res.locals.user.id) {
+      return res.status(403).send({ message: 'Access denied' });
+    }
+
     return res.locals.user.destroy()
       .then(() => res.status(200).send({ message: 'User deleted' }));
   },
@@ -124,19 +128,16 @@ const UserController = {
   * @returns {Response} response object
   */
   getUserDocuments(req, res) {
-    return models.User.findById(req.params.id)
-      .then((user) => {
-        if (!user) return res.status(404).send({ message: 'User not found' });
-
-        return models.Document.findAll({
-          where: { authorId: user.id }
-        })
-        .then((documents) => {
-          res.status(200).send(documents);
-        })
-        .catch(error => handleError(error, res));
-      })
-      .catch(error => handleError(error, res));
+    return models.Document.findAll({
+      where: { authorId: res.locals.user.id },
+      include: [{
+        model: models.User,
+        attributes: ['username', 'roleId'] }],
+    })
+    .then((documents) => {
+      res.status(200).send(documents);
+    })
+    .catch(error => handleError(error, res));
   },
 
   /**

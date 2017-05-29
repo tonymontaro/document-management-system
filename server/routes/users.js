@@ -8,15 +8,15 @@ export default (app) => {
 
   app.get('/users/:id', Authenticator.verifyUser, UserController.getUser);
   app.put('/users/:id', Authenticator.verifyUser,
-    Authenticator.permitProfileOwner, UserController.update);
+    Authenticator.permitOwnerOrAdmin, UserController.update);
   app.delete('/users/:id', Authenticator.verifyUser,
-    Authenticator.permitProfileOwner, UserController.delete);
+    Authenticator.permitOwnerOrAdmin, UserController.delete);
 
   app.post('/users/login', UserController.login);
   app.post('/users/logout', UserController.logout);
 
   app.get('/users/:id/documents', Authenticator.verifyUser,
-    Authenticator.permitProfileOwner, UserController.getUserDocuments);
+    Authenticator.permitOwnerOrAdmin, UserController.getUserDocuments);
   app.get('/search/users', Authenticator.verifyUser, Authenticator.permitAdmin,
     UserController.getUsers);
 };

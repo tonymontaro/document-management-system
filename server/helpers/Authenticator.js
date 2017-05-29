@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import models from '../models';
+import handleError from '../helpers/handleError';
 
 const secret = process.env.SECRET || 'winter is coming';
 
@@ -31,8 +32,9 @@ const Authenticator = {
         if (err) {
           return res.status(403).send({ message: 'Authentication failed' });
         }
+
         res.locals.decoded = decoded;
-        next();
+        return next();
       });
     } else {
       return res.status(403).send({
@@ -70,14 +72,14 @@ const Authenticator = {
   },
 
   /**
-  * Allow access for an admin or profile owner
+  * Permit an admin or profile owner
   *
   * @param {Object} req request object
   * @param {Object} res response object
   * @param {Function} next next function
   * @returns {Response} response object
   */
-  permitProfileOwner(req, res, next) {
+  permitOwnerOrAdmin(req, res, next) {
     return models.User.findById(req.params.id)
       .then((user) => {
         if (!user) return res.status(404).send({ message: 'User not found' });
@@ -90,7 +92,7 @@ const Authenticator = {
         res.locals.user = user;
         return next();
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => handleError(error, res));
   },
 
   /**
@@ -114,7 +116,7 @@ const Authenticator = {
         res.locals.document = document;
         return next();
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => handleError(error, res));
   },
 
   /**

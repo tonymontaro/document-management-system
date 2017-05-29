@@ -6,6 +6,9 @@
     },
     "test": {
       "plugins": ["istanbul"]
+    },
+    "production": {
+        "plugins": []
     }
   }
 }

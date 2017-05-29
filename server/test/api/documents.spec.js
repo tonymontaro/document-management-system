@@ -142,12 +142,12 @@ describe('Documents', () => {
 
     it('should return correct documents(s) for a query', (done) => {
       chai.request(server)
-        .get('/documents?q=DMS')
+        .get('/documents?q=Doc-Mage')
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.rows).to.be.a('array');
-          expect(res.body.rows[0].title).to.eql('DMS Welcome Message');
+          expect(res.body.rows[0].title).to.eql('Doc-Mage Welcome Message');
           done();
         });
     });
@@ -200,7 +200,7 @@ describe('Documents', () => {
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.keys(['id', 'title', 'content', 'access',
             'authorId', 'createdAt', 'updatedAt', 'User']);
-          expect(res.body.title).to.equal('DMS Welcome Message');
+          expect(res.body.title).to.equal('Doc-Mage Welcome Message');
           done();
         });
     });
@@ -211,7 +211,7 @@ describe('Documents', () => {
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.a('object');
-        expect(res.body.title).to.equal('DMS Welcome Message');
+        expect(res.body.title).to.equal('Doc-Mage Welcome Message');
         done();
       });
     });

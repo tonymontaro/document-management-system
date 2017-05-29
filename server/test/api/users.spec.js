@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../../app';
+import models from '../../models/';
 import testData from '../testData';
 
 const {
@@ -12,6 +13,11 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('User', () => {
+  after((done) => {
+    models.User.destroy({ where: { id: { $notIn: [1, 2] } } });
+    done();
+  });
+
   // POST /users/login
   describe('/POST/login user', () => {
     it('can login a user and return a token', (done) => {
@@ -399,14 +405,14 @@ describe('User', () => {
       });
     });
 
-    it("should allow admin to delete a user's profile", (done) => {
+    it("should not allow admin to delete a user's profile", (done) => {
       chai.request(server)
       .delete(`/users/${userOne.userId}`)
       .set({ 'x-access-token': adminToken })
       .end((err, res) => {
-        expect(res.status).to.equal(200);
+        expect(res.status).to.equal(403);
         expect(res.body).to.be.a('object');
-        expect(res.body.message).to.eql('User deleted');
+        expect(res.body.message).to.eql('Access denied');
         done();
       });
     });
