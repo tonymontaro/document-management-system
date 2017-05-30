@@ -35,7 +35,7 @@ export function getUsers(offset = 0, limit = 9) {
       .then((res) => {
         dispatch({
           type: types.LOAD_USERS_SUCCESS,
-          users: res.data,
+          users: res.data.rows,
           offset
         });
       })
@@ -57,7 +57,7 @@ export function searchUsers(query, offset = 0, limit = 9) {
       .then((res) => {
         dispatch({
           type: types.SEARCH_USERS_SUCCESS,
-          searchResult: res.data,
+          searchResult: res.data.rows,
           query,
           offset
         });

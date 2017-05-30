@@ -23,9 +23,8 @@ const DocumentController = {
     if (decoded) {
       queryOptions = (decoded.roleId === 1) ? { title: { $iLike: searchKey } } : {
         $or: [
-          { access: 'public' },
-          { authorId: decoded.id },
-          { $and: [{ authorRoleId: decoded.roleId }, { access: 'role' }] }
+          { access: { $or: ['public', 'role'] } },
+          { authorId: decoded.id }
         ],
         title: { $iLike: searchKey } };
     }
@@ -43,8 +42,13 @@ const DocumentController = {
       order: [['createdAt', 'DESC']]
     })
     .then((documents) => {
+      const documentRows = decoded.roleId === 1 ? documents.rows :
+        documents.rows.filter(
+          doc => !(doc.access === 'role' && doc.User.roleId !== decoded.roleId)
+        );
+
       const response = {
-        rows: documents.rows,
+        rows: documentRows,
         metaData: paginate(documents.count, limit, offset)
       };
 

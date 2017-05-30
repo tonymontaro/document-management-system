@@ -1,9 +1,7 @@
 /* eslint no-console: "off", global-require: "off" */
-import express from 'express';
 import path from 'path';
 import morgan from 'morgan';
 import app from './app';
-
 
 let port = process.env.PORT || 3000;
 let homepage = path.join(__dirname, '../client/index.html');
@@ -24,7 +22,7 @@ if (process.env.NODE_ENV === 'development') {
   port = 8080;
   homepage = path.join(__dirname, '../../client/index.html');
 } else {
-  app.use(express.static('lib/client'));
+  app.use(require('express').static('lib/client'));
   app.use(require('compression')());
 
   app.get('/api', (req, res) => {

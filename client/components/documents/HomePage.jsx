@@ -9,7 +9,7 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = Object.assign({ editMode: false, search: '' }, props.pagination);
+    this.state = Object.assign({ search: '' }, props.pagination);
     this.prevPage = this.prevPage.bind(this);
     this.nextPage = this.nextPage.bind(this);
     this.deleteDocument = this.deleteDocument.bind(this);
@@ -61,9 +61,6 @@ class HomePage extends React.Component {
   }
 
   onChange(event) {
-    if (event.target.name === 'editMode') {
-      return this.setState({ editMode: event.target.checked });
-    }
     return this.setState({ [event.target.name]: event.target.value });
   }
 
@@ -74,7 +71,7 @@ class HomePage extends React.Component {
 
   render() {
     const { documents, access } = this.props;
-    const { currentPage, editMode, search, query } = this.state;
+    const { currentPage, search, query } = this.state;
 
     return (
       <HomePageDiv
@@ -84,7 +81,6 @@ class HomePage extends React.Component {
       access={access}
       documents={documents}
       deleteDocument={this.deleteDocument}
-      editMode={editMode}
       nextPage={this.nextPage}
       prevPage={this.prevPage}
       currentPage={currentPage}

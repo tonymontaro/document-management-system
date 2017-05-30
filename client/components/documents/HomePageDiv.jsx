@@ -9,7 +9,6 @@ const HomePageDiv = ({
   access,
   documents,
   deleteDocument,
-  editMode,
   nextPage,
   prevPage,
   currentPage,
@@ -35,19 +34,6 @@ const HomePageDiv = ({
         </ul>
       </div>
 
-      {access.loggedIn && <div className="edit-mode">
-        <span className="switch">
-          <label>
-            <input
-              type="checkbox"
-              name="editMode"
-              onChange={onChange} />
-            <span className="lever" />
-            Edit Mode
-          </label>
-        </span>
-      </div>}
-
       <div className="container documents">
         {query ? <h3 className="recent-documents">
           Search result for: <span className="teal-text">{query}</span></h3> :
@@ -59,8 +45,7 @@ const HomePageDiv = ({
               key={document.id}
               document={document}
               user={access.user}
-              deleteDocument={deleteDocument}
-              editMode={editMode} />
+              deleteDocument={deleteDocument} />
           )}
 
         </div>
@@ -81,7 +66,6 @@ HomePageDiv.propTypes = {
   query: PropTypes.string.isRequired,
   documents: PropTypes.array.isRequired,
   deleteDocument: PropTypes.func.isRequired,
-  editMode: PropTypes.bool.isRequired,
   nextPage: PropTypes.func.isRequired,
   prevPage: PropTypes.func.isRequired,
   currentPage: PropTypes.number.isRequired

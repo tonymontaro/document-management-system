@@ -17,6 +17,9 @@ export default function documentReducer(state = initialState.users, action) {
   case types.SEARCH_USERS_SUCCESS:
     return Object.assign({}, state, { users: action.searchResult });
 
+  case types.LOGOUT:
+    return Object.assign({}, state, { userProfile: initialState.users.userProfile });
+
   default:
     return state;
   }

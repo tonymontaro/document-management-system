@@ -3,12 +3,12 @@ import { Link } from 'react-router';
 import truncate from 'html-truncate';
 import renderHTML from 'react-render-html';
 
-const DocumentList = ({ document, user, deleteDocument, editMode }) =>
+const DocumentList = ({ document, user, deleteDocument }) =>
   <div className="col s12 m4">
     <div className="card">
       <div className="document-access">{document.access}</div>
 
-      {(user.id === document.authorId || user.roleId === 1) && editMode &&
+      {(user.id === document.authorId) &&
       <span>
         <Link
           to={`document/${document.id}`}
@@ -37,8 +37,7 @@ const DocumentList = ({ document, user, deleteDocument, editMode }) =>
 DocumentList.propTypes = {
   document: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  deleteDocument: PropTypes.func.isRequired,
-  editMode: PropTypes.bool.isRequired
+  deleteDocument: PropTypes.func.isRequired
 };
 
 export default DocumentList;

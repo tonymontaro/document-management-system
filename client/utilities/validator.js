@@ -32,18 +32,14 @@ export function validateLogin({ username = '', password = '' }) {
 * @returns {Object} object containing the status and possible error messages
 */
 export function validateSignUp({
-  username = '', password = '', fullName = '', email = '', roleId = ''
+  username = '', password = '', fullName = '', email = ''
 }) {
   const status = validateRequiredFields(
-    [username, password, fullName, email, roleId],
-    ['username', 'password', 'fullName', 'email', 'roleId']);
+    [username, password, fullName, email],
+    ['username', 'password', 'fullName', 'email']);
 
   if (!validator.isEmail(email)) {
     status.errors.email = 'Please enter a valid email';
-    status.valid = false;
-  }
-  if (roleId === 'null') {
-    status.errors.roleId = 'Please choose a role';
     status.valid = false;
   }
 

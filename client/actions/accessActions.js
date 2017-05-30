@@ -11,11 +11,14 @@ import { throwError } from '../utilities/errorHandler';
 * @param {String} token
 * @returns {Object} dispatch object
 */
-export function clientLogin(token) {
+export function clientLogin(token, type) {
   setHeaderToken(token);
+  const decoded = jwt.decode(token);
+  const user = { id: decoded.id, roleId: decoded.roleId, username: decoded.username };
+
   return {
-    type: types.CLIENT_LOGIN,
-    user: jwt.decode(token)
+    type,
+    user
   };
 }
 /**
@@ -30,11 +33,8 @@ export function login(userDetails) {
       .then((res) => {
         const token = res.data.token;
         localStorage.setItem('jwToken', token);
-        setHeaderToken(token);
-        dispatch({
-          type: types.LOGIN_SUCCESS,
-          user: jwt.decode(token)
-        });
+
+        dispatch(clientLogin(token, types.LOGIN_SUCCESS));
       })
       .catch(error => throwError(error, dispatch));
   };

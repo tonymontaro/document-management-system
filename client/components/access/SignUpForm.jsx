@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react';
 import TextInput from '../common/TextInput';
-import SelectInput from '../common/SelectInput';
 
-const SignUpForm = ({ onSubmit, onChange, userDetails, options }) =>
+const SignUpForm = ({ onSubmit, onChange, userDetails }) =>
   <div className="form-div">
     <div className="container">
       <h3 className="center">Sign Up</h3>
@@ -46,15 +45,6 @@ const SignUpForm = ({ onSubmit, onChange, userDetails, options }) =>
           error={userDetails.errors.password}
         />
 
-        <SelectInput
-          value={userDetails.roleId}
-          name="roleId"
-          label="Choose Role"
-          onChange={onChange}
-          error={userDetails.errors.roleId}
-          options={options}
-          icon="user-plus" />
-
         <div className="input-field">
           <i className="fa fa-comments-o prefix" />
           <textarea
@@ -77,8 +67,7 @@ const SignUpForm = ({ onSubmit, onChange, userDetails, options }) =>
 SignUpForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  userDetails: PropTypes.object,
-  options: PropTypes.array,
+  userDetails: PropTypes.object
 };
 
 export default SignUpForm;

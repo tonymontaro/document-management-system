@@ -34,26 +34,17 @@ class SignUpPage extends React.Component {
   }
 
   render() {
-    const roleOptions = [];
-    this.props.roles.forEach((role) => {
-      if (role.id !== 1 || this.state.roleId === 1) {
-        roleOptions.push({ value: role.id, text: role.name });
-      }
-    });
-
     return (
       <SignUpForm
       onSubmit={this.onSubmit}
       onChange={this.onChange}
-      userDetails={this.state}
-      options={roleOptions} />
+      userDetails={this.state} />
     );
   }
 }
 
 SignUpPage.propTypes = {
   signup: PropTypes.func.isRequired,
-  roles: PropTypes.array.isRequired,
   profile: PropTypes.object.isRequired
 };
 
@@ -62,6 +53,5 @@ SignUpPage.contextTypes = {
 };
 
 export default connect(state => ({
-  roles: state.roles,
   profile: state.users.userProfile
 }), { signup })(SignUpPage);
