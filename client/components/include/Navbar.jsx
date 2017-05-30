@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 
 const Navbar = ({
-  username, logout, accessClass, getDocuments, getProfile, getUsers, getUserDocuments }) =>
+  username, logout, accessClass, getDocuments, getProfile, getUserDocuments }) =>
     <header className={`navbar-fixed ${accessClass}`}>
       <nav>
         <div className="nav-wrapper container">
@@ -19,7 +19,7 @@ const Navbar = ({
               <li><Link id="signup" to="signup">SignUp</Link></li>
             </span>
             <span className="forAdmin">
-              <li><Link to="" onClick={getUsers}>Users</Link></li>
+              <li><Link to="user">Users</Link></li>
               <li><Link to="role">Roles</Link></li>
             </span>
             <span className="loggedIn">
@@ -58,7 +58,6 @@ Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
   getProfile: PropTypes.func.isRequired,
   getDocuments: PropTypes.func.isRequired,
-  getUsers: PropTypes.func.isRequired,
   getUserDocuments: PropTypes.func.isRequired,
   username: PropTypes.string,
   accessClass: PropTypes.string.isRequired

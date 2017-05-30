@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Pagination from '../common/Pagination';
 import DocumentCard from './DocumentCard';
+import DeleteModal from '../common/DeleteModal';
 
 const HomePageDiv = ({
   search,
@@ -8,6 +9,8 @@ const HomePageDiv = ({
   onChange,
   access,
   documents,
+  toBeDeleted,
+  confirmDelete,
   deleteDocument,
   nextPage,
   prevPage,
@@ -15,37 +18,36 @@ const HomePageDiv = ({
   query }) =>
     <div className="documents-div">
 
-      <div className="fixed-action-btn horizontal click-to-toggle">
-        <a className="btn-floating btn-large">
-          <i className="large material-icons">search</i>
-        </a>
-        <ul>
-          <form id="searchForm" className="search-form" onSubmit={onSearch}>
-            <div className="input-field">
-              <input
-                id="search"
-                type="text"
-                name="search"
-                value={search}
-                onChange={onChange} />
-              <label htmlFor="search" data-success="right">Search</label>
-            </div>
-          </form>
-        </ul>
-      </div>
-
       <div className="container documents">
         {query ? <h3 className="recent-documents">
           Search result for: <span className="teal-text">{query}</span></h3> :
         <h3 className="recent-documents">Recently Added Documents</h3>}
+
+        <form id="searchForm" className="search-form" onSubmit={onSearch}>
+          <div className="row">
+            <div className="input-field col s10">
+              <input
+              id="search"
+              type="text"
+              name="search"
+              placeholder="Search"
+              value={search}
+              onChange={onChange} />
+            </div>
+            <div className="input-field col s2">
+              <button className="waves-effect btn">Go</button>
+            </div>
+          </div>
+        </form>
+
         <div className="row">
 
           {documents.map(document =>
             <DocumentCard
               key={document.id}
               document={document}
-              user={access.user}
-              deleteDocument={deleteDocument} />
+              confirmDelete={confirmDelete}
+              user={access.user} />
           )}
 
         </div>
@@ -56,6 +58,11 @@ const HomePageDiv = ({
           prevPage={prevPage}
           currentPage={currentPage} />
       </div>
+
+      <DeleteModal
+      toBeDeleted={toBeDeleted}
+      deleteDocument={deleteDocument} />
+
     </div>;
 
 HomePageDiv.propTypes = {
@@ -63,10 +70,12 @@ HomePageDiv.propTypes = {
   search: PropTypes.string.isRequired,
   onSearch: PropTypes.func.isRequired,
   access: PropTypes.object.isRequired,
+  toBeDeleted: PropTypes.object.isRequired,
   query: PropTypes.string.isRequired,
   documents: PropTypes.array.isRequired,
   deleteDocument: PropTypes.func.isRequired,
   nextPage: PropTypes.func.isRequired,
+  confirmDelete: PropTypes.func.isRequired,
   prevPage: PropTypes.func.isRequired,
   currentPage: PropTypes.number.isRequired
 };

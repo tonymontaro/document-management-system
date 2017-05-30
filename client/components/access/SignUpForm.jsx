@@ -47,13 +47,13 @@ const SignUpForm = ({ onSubmit, onChange, userDetails }) =>
 
         <div className="input-field">
           <i className="fa fa-comments-o prefix" />
+          <label htmlFor="about">About</label>
           <textarea
             name="about"
             id="textarea1"
             className="materialize-textarea"
             onChange={onChange}
-            value={userDetails.about}
-            placeholder="About" />
+            value={userDetails.about} />
         </div>
 
         <div className="input-field center">

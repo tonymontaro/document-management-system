@@ -9,12 +9,13 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = Object.assign({ search: '' }, props.pagination);
+    this.state = Object.assign({ search: '', toBeDeleted: {} }, props.pagination);
     this.prevPage = this.prevPage.bind(this);
     this.nextPage = this.nextPage.bind(this);
     this.deleteDocument = this.deleteDocument.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.confirmDelete = this.confirmDelete.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -22,6 +23,10 @@ class HomePage extends React.Component {
       this.props.pagination.query !== nextProps.pagination.query) {
       this.setState(Object.assign({}, nextProps.pagination));
     }
+  }
+
+  componentDidMount() {
+    $('.modal').modal();
   }
 
   nextPage() {
@@ -52,6 +57,10 @@ class HomePage extends React.Component {
     });
   }
 
+  confirmDelete(document) {
+    this.setState({ toBeDeleted: { id: document.id, title: document.title } });
+  }
+
   deleteDocument(id) {
     this.props.deleteDocument(id)
       .then(() => {
@@ -71,7 +80,7 @@ class HomePage extends React.Component {
 
   render() {
     const { documents, access } = this.props;
-    const { currentPage, search, query } = this.state;
+    const { currentPage, search, query, toBeDeleted } = this.state;
 
     return (
       <HomePageDiv
@@ -79,7 +88,9 @@ class HomePage extends React.Component {
       onSearch={this.onSearch}
       onChange={this.onChange}
       access={access}
+      toBeDeleted={toBeDeleted}
       documents={documents}
+      confirmDelete={this.confirmDelete}
       deleteDocument={this.deleteDocument}
       nextPage={this.nextPage}
       prevPage={this.prevPage}

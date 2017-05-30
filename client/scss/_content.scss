@@ -11,7 +11,7 @@ main {
   .documents-div,
   .document-div,
   .form-div {
-    padding: 50px 0;
+    padding: 60px 0;
     min-height: 85vh;
     background: rgba(0,0,0, 0.6);
   }
@@ -37,6 +37,8 @@ main {
     }
   }
   .documents {
+     position: relative;
+
     .card {
       position: relative;
       background-color: $white;
@@ -123,7 +125,10 @@ main {
   }
 
   .search-form {
-    padding-left: 15px;
+    position: fixed;
+    width: inherit;
+    top: 53px;
+    z-index: 980;
 
     input {
       background: rgba(0,0,0,0.6);
@@ -134,6 +139,8 @@ main {
     label {
       margin-left: 15px;
     }
+
+    button { margin-top: 5px;}
   }
 
   .edit-role, .edit-user { margin-right: 20px; }
@@ -142,5 +149,21 @@ main {
 #roleModal, #userModal {
   .modal-content {
     background: $text-color;
+  }
+}
+
+.about-card {
+  background: transparent;
+  border: 1px $white solid;
+  border-radius: 10px;
+}
+
+.delete-modal {
+  background-color: rgba(0,0,0,0.6);
+  .modal-footer {
+    background: transparent;
+    .red {
+      margin-right: 10px;
+    }
   }
 }

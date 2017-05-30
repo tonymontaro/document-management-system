@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import truncate from 'html-truncate';
 import renderHTML from 'react-render-html';
 
-const DocumentList = ({ document, user, deleteDocument }) =>
+const DocumentCard = ({ document, user, confirmDelete }) =>
   <div className="col s12 m4">
     <div className="card">
       <div className="document-access">{document.access}</div>
@@ -15,13 +15,12 @@ const DocumentList = ({ document, user, deleteDocument }) =>
           className="btn-floating waves-effect waves-light edit-btn">
           <i className="material-icons">edit</i>
         </Link>
-        <button
-          onClick={() => {
-            if (confirm(`Delete: ${document.title}?`)) deleteDocument(document.id);
-          }}
+        <a
+          onClick={() => confirmDelete(document)}
+          href="#deleteModal"
           className="btn-floating waves-effect waves-light delete-btn">
           <i className="material-icons">delete</i>
-        </button>
+        </a>
       </span>}
 
       <Link to={`/${document.id}`} className="view-document">
@@ -34,10 +33,10 @@ const DocumentList = ({ document, user, deleteDocument }) =>
     </div>
   </div>;
 
-DocumentList.propTypes = {
+DocumentCard.propTypes = {
   document: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  deleteDocument: PropTypes.func.isRequired
+  confirmDelete: PropTypes.func.isRequired
 };
 
-export default DocumentList;
+export default DocumentCard;

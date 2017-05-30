@@ -3,8 +3,8 @@ import React, { PropTypes } from 'react';
 const TextInput = ({ name, label, onChange, value, error, icon = 'user', type = 'text' }) =>
   <div className="input-field">
     <i className={`fa fa-${icon} prefix`} />
+    <label htmlFor={name}>{label}</label>
     <input
-      placeholder={label}
       type={type}
       name={name}
       id={name}

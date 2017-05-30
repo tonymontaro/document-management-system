@@ -10,6 +10,8 @@ function setup() {
     onChange: () => {},
     access: { loggedIn: true, user: 'tony' },
     documents: [],
+    toBeDeleted: {},
+    confirmDelete: () => {},
     deleteDocument: () => {},
     nextPage: () => {},
     prevPage: () => {},

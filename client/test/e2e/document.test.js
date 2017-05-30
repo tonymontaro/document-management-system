@@ -1,7 +1,8 @@
 import faker from 'faker';
 import config from './config';
 
-const fakeTitle = faker.lorem.words(2);
+const newTitle = faker.lorem.words(2);
+const editedTitle = faker.lorem.words(2);
 
 export default {
   'Create document': browser =>
@@ -12,17 +13,73 @@ export default {
       .setValue('Input[name=username]', 'admin')
       .setValue('Input[name=password]', 'alpine')
       .click('button')
-      .pause(1000)
+      .waitForElementVisible('h3.recent-documents')
       .assert.containsText('h3.recent-documents', 'Recently Added Documents')
       .click('a[data-activates=documents-dropdown]')
-      .pause(1000)
+      .waitForElementVisible('a[href="document/new"]')
       .click('a[href="document/new"]')
-      .pause(1000)
-      .setValue('Input[name=title]', fakeTitle)
+      .waitForElementVisible('.mce-i-code')
+      .setValue('Input[name=title]', newTitle)
       .click('select option[value="public"]')
-      .setValue('textarea#hiddenContentArea', faker.lorem.paragraphs())
+      .click('.mce-i-code')
+      .setValue('.mce-textbox', faker.lorem.paragraphs())
+      .click('.mce-floatpanel .mce-container-body button')
+      .waitForElementVisible('button.waves-effect')
       .click('button.waves-effect')
-      .pause(1000)
-      .assert.containsText('span.card-title', fakeTitle)
+      .waitForElementVisible('h3.recent-documents')
+      .assert.containsText('span.card-title', newTitle)
       .end(),
+
+  'Open document': browser =>
+    browser
+      .url(config.url)
+      .waitForElementVisible('body')
+      .click('#login')
+      .setValue('Input[name=username]', 'admin')
+      .setValue('Input[name=password]', 'alpine')
+      .click('button')
+      .waitForElementVisible('h3.recent-documents')
+      .click('span.card-title')
+      .waitForElementVisible('.document')
+      .assert.containsText('.document h3', newTitle)
+      .end(),
+
+  'Edit document': (browser) => {
+    browser
+      .url(config.url)
+      .waitForElementVisible('body')
+      .click('#login')
+      .setValue('Input[name=username]', 'admin')
+      .setValue('Input[name=password]', 'alpine')
+      .click('button')
+      .waitForElementVisible('h3.recent-documents')
+      .click('.edit-btn')
+      .waitForElementVisible('.mce-i-code')
+      .clearValue('Input[name=title]')
+      .setValue('Input[name=title]', editedTitle)
+      .click('button.waves-effect')
+      .waitForElementVisible('h3.recent-documents');
+    browser
+      .expect.element('span.card-title').text.to.equal(editedTitle);
+    browser.end();
+  },
+
+  'Delete document': (browser) => {
+    browser
+      .url(config.url)
+      .waitForElementVisible('body')
+      .click('#login')
+      .setValue('Input[name=username]', 'admin')
+      .setValue('Input[name=password]', 'alpine')
+      .click('button')
+      .waitForElementVisible('h3.recent-documents')
+      .assert.containsText('span.card-title', editedTitle)
+      .click('.delete-btn')
+      .waitForElementVisible('.delete-modal .red')
+      .click('.delete-modal a.red')
+      .waitForElementVisible('.toast');
+    browser
+      .expect.element('span.card-title').text.to.not.equal(editedTitle);
+    browser.end();
+  }
 };

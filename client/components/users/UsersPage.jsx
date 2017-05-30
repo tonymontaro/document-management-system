@@ -13,8 +13,7 @@ const UsersPage = ({
   onClick,
   user,
   options,
-  onSubmit,
-  deleteUser }) =>
+  onSubmit }) =>
     <div className="documents-div">
 
       <div className="fixed-action-btn horizontal click-to-toggle">
@@ -58,20 +57,12 @@ const UsersPage = ({
                   <td>{currentUser.email}</td>
                   <td>{userRole ? userRole.text : ''}</td>
                   <td>
-                    <a
-                      href="#!"
-                      className="secondary-content"
-                      onClick={() => {
-                        if (confirm(`Delete: ${currentUser.username}?`)) deleteUser(currentUser.id);
-                      }}>
-                      <i className="material-icons">delete</i>
-                    </a>
-                    <a
+                    {currentUser.id !== 1 && <a
                       href="#userModal"
                       className="secondary-content"
                       onClick={e => onClick(e, currentUser)} >
                       <i className="material-icons edit-user">edit</i>
-                    </a>
+                    </a>}
                   </td>
                 </tr>);
               })}
@@ -131,8 +122,7 @@ UsersPage.propTypes = {
   onSearch: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired,
-  deleteUser: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired
 };
 
 export default UsersPage;

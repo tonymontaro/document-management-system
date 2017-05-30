@@ -28,9 +28,11 @@ class ManageDocument extends React.Component {
       this.setState({ errors });
     }
   }
+
   onChange(event) {
     return this.setState({ [event.target.name]: event.target.value });
   }
+
   getContent(event) {
     this.setState({ content: event.target.getContent() });
   }

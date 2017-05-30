@@ -11,6 +11,7 @@ function setup() {
       content: 'content',
       authorId: 1
     },
+    confirmDelete: () => {},
     deleteDocument: () => {},
     user: { id: 1, roleId: 1 }
   };

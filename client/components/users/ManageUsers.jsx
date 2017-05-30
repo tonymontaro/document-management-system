@@ -30,6 +30,10 @@ class ManageUsers extends React.Component {
     }
   }
 
+  componentWillMount() {
+    this.props.getUsers();
+  }
+
   componentDidMount() {
     $('.modal').modal();
   }
@@ -125,6 +129,7 @@ class ManageUsers extends React.Component {
 ManageUsers.propTypes = {
   roles: PropTypes.array.isRequired,
   users: PropTypes.array.isRequired,
+  access: PropTypes.object.isRequired,
   pagination: PropTypes.object.isRequired,
   saveUser: PropTypes.func.isRequired,
   searchUsers: PropTypes.func.isRequired,
@@ -133,7 +138,13 @@ ManageUsers.propTypes = {
   deleteUser: PropTypes.func.isRequired
 };
 
+ManageUsers.contextTypes = {
+  router: PropTypes.object.isRequired
+};
+
+
 export default connect(state => ({
+  access: state.access,
   roles: state.roles,
   users: state.users.users,
   pagination: state.pagination
