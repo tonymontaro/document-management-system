@@ -27,7 +27,7 @@ const Navbar = ({
                 Documents<i className="material-icons right">arrow_drop_down</i>
               </Link></li>
               <li><Link className="dropdown-button" to="" data-activates="profile-dropdown">
-                {username}<i className="material-icons left">person_pin</i>
+                <span id="userName">{username}</span><i className="material-icons left">person_pin</i>
               </Link></li>
             </span>
           </ul>

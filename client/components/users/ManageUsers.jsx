@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import UsersPage from './UsersPage';
 import { searchUsers, saveUser, deleteUser, getUsers } from '../../actions/userActions';
-import updatePage from '../../actions/paginationActions';
 import { handleError } from '../../utilities/errorHandler';
 
 class ManageUsers extends React.Component {
@@ -10,9 +9,9 @@ class ManageUsers extends React.Component {
     super(props);
 
     this.state = {
-      user: { about: '', id: '', error: '', roleId: 'null' },
+      user: { id: '', error: '', roleId: 'null' },
       search: '',
-      pagination: Object.assign({}, props.pagination)
+      paginate: Object.assign({}, props.pagination)
     };
     this.onSearch = this.onSearch.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -24,9 +23,8 @@ class ManageUsers extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.pagination.offset !== nextProps.pagination.offset ||
-      this.props.pagination.query !== nextProps.pagination.query) {
-      this.setState({ pagination: Object.assign({}, nextProps.pagination) });
+    if (this.props.pagination !== nextProps.pagination) {
+      this.setState({ paginate: Object.assign({}, nextProps.pagination) });
     }
   }
 
@@ -40,35 +38,25 @@ class ManageUsers extends React.Component {
 
   nextPage() {
     if (this.props.users.length < 9) return;
-    if (this.state.pagination.query) {
-      return this.props.searchUsers(this.state.search, this.state.pagination.offset + 9)
-        .then(() => {
-          this.props.updatePage('next');
-        });
+    if (this.state.paginate.query) {
+      return this.props.searchUsers(this.state.search, this.state.paginate.offset + 9);
     }
-    return this.props.getUsers(this.state.pagination.offset + 9)
-      .then(() => {
-        this.props.updatePage('next');
-      });
+    return this.props.getUsers(this.state.paginate.offset + 9);
   }
 
   prevPage() {
-    if (this.state.pagination.offset < 1) return;
-    if (this.state.pagination.query) {
-      return this.props.searchUsers(this.state.search, this.state.pagination.offset - 9)
-        .then(() => {
-          this.props.updatePage('prev');
-        });
+    if (this.state.paginate.offset < 1) return;
+    if (this.state.paginate.query) {
+      return this.props.searchUsers(this.state.search, this.state.paginate.offset - 9);
     }
-    return this.props.getUsers(this.state.pagination.offset - 9)
-    .then(() => {
-      this.props.updatePage('prev');
-    });
+    return this.props.getUsers(this.state.paginate.offset - 9);
   }
 
   onSearch(event) {
     event.preventDefault();
-    this.props.searchUsers(this.state.search);
+    this.props.searchUsers(this.state.search)
+    .then(() => Materialize.toast('Search successful', 2000))
+    .catch(error => handleError(error));
   }
 
   onSubmit(event) {
@@ -84,7 +72,7 @@ class ManageUsers extends React.Component {
   deleteUser(id) {
     this.props.deleteUser(id)
       .then(() => {
-        this.props.getUsers(this.state.pagination.offset)
+        this.props.getUsers(this.state.paginate.offset)
           .then(() => Materialize.toast('User deleted', 2000));
       });
   }
@@ -99,12 +87,12 @@ class ManageUsers extends React.Component {
   }
 
   onClick(event, user) {
-    this.setState({ user: { about: user.about, id: user.id, roleId: user.roleId } });
+    this.setState({ user: { id: user.id, roleId: user.roleId } });
   }
 
   render() {
     const { users, roles } = this.props;
-    const { search, user, pagination } = this.state;
+    const { search, user, paginate } = this.state;
     const roleOptions = [];
     roles.forEach(role => roleOptions.push({ value: role.id, text: role.name }));
 
@@ -113,7 +101,7 @@ class ManageUsers extends React.Component {
         users={users}
         nextPage={this.nextPage}
         prevPage={this.prevPage}
-        currentPage={pagination.currentPage}
+        paginate={paginate}
         onSearch={this.onSearch}
         search={search}
         onChange={this.onChange}
@@ -129,12 +117,10 @@ class ManageUsers extends React.Component {
 ManageUsers.propTypes = {
   roles: PropTypes.array.isRequired,
   users: PropTypes.array.isRequired,
-  access: PropTypes.object.isRequired,
   pagination: PropTypes.object.isRequired,
   saveUser: PropTypes.func.isRequired,
   searchUsers: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,
-  updatePage: PropTypes.func.isRequired,
   deleteUser: PropTypes.func.isRequired
 };
 
@@ -148,4 +134,4 @@ export default connect(state => ({
   roles: state.roles,
   users: state.users.users,
   pagination: state.pagination
-}), { saveUser, searchUsers, deleteUser, getUsers, updatePage })(ManageUsers);
+}), { saveUser, searchUsers, deleteUser, getUsers })(ManageUsers);

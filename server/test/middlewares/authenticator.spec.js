@@ -42,6 +42,8 @@ describe('Authenticator', () => {
         done();
       };
       Authenticator.verifyUser(request, response, callback);
+
+      expect(response._getData().message).to.equal(undefined);
     });
 
 
@@ -93,6 +95,8 @@ describe('Authenticator', () => {
         done();
       };
       Authenticator.permitAdmin(request, response, callback);
+
+      expect(response._getData().message).to.equal(undefined);
     });
 
 
@@ -128,6 +132,8 @@ describe('Authenticator', () => {
         done();
       };
       Authenticator.permitOwnerOrAdmin(request, response, callback);
+
+      expect(response._getData().message).to.equal(undefined);
     });
 
     it('should grant access to the profile owner', (done) => {
@@ -144,6 +150,8 @@ describe('Authenticator', () => {
         done();
       };
       Authenticator.permitOwnerOrAdmin(request, response, callback);
+
+      expect(response._getData().message).to.equal(undefined);
     });
 
     it('should deny access if the user is not an admin or profile owner', (done) => {
@@ -180,6 +188,8 @@ describe('Authenticator', () => {
         done();
       };
       Authenticator.permitAuthor(request, response, callback);
+
+      expect(response._getData().message).to.equal(undefined);
     });
 
     it('should deny access if the user is not the document author', (done) => {

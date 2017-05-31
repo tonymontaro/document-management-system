@@ -27,7 +27,7 @@ const UserController = {
       where: { username: {
         $iLike: searchKey
       } },
-      order: [['id', 'ASC']]
+      order: [['createdAt', 'DESC']]
     })
     .then((users) => {
       const response = {

@@ -11,7 +11,7 @@ export default function documentReducer(state = initialState.users, action) {
     return Object.assign({}, state, { users: action.users });
 
   case types.UPDATE_USER_SUCCESS:
-    newState = [...state.users.filter(item => item.id !== action.user.id), action.user];
+    newState = [action.user, ...state.users.filter(item => item.id !== action.user.id)];
     return Object.assign({}, state, { users: newState });
 
   case types.SEARCH_USERS_SUCCESS:

@@ -36,7 +36,9 @@ export function getUsers(offset = 0, limit = 9) {
         dispatch({
           type: types.LOAD_USERS_SUCCESS,
           users: res.data.rows,
-          offset
+          metaData: res.data.metaData,
+          offset,
+          query: ''
         });
       })
       .catch(error => handleError(error, dispatch));
@@ -58,11 +60,12 @@ export function searchUsers(query, offset = 0, limit = 9) {
         dispatch({
           type: types.SEARCH_USERS_SUCCESS,
           searchResult: res.data.rows,
+          metaData: res.data.metaData,
           query,
           offset
         });
       })
-      .catch(error => handleError(error, dispatch));
+      .catch(error => throwError(error, dispatch));
   };
 }
 

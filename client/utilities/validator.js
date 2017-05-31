@@ -32,7 +32,7 @@ export function validateLogin({ username = '', password = '' }) {
 * @returns {Object} object containing the status and possible error messages
 */
 export function validateSignUp({
-  username = '', password = '', fullName = '', email = ''
+  username = '', password = '', fullName = '', email = '', confirmPassword
 }) {
   const status = validateRequiredFields(
     [username, password, fullName, email],
@@ -40,6 +40,11 @@ export function validateSignUp({
 
   if (!validator.isEmail(email)) {
     status.errors.email = 'Please enter a valid email';
+    status.valid = false;
+  }
+
+  if (password !== confirmPassword) {
+    status.errors.confirmPassword = 'Password must match';
     status.valid = false;
   }
 

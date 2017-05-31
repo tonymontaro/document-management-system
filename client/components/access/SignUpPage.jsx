@@ -9,7 +9,7 @@ class SignUpPage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = Object.assign({ password: '', errors: {} }, props.profile);
+    this.state = Object.assign({ password: '', confirmPassword: '', errors: {} }, props.profile);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
@@ -21,6 +21,7 @@ class SignUpPage extends React.Component {
       this.setState({ errors: {} });
       this.props.signup(this.state)
       .then(() => {
+        Materialize.toast('Success!', 2000);
         this.context.router.push('/');
       })
       .catch(error => handleError(error));

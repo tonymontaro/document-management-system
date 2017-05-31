@@ -14,13 +14,12 @@ const HomePageDiv = ({
   deleteDocument,
   nextPage,
   prevPage,
-  currentPage,
-  query }) =>
+  paginate }) =>
     <div className="documents-div">
 
       <div className="container documents">
-        {query ? <h3 className="recent-documents">
-          Search result for: <span className="teal-text">{query}</span></h3> :
+        {paginate.query ? <h3 className="recent-documents">
+          Search result for: <span className="teal-text">{paginate.query}</span></h3> :
         <h3 className="recent-documents">Recently Added Documents</h3>}
 
         <form id="searchForm" className="search-form" onSubmit={onSearch}>
@@ -56,12 +55,12 @@ const HomePageDiv = ({
           collection={documents}
           nextPage={nextPage}
           prevPage={prevPage}
-          currentPage={currentPage} />
+          paginate={paginate} />
       </div>
 
       <DeleteModal
       toBeDeleted={toBeDeleted}
-      deleteDocument={deleteDocument} />
+      deleteItem={deleteDocument} />
 
     </div>;
 
@@ -71,13 +70,12 @@ HomePageDiv.propTypes = {
   onSearch: PropTypes.func.isRequired,
   access: PropTypes.object.isRequired,
   toBeDeleted: PropTypes.object.isRequired,
-  query: PropTypes.string.isRequired,
+  paginate: PropTypes.object.isRequired,
   documents: PropTypes.array.isRequired,
   deleteDocument: PropTypes.func.isRequired,
   nextPage: PropTypes.func.isRequired,
   confirmDelete: PropTypes.func.isRequired,
-  prevPage: PropTypes.func.isRequired,
-  currentPage: PropTypes.number.isRequired
+  prevPage: PropTypes.func.isRequired
 };
 
 export default HomePageDiv;

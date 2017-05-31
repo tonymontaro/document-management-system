@@ -44,6 +44,21 @@ export default {
       .assert.containsText('.document h3', newTitle)
       .end(),
 
+  'Search for a document': browser =>
+    browser
+      .url(config.url)
+      .waitForElementVisible('body')
+      .click('#login')
+      .setValue('Input[name=username]', 'admin')
+      .setValue('Input[name=password]', 'alpine')
+      .click('button')
+      .waitForElementVisible('input#search')
+      .setValue('input#search', 'Doc-Mage Welcome Message')
+      .keys(browser.Keys.ENTER)
+      .waitForElementVisible('.toast')
+      .assert.containsText('span.card-title', 'Doc-Mage Welcome Message')
+      .end(),
+
   'Edit document': (browser) => {
     browser
       .url(config.url)

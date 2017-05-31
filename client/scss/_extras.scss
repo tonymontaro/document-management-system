@@ -49,3 +49,11 @@ p, span, h1, h2, h3 {
 .input-field label {
     top: 0.1rem;
 }
+
+.delete-btn {
+  background-color: $primary-color;
+  margin-left: 15px;
+  &:hover {
+    background-color: darken($primary-color, 15%);
+  }
+}

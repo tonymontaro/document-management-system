@@ -15,8 +15,7 @@ function setup() {
     deleteDocument: () => {},
     nextPage: () => {},
     prevPage: () => {},
-    currentPage: 1,
-    query: ''
+    paginate: { page: 1, pageCount: 3, pageSize: 9, totalCount: 26 }
   };
 
   return shallow(<HomePageDiv {...props} />);

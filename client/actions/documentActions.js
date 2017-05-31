@@ -17,7 +17,9 @@ export function getDocuments(offset = 0, limit = 9) {
         dispatch({
           type: types.LOAD_DOCUMENTS_SUCCESS,
           documents: res.data.rows,
-          offset
+          metaData: res.data.metaData,
+          offset,
+          query: ''
         });
       })
       .catch(error => handleError(error, dispatch));
@@ -40,11 +42,12 @@ export function searchDocument(query, offset = 0, limit = 9) {
         dispatch({
           type: types.SEARCH_SUCCESS,
           searchResult: res.data.rows,
+          metaData: res.data.metaData,
           query,
           offset
         });
       })
-      .catch(error => handleError(error, dispatch));
+      .catch(error => throwError(error, dispatch));
   };
 }
 /**

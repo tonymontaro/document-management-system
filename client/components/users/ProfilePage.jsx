@@ -1,8 +1,30 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { deleteUser } from '../../actions/userActions';
+import { logout } from '../../actions/accessActions';
+import DeleteModal from '../common/DeleteModal';
 
 class ProfilePage extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.deleteProfile = this.deleteProfile.bind(this);
+  }
+
+  deleteProfile(id) {
+    this.props.deleteUser(id)
+      .then(() => {
+        this.props.logout();
+        this.context.router.push('/');
+        Materialize.toast('Profile deleted', 2000);
+      });
+  }
+
+  componentDidMount() {
+    $('.modal').modal();
+  }
+
   render() {
     const { profile, access } = this.props;
     return (
@@ -24,8 +46,15 @@ class ProfilePage extends React.Component {
 
           {(access.user.id === profile.id) && <div className="input-field center">
             <Link to="/user/edit" className="waves-effect btn">Edit</Link>
+            {access.user.id !== 1 && <a
+              href="#deleteModal"
+              className="delete-btn btn">Delete</a>}
           </div>}
         </div>
+
+        <DeleteModal
+          toBeDeleted={{ id: profile.id, title: `Your profile, ${profile.username}?` }}
+          deleteItem={this.deleteProfile} />
       </div>
     );
   }
@@ -36,7 +65,12 @@ ProfilePage.propTypes = {
   access: PropTypes.object.isRequired
 };
 
+ProfilePage.contextTypes = {
+  router: PropTypes.object.isRequired
+};
+
+
 export default connect(state => ({
   profile: state.users.userProfile,
   access: state.access
-}))(ProfilePage);
+}), { deleteUser, logout })(ProfilePage);

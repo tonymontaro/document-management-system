@@ -51,7 +51,7 @@ class Header extends React.Component {
     let username;
     if (access.loggedIn) {
       accessClass = 'regularUser';
-      username = truncate(access.user.username, 20);
+      username = truncate(access.user.username, 30);
       if (access.user.roleId === 1) {
         accessClass = 'administrator';
       }

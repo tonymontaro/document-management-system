@@ -2,14 +2,19 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getDocuments, deleteDocument, searchDocument, getUserDocuments }
   from '../../actions/documentActions';
-import updatePage from '../../actions/paginationActions';
 import HomePageDiv from './HomePageDiv';
+import { handleError } from '../../utilities/errorHandler';
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = Object.assign({ search: '', toBeDeleted: {} }, props.pagination);
+    this.state = {
+      search: '',
+      toBeDeleted: {},
+      paginate: Object.assign({}, props.pagination)
+    };
+
     this.prevPage = this.prevPage.bind(this);
     this.nextPage = this.nextPage.bind(this);
     this.deleteDocument = this.deleteDocument.bind(this);
@@ -19,9 +24,8 @@ class HomePage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.pagination.offset !== nextProps.pagination.offset ||
-      this.props.pagination.query !== nextProps.pagination.query) {
-      this.setState(Object.assign({}, nextProps.pagination));
+    if (this.props.pagination !== nextProps.pagination) {
+      this.setState({ paginate: Object.assign({}, nextProps.pagination) });
     }
   }
 
@@ -31,30 +35,18 @@ class HomePage extends React.Component {
 
   nextPage() {
     if (this.props.documents.length < 9) return;
-    if (this.state.query) {
-      return this.props.searchDocument(this.state.search, this.state.offset + 9)
-        .then(() => {
-          this.props.updatePage('next');
-        });
+    if (this.state.paginate.query) {
+      return this.props.searchDocument(this.state.search, this.state.paginate.offset + 9);
     }
-    return this.props.getDocuments(this.state.offset + 9)
-      .then(() => {
-        this.props.updatePage('next');
-      });
+    return this.props.getDocuments(this.state.paginate.offset + 9);
   }
 
   prevPage() {
-    if (this.state.offset < 1) return;
-    if (this.state.query) {
-      return this.props.searchDocument(this.state.search, this.state.offset - 9)
-        .then(() => {
-          this.props.updatePage('prev');
-        });
+    if (this.state.paginate.offset < 1) return;
+    if (this.state.paginate.query) {
+      return this.props.searchDocument(this.state.search, this.state.paginate.offset - 9);
     }
-    return this.props.getDocuments(this.state.offset - 9)
-    .then(() => {
-      this.props.updatePage('prev');
-    });
+    return this.props.getDocuments(this.state.paginate.offset - 9);
   }
 
   confirmDelete(document) {
@@ -64,7 +56,7 @@ class HomePage extends React.Component {
   deleteDocument(id) {
     this.props.deleteDocument(id)
       .then(() => {
-        this.props.getDocuments(this.state.offset)
+        this.props.getDocuments(this.state.paginate.offset)
           .then(() => Materialize.toast('Document deleted', 2000));
       });
   }
@@ -75,12 +67,14 @@ class HomePage extends React.Component {
 
   onSearch(event) {
     event.preventDefault();
-    this.props.searchDocument(this.state.search);
+    this.props.searchDocument(this.state.search)
+      .then(() => Materialize.toast('Search successful', 2000))
+      .catch(error => handleError(error));
   }
 
   render() {
     const { documents, access } = this.props;
-    const { currentPage, search, query, toBeDeleted } = this.state;
+    const { search, paginate, toBeDeleted } = this.state;
 
     return (
       <HomePageDiv
@@ -94,8 +88,7 @@ class HomePage extends React.Component {
       deleteDocument={this.deleteDocument}
       nextPage={this.nextPage}
       prevPage={this.prevPage}
-      currentPage={currentPage}
-      query={query} />
+      paginate={paginate} />
     );
   }
 }
@@ -105,7 +98,6 @@ HomePage.propTypes = {
   documents: PropTypes.array.isRequired,
   access: PropTypes.object.isRequired,
   getDocuments: PropTypes.func.isRequired,
-  updatePage: PropTypes.func.isRequired,
   deleteDocument: PropTypes.func.isRequired,
   searchDocument: PropTypes.func.isRequired,
 };
@@ -118,4 +110,4 @@ export default connect(state => ({
   documents: state.documents,
   access: state.access,
   pagination: state.pagination
-}), { getDocuments, updatePage, deleteDocument, searchDocument, getUserDocuments })(HomePage);
+}), { getDocuments, deleteDocument, searchDocument, getUserDocuments })(HomePage);

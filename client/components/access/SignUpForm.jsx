@@ -45,6 +45,16 @@ const SignUpForm = ({ onSubmit, onChange, userDetails }) =>
           error={userDetails.errors.password}
         />
 
+        <TextInput
+          name="confirmPassword"
+          label="Confirm&nbsp;Password"
+          onChange={onChange}
+          value={userDetails.confirmPassword}
+          type="password"
+          icon="unlock-alt"
+          error={userDetails.errors.confirmPassword}
+        />
+
         <div className="input-field">
           <i className="fa fa-comments-o prefix" />
           <label htmlFor="about">About</label>

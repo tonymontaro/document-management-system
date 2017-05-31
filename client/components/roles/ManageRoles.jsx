@@ -30,6 +30,10 @@ class ManageRoles extends React.Component {
     $('.modal').modal();
   }
 
+  componentWillMount() {
+    this.props.getRoles();
+  }
+
   deleteRole(id) {
     this.props.deleteRole(id)
       .then(() => {

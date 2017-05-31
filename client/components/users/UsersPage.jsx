@@ -6,7 +6,7 @@ const UsersPage = ({
   users,
   nextPage,
   prevPage,
-  currentPage,
+  paginate,
   onSearch,
   search,
   onChange,
@@ -15,24 +15,25 @@ const UsersPage = ({
   options,
   onSubmit }) =>
     <div className="documents-div">
-
-      <div className="fixed-action-btn horizontal click-to-toggle">
-        <a className="btn-floating btn-large">
-          <i className="large material-icons">search</i>
-        </a>
-        <ul>
-          <form className="col s12" onSubmit={onSearch}>
-            <div className="row">
-              <div className="input-field col s12">
-                <input value={search} id="search" name="search" type="text" onChange={onChange} />
-                <label htmlFor="search" data-success="right">Search</label>
-              </div>
-            </div>
-          </form>
-        </ul>
-      </div>
-
       <div className="container documents">
+
+        <form id="searchForm" className="search-form" onSubmit={onSearch}>
+          <div className="row">
+            <div className="input-field col s10">
+              <input
+              id="search"
+              type="text"
+              name="search"
+              placeholder="Search usernames"
+              value={search}
+              onChange={onChange} />
+            </div>
+            <div className="input-field col s2">
+              <button className="waves-effect btn">Go</button>
+            </div>
+          </div>
+        </form>
+
         <h3 className="recent-documents">Users</h3>
 
         <div className="row">
@@ -55,7 +56,7 @@ const UsersPage = ({
                   <td>{currentUser.fullName}</td>
                   <td>{currentUser.username}</td>
                   <td>{currentUser.email}</td>
-                  <td>{userRole ? userRole.text : ''}</td>
+                  <td className="user-role">{userRole ? userRole.text : ''}</td>
                   <td>
                     {currentUser.id !== 1 && <a
                       href="#userModal"
@@ -76,7 +77,7 @@ const UsersPage = ({
         collection={users}
         nextPage={nextPage}
         prevPage={prevPage}
-        currentPage={currentPage} />
+        paginate={paginate} />
 
       <div id="userModal" className="modal">
         <div className="modal-content">
@@ -90,18 +91,6 @@ const UsersPage = ({
               options={options}
               icon="user-plus" />
 
-            <div className="input-field">
-              <i className="fa fa-comments-o prefix" />
-              <textarea
-                name="about"
-                id="textarea1"
-                className="materialize-textarea"
-                placeholder="About"
-                onChange={onChange}
-                value={user.about} />
-            </div>
-
-
             <div className="input-field center">
               <button className="waves-effect btn">Submit</button>
             </div>
@@ -114,7 +103,7 @@ const UsersPage = ({
 UsersPage.propTypes = {
   options: PropTypes.array.isRequired,
   users: PropTypes.array.isRequired,
-  currentPage: PropTypes.number.isRequired,
+  paginate: PropTypes.object.isRequired,
   search: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
   nextPage: PropTypes.func.isRequired,
