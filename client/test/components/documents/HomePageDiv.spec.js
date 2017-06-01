@@ -1,6 +1,5 @@
 import expect from 'expect';
 import React from 'react';
-import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import HomePageDiv from '../../../components/documents/HomePageDiv';
 
@@ -9,7 +8,7 @@ function setup() {
     search: 'doc',
     onSearch: () => {},
     onChange: () => {},
-    access: { loggedIn: true, user: 'tony' },
+    access: { loggedIn: true, user: { username: 'tony' } },
     documents: [{ title: 'Manny' }, {}, {}],
     toBeDeleted: {},
     confirmDelete: () => {},
