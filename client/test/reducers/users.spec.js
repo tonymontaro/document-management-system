@@ -1,6 +1,5 @@
 import expect from 'expect';
 import users from '../../reducers/userReducer';
-// import initialState from '../../reducers/initialState';
 import * as types from '../../actions/types';
 
 describe('Users Reducer', () => {
@@ -16,7 +15,6 @@ describe('Users Reducer', () => {
     // act
     const newState = users(initialState, action);
 
-    // assert
     expect(newState.userProfile).toEqual(loadedProfile);
   });
 
@@ -49,17 +47,75 @@ describe('Users Reducer', () => {
       ],
       userProfile: { username: '' }
     };
-    const user = { id: '2', username: 'NewUsername' };
-    const action = { type: types.UPDATE_USER_SUCCESS, user };
+    const action = { type: types.UPDATE_USER_SUCCESS, user: { id: '2', username: 'NewUsername' } };
+
+    const expectedState = {
+      users: [
+        { id: '2', username: 'NewUsername' },
+        { id: '1', username: 'Tony' },
+        { id: '3', username: 'Kenpachi' }
+      ],
+      userProfile: { username: '' }
+    };
 
     // act
     const newState = users(initialState, action);
-    const updatedUser = newState.users.find(currentUser => currentUser.id === user.id);
-    const untouchedRole = newState.users.find(currentUser => currentUser.id === '1');
 
     // assert
-    expect(updatedUser.username).toEqual('NewUsername');
-    expect(untouchedRole.username).toEqual('Tony');
-    expect(newState.length).toEqual(initialState.length);
+    expect(newState).toEqual(expectedState);
+  });
+
+  it('should set users when passed SEARCH_USERS_SUCCESS', () => {
+    // arrange
+    const initialState = {
+      users: [],
+      userProfile: { username: '' }
+    };
+
+    const expectedState = {
+      users: [{ username: 'Anthony' }],
+      userProfile: { username: '' }
+    };
+
+    const action = { type: types.SEARCH_USERS_SUCCESS, searchResult: [{ username: 'Anthony' }] };
+
+    // act
+    const newState = users(initialState, action);
+
+    expect(newState).toEqual(expectedState);
+  });
+
+  it('should set user profile to the initial state when passed LOGOUT', () => {
+    // arrange
+    const currentState = {
+      users: [{ name: 'kempachi' }],
+      userProfile: { username: 'anthony' }
+    };
+
+    const expectedState = {
+      users: [{ name: 'kempachi' }],
+      userProfile: { username: '', about: '', fullName: '', email: '' }
+    };
+
+    const action = { type: types.LOGOUT };
+
+    // act
+    const newState = users(currentState, action);
+
+    // assert
+    expect(newState).toEqual(expectedState);
+  });
+
+  it('should return the state when not affected', () => {
+    // arrange
+    const currentState = {
+      iAmInitialState: true,
+    };
+    const action = { type: 'AFFECT_NO_ONE' };
+
+    // act
+    const newState = users(currentState, action);
+
+    expect(newState).toEqual(currentState);
   });
 });

@@ -1,5 +1,6 @@
 import expect from 'expect';
 import React from 'react';
+import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import HomePageDiv from '../../../components/documents/HomePageDiv';
 
@@ -9,7 +10,7 @@ function setup() {
     onSearch: () => {},
     onChange: () => {},
     access: { loggedIn: true, user: 'tony' },
-    documents: [],
+    documents: [{ title: 'Manny' }, {}, {}],
     toBeDeleted: {},
     confirmDelete: () => {},
     deleteDocument: () => {},
@@ -30,6 +31,16 @@ describe('HomePageDiv', () => {
   it('renders search form', () => {
     const wrapper = setup();
     expect(wrapper.find('.search-form').length).toEqual(1);
+  });
+
+  it('renders correct number of documents', () => {
+    const wrapper = setup();
+    expect(wrapper.find('DocumentCard').length).toEqual(3);
+  });
+
+  it('correctly passes in props when rendering a DocumentCard', () => {
+    const wrapper = setup();
+    expect(wrapper.find('DocumentCard').first().prop('document')).toEqual({ title: 'Manny' });
   });
 
   it('renders recent-documents container', () => {

@@ -22,10 +22,12 @@ describe('SelectInput', () => {
     const wrapper = setup();
     expect(wrapper.find('.input-field').length).toEqual(1);
   });
+
   it('renders a select component', () => {
     const wrapper = setup();
     expect(wrapper.find('select').length).toEqual(1);
   });
+
   it('correctly initializes the select input', () => {
     const wrapper = setup();
     expect(wrapper.find('select').prop('value')).toBe('null');
