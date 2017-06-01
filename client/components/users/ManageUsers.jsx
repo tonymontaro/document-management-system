@@ -21,7 +21,6 @@ class ManageUsers extends React.Component {
     };
     this.onSearch = this.onSearch.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.deleteUser = this.deleteUser.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
     this.nextPage = this.nextPage.bind(this);
