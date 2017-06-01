@@ -53,7 +53,8 @@ Ensure that project dependencies are installed before running tests.
 3. Run `npm test`
 ### End to end tests
 1. Ensure the app is running, you can start it with `npm start`
-2. Open another terminal, navigate to the project directory and run `npm run e2e-test`
+2. Open another terminal, navigate to the project directory and setup the test with `npm run e2e-setup`
+2. Run `npm run e2e-test`
 
 ## API Summary
 View full API documentation [here](http://doc-mage.herokuapp.com/api)
