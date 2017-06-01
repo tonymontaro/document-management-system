@@ -5,10 +5,12 @@ import handleError from '../helpers/handleError';
 const secret = process.env.SECRET || 'winter is coming';
 
 const Authenticator = {
-   /**
-   * @param {Object} userDetails user details
-   * @returns {String} token
-   */
+  /**
+  * Generate a token
+  *
+  * @param {Object} userDetails user details
+  * @returns {String} token
+  */
   generateToken(userDetails) {
     return jwt.sign(userDetails, secret, {
       expiresIn: 60 * 60 * 24 * 7
@@ -16,7 +18,7 @@ const Authenticator = {
   },
 
   /**
-  * Verify user
+  * Verify a user
   *
   * @param {Object} req request object
   * @param {Object} res response object
@@ -27,6 +29,7 @@ const Authenticator = {
     const token = req.body.token
       || req.query.token
       || req.headers['x-access-token'];
+
     if (token) {
       jwt.verify(token, secret, (err, decoded) => {
         if (err) {
@@ -68,6 +71,7 @@ const Authenticator = {
     if (res.locals.decoded.roleId === 1) {
       return next();
     }
+
     return res.status(403).send({ message: 'Access denied' });
   },
 
@@ -109,6 +113,7 @@ const Authenticator = {
         if (!document) {
           return res.status(404).send({ message: 'Document not found' });
         }
+
         if (res.locals.decoded.id !== document.authorId) {
           return res.status(403).send({ message: 'Access denied' });
         }

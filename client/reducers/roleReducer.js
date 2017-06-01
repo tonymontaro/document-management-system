@@ -1,6 +1,14 @@
 import * as types from '../actions/types';
 import initialState from './initialState';
 
+/**
+* Role reducer
+*
+* @export
+* @param {Object} [state=initialState.roles] initial state
+* @param {Array} action action
+* @returns {Array} reduced or initial state
+*/
 export default function roles(state = initialState.roles, action) {
   const role = action.role;
   let newState;

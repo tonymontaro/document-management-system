@@ -5,6 +5,7 @@ const RoleController = {
   /**
   * Get roles
   * Route: GET: /roles or GET: /roles
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -21,6 +22,7 @@ const RoleController = {
   /**
   * Create a role
   * Route: POST: /roles
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -48,6 +50,7 @@ const RoleController = {
   /**
   * Update a role
   * Route: PUT: /roles/:id
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -68,6 +71,7 @@ const RoleController = {
   /**
   * Delete a role
   * Route: DELETE: /roles/:id
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object

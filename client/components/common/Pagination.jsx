@@ -1,5 +1,11 @@
 import React, { PropTypes } from 'react';
 
+/**
+ * Pagination component
+ *
+ * @param {Object} props { collection, nextPage, prevPage, paginate }
+ * @returns {Object} jsx object
+ */
 const Pagination = ({ collection, nextPage, prevPage, paginate }) =>
   <div>
     <ul className="pagination center">

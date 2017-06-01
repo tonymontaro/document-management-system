@@ -5,6 +5,12 @@ import { validateSaveDocument } from '../../utilities/validator';
 import DocumentForm from './DocumentForm';
 import { handleError } from '../../utilities/errorHandler';
 
+/**
+ * Document form container
+ *
+ * @class ManageDocument
+ * @extends {React.Component}
+ */
 class ManageDocument extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +20,12 @@ class ManageDocument extends React.Component {
     this.getContent = this.getContent.bind(this);
   }
 
+  /**
+  * Validate and submit the form
+  *
+  * @param {Object} event
+   * @returns {Undefined} nothing
+   */
   onSubmit(event) {
     event.preventDefault();
     const { valid, errors } = validateSaveDocument(this.state);
@@ -29,14 +41,31 @@ class ManageDocument extends React.Component {
     }
   }
 
+  /**
+  * Control input fields
+  *
+  * @param {Object} event
+  * @returns {Undefined} nothing
+  */
   onChange(event) {
     return this.setState({ [event.target.name]: event.target.value });
   }
 
+  /**
+  * Get the content of the TinyMCE editor
+  *
+  * @param {Object} event
+  * @returns {Undefined} nothing
+  */
   getContent(event) {
     this.setState({ content: event.target.getContent() });
   }
 
+  /**
+  * Render the component
+  *
+  * @returns {Object} jsx component
+   */
   render() {
     const accessOptions = [
     { value: 'public', text: 'Public' },
@@ -58,6 +87,13 @@ ManageDocument.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
+/**
+ * Filter and map the correct document to props
+ *
+ * @param {Object} state redux store state
+ * @param {Object} ownProps own props
+ * @returns {Object} document object
+ */
 function mapStateTopProps(state, ownProps) {
   let currentDocument = { title: '', content: '', access: 'null' };
   const documentId = ownProps.params.id;

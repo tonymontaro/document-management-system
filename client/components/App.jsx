@@ -4,8 +4,13 @@ import Header from './include/Header';
 import Footer from './include/Footer';
 import Spinner from './common/Spinner';
 
+/**
+ * Top level application wrapper
+ *
+ * @class App
+ * @extends {React.Component}
+ */
 class App extends React.Component {
-
   render() {
     return (
       <div>

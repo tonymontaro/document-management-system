@@ -2,6 +2,23 @@ import React, { PropTypes } from 'react';
 import SelectInput from '../common/SelectInput';
 import Pagination from '../common/Pagination';
 
+/**
+ * Manage users page
+ *
+ * @param {Object} props {
+ *   users,
+ *   nextPage,
+ *   prevPage,
+ *   paginate,
+ *   onSearch,
+ *   search,
+ *   onChange,
+ *   onClick,
+ *   user,
+ *   options,
+ *   onSubmit }
+ * @returns {Object} jsx object
+ */
 const UsersPage = ({
   users,
   nextPage,

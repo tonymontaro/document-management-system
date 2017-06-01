@@ -2,6 +2,7 @@ import { endAjaxCall } from '../actions/ajaxStatusActions';
 
 /**
  * Handle ajax call errors
+ * *
  * @param {Object} error
  * @param {Function} dispatch
  * @returns {Function} function that displays an error message
@@ -15,6 +16,7 @@ export function handleError(error, dispatch) {
 }
 /**
 * Throw an ajax call error to be handle else where
+*
 * @param {Object} error
 * @param {Function} dispatch
 * @returns {Object} error

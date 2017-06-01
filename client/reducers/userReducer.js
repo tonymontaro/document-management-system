@@ -1,6 +1,14 @@
 import * as types from '../actions/types';
 import initialState from './initialState';
 
+/**
+* User reducer
+*
+* @export
+* @param {Object} [state=initialState.users] initial state
+* @param {Object} action action
+* @returns {Object} reduced or initial state
+*/
 export default function documentReducer(state = initialState.users, action) {
   let newState;
   switch (action.type) {

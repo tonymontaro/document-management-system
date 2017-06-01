@@ -5,11 +5,13 @@ import { handleError, throwError } from '../utilities/errorHandler';
 
 /**
 * get roles
+*
 * @returns {Object} dispatch object
 */
 export function getRoles() {
   return (dispatch) => {
     dispatch(beginAjaxCall());
+
     return axios.get('/roles')
       .then((res) => {
         dispatch({
@@ -23,6 +25,7 @@ export function getRoles() {
 
 /**
 * Save a role
+*
 * @param {String} role
 * @returns {Object} dispatch object
 */
@@ -30,6 +33,7 @@ export function saveRole(role) {
   if (role.id) {
     return (dispatch) => {
       dispatch(beginAjaxCall());
+
       return axios.put(`/roles/${role.id}`, role)
         .then((res) => {
           dispatch({ type: types.UPDATE_ROLE_SUCCESS, role: res.data });
@@ -37,8 +41,10 @@ export function saveRole(role) {
         .catch(error => throwError(error, dispatch));
     };
   }
+
   return (dispatch) => {
     dispatch(beginAjaxCall());
+
     return axios.post('/roles', role)
       .then((res) => {
         dispatch({ type: types.CREATE_ROLE_SUCCESS, role: res.data });
@@ -49,12 +55,14 @@ export function saveRole(role) {
 
 /**
 * Delete a role
+*
 * @param {String} id role id
 * @returns {Object} dispatch object
 */
 export function deleteRole(id) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
+
     return axios.delete(`/roles/${id}`)
       .then(() => {
         dispatch({

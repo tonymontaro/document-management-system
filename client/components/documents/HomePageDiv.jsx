@@ -3,6 +3,23 @@ import Pagination from '../common/Pagination';
 import DocumentCard from './DocumentCard';
 import DeleteModal from '../common/DeleteModal';
 
+/**
+ * Home page component
+ *
+ * @param {Object} props {
+ *   search,
+ *   onSearch,
+ *   onChange,
+ *   access,
+ *   documents,
+ *   toBeDeleted,
+ *   confirmDelete,
+ *   deleteDocument,
+ *   nextPage,
+ *   prevPage,
+ *   paginate }
+ * @returns {Object} jsx object
+ */
 const HomePageDiv = ({
   search,
   onSearch,

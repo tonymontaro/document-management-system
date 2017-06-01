@@ -3,6 +3,12 @@ import TinyMCE from 'react-tinymce';
 import SelectInput from '../common/SelectInput';
 import TextInput from '../common/TextInput';
 
+/**
+ * Document Form
+ *
+ * @param {Object} props { accessOptions, getContent, onChange, document, onSubmit }
+ * @returns {Object} jsx object
+ */
 const DocumentForm = ({ accessOptions, getContent, onChange, document, onSubmit }) =>
   <div className="form-div new-document">
     <div className="container">

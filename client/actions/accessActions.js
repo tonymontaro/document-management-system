@@ -8,6 +8,7 @@ import { throwError } from '../utilities/errorHandler';
 
 /**
 * Dispatch action to login a user via the client
+*
 * @param {String} token user token
 * @param {String} type action type
 * @returns {Object} dispatch object
@@ -22,14 +23,17 @@ export function clientLogin(token, type) {
     user
   };
 }
+
 /**
 * Dispatch action to login a user
+*
 * @param {Object} userDetails
 * @returns {Object} dispatch object
 */
 export function login(userDetails) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
+
     return axios.post('/users/login', userDetails)
       .then((res) => {
         const token = res.data.token;
@@ -42,6 +46,7 @@ export function login(userDetails) {
 }
 /**
 * Dispatch action to register or update a user
+*
 * @param {Object} userDetails
 * @returns {Object} dispatch object
 */
@@ -49,6 +54,7 @@ export function saveUser(userDetails) {
   if (userDetails.id) {
     return (dispatch) => {
       dispatch(beginAjaxCall());
+
       return axios.put(`/users/${userDetails.id}`, userDetails)
         .then(() => {
           dispatch({
@@ -58,8 +64,10 @@ export function saveUser(userDetails) {
         .catch(error => throwError(error, dispatch));
     };
   }
+
   return (dispatch) => {
     dispatch(beginAjaxCall());
+
     return axios.post('/users', userDetails)
       .then((res) => {
         const token = res.data.token;
@@ -72,6 +80,7 @@ export function saveUser(userDetails) {
 
 /**
 * Dispatch action to logout a user
+*
 * @returns {Object} dispatch object
 */
 export function logout() {

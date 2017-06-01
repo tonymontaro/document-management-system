@@ -5,6 +5,12 @@ import { validateSignUp } from '../../utilities/validator';
 import SignUpForm from './SignUpForm';
 import { handleError } from '../../utilities/errorHandler';
 
+/**
+ * SignUpPage component
+ *
+ * @class SignUpPage
+ * @extends {React.Component}
+ */
 class SignUpPage extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +20,12 @@ class SignUpPage extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  /**
+  * Validate and submit the form
+  *
+  * @param {Object} event
+   * @returns {Undefined} nothing
+   */
   onSubmit(event) {
     event.preventDefault();
     const { valid, errors } = validateSignUp(this.state);
@@ -30,10 +42,21 @@ class SignUpPage extends React.Component {
     }
   }
 
+  /**
+  * Control input fields
+  *
+  * @param {Object} event
+  * @returns {Undefined} nothing
+  */
   onChange(event) {
     return this.setState({ [event.target.name]: event.target.value });
   }
 
+  /**
+  * Render the component
+  *
+  * @returns {Object} jsx component
+   */
   render() {
     return (
       <SignUpForm

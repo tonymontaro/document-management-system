@@ -1,9 +1,15 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import UsersPage from './UsersPage';
-import { searchUsers, saveUser, deleteUser, getUsers } from '../../actions/userActions';
+import { searchUsers, saveUser, getUsers } from '../../actions/userActions';
 import { handleError } from '../../utilities/errorHandler';
 
+/**
+ * Manage User container
+ *
+ * @class ManageUsers
+ * @extends {React.Component}
+ */
 class ManageUsers extends React.Component {
   constructor(props) {
     super(props);
@@ -22,20 +28,41 @@ class ManageUsers extends React.Component {
     this.prevPage = this.prevPage.bind(this);
   }
 
+  /**
+  * Assigns updated pagination state to class state
+  *
+  * @param {Object} nextProps
+  * @returns {Undefined} nothing
+  */
   componentWillReceiveProps(nextProps) {
     if (this.props.pagination !== nextProps.pagination) {
       this.setState({ paginate: Object.assign({}, nextProps.pagination) });
     }
   }
 
+  /**
+  * Retrieve users before redering the component
+  *
+  * @returns {Undefined} nothing
+  */
   componentWillMount() {
     this.props.getUsers();
   }
 
+  /**
+  * Initiates the modal after rendering the component
+  *
+  * @returns {Undefined} nothing
+  */
   componentDidMount() {
     $('.modal').modal();
   }
 
+  /**
+  * Retrieves and renders the next set of users
+  *
+  * @returns {Undefined} nothing
+  */
   nextPage() {
     if (this.props.users.length < 9) return;
     if (this.state.paginate.query) {
@@ -44,6 +71,11 @@ class ManageUsers extends React.Component {
     return this.props.getUsers(this.state.paginate.offset + 9);
   }
 
+  /**
+  * Retrieves and renders the previous set of users
+  *
+  * @returns {Undefined} nothing
+  */
   prevPage() {
     if (this.state.paginate.offset < 1) return;
     if (this.state.paginate.query) {
@@ -52,6 +84,12 @@ class ManageUsers extends React.Component {
     return this.props.getUsers(this.state.paginate.offset - 9);
   }
 
+  /**
+  * Search for users
+  *
+  * @param {Object} event
+  * @returns {Undefined} nothing
+  */
   onSearch(event) {
     event.preventDefault();
     this.props.searchUsers(this.state.search)
@@ -59,6 +97,12 @@ class ManageUsers extends React.Component {
     .catch(error => handleError(error));
   }
 
+  /**
+  * Validate input fields and submit the form
+  *
+  * @param {Object} event
+  * @returns {Object} state
+  */
   onSubmit(event) {
     event.preventDefault();
     this.props.saveUser(this.state.user)
@@ -69,14 +113,12 @@ class ManageUsers extends React.Component {
       .catch(error => handleError(error));
   }
 
-  deleteUser(id) {
-    this.props.deleteUser(id)
-      .then(() => {
-        this.props.getUsers(this.state.paginate.offset)
-          .then(() => Materialize.toast('User deleted', 2000));
-      });
-  }
-
+  /**
+  * Control input fields
+  *
+  * @param {Object} event
+  * @returns {Undefined} nothing
+  */
   onChange(event) {
     if (event.target.name === 'search') {
       return this.setState({ search: event.target.value });
@@ -86,10 +128,22 @@ class ManageUsers extends React.Component {
     });
   }
 
+  /**
+  * Set the user to be edited to state
+  *
+  * @param {Object} event
+  * @param {String} user
+  * @returns {Undefined} nothing
+  */
   onClick(event, user) {
     this.setState({ user: { id: user.id, roleId: user.roleId } });
   }
 
+  /**
+  * Render the component
+  *
+  * @returns {Object} jsx component
+   */
   render() {
     const { users, roles } = this.props;
     const { search, user, paginate } = this.state;
@@ -108,8 +162,7 @@ class ManageUsers extends React.Component {
         onClick={this.onClick}
         user={user}
         options={roleOptions}
-        onSubmit={this.onSubmit}
-        deleteUser={this.deleteUser} />
+        onSubmit={this.onSubmit} />
     );
   }
 }
@@ -120,8 +173,7 @@ ManageUsers.propTypes = {
   pagination: PropTypes.object.isRequired,
   saveUser: PropTypes.func.isRequired,
   searchUsers: PropTypes.func.isRequired,
-  getUsers: PropTypes.func.isRequired,
-  deleteUser: PropTypes.func.isRequired
+  getUsers: PropTypes.func.isRequired
 };
 
 ManageUsers.contextTypes = {
@@ -134,4 +186,4 @@ export default connect(state => ({
   roles: state.roles,
   users: state.users.users,
   pagination: state.pagination
-}), { saveUser, searchUsers, deleteUser, getUsers })(ManageUsers);
+}), { saveUser, searchUsers, getUsers })(ManageUsers);

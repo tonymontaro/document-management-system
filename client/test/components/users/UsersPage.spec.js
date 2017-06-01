@@ -18,14 +18,14 @@ function setup() {
     onSearch: () => {},
     onSubmit: () => {},
     deleteUser: () => {},
-    currentPage: 1
+    paginate: {}
   };
 
   return shallow(<UsersPage
     {...props} />);
 }
 
-describe('RolesPage', () => {
+describe('UsersPage', () => {
   it('renders the top container', () => {
     const wrapper = setup();
     expect(wrapper.find('.documents-div').length).toEqual(1);

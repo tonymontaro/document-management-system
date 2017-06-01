@@ -28,7 +28,13 @@
       "requireParamDescription": false,
       "requireReturnDescription": true
     }],
-    "require-jsdoc": 0,
+    "require-jsdoc": [1, {
+      "require": {
+        "FunctionDeclaration": true,
+        "MethodDefinition": false,
+        "ClassDeclaration": false
+      }
+    }],
     "import/no-dynamic-require": 0,
     "import/no-unresolved": 0,
     "no-script-url": 0,

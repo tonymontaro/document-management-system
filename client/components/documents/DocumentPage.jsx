@@ -3,6 +3,12 @@ import { connect } from 'react-redux';
 import renderHTML from 'react-render-html';
 import { getDocument } from '../../actions/documentActions';
 
+/**
+ * Document Page container
+ *
+ * @class DocumentPage
+ * @extends {React.Component}
+ */
 class DocumentPage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -10,6 +16,11 @@ class DocumentPage extends React.Component {
     this.state = {};
   }
 
+  /**
+  * Retrieves the document before rendering the component
+  *
+  * @returns {Undefined} nothing
+  */
   componentWillMount() {
     this.props.getDocument(this.props.params.id)
       .catch((error) => {
@@ -20,6 +31,11 @@ class DocumentPage extends React.Component {
       });
   }
 
+  /**
+  * Render the component
+  *
+  * @returns {Object} jsx object
+  */
   render() {
     const { document } = this.props;
 

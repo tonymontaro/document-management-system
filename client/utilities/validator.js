@@ -1,6 +1,7 @@
 import validator from 'validator';
 /**
 * Validate required fields
+*
 * @param {Array} inputFields values
 * @param {Function} requiredFields names of fields
 * @returns {Object} object containing the status and possible error messages
@@ -8,17 +9,20 @@ import validator from 'validator';
 export function validateRequiredFields(inputFields = [], requiredFields = []) {
   const errors = {};
   let valid = true;
+
   inputFields.forEach((field, index) => {
     if (validator.isEmpty(String(field))) {
       errors[requiredFields[index]] = `Please enter the ${requiredFields[index]}`;
       valid = false;
     }
   });
+
   return { errors, valid };
 }
 
 /**
 * Validate login
+*
 * @param {Object} inputFields user details
 * @returns {Object} object containing the status and possible error messages
 */
@@ -28,6 +32,7 @@ export function validateLogin({ username = '', password = '' }) {
 
 /**
 * Validate signup
+*
 * @param {Object} inputFields user details
 * @returns {Object} object containing the status and possible error messages
 */
@@ -52,6 +57,7 @@ export function validateSignUp({
 }
 /**
 * Validate save document
+*
 * @param {Object} inputFields document details
 * @returns {Object} object containing the status and possible error messages
 */

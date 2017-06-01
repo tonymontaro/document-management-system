@@ -1,6 +1,12 @@
 import React, { PropTypes } from 'react';
 import TextInput from '../common/TextInput';
 
+/**
+* Login Form
+*
+* @param {Object} props { onSubmit, onChange, userDetails }
+* @returns {Object} jsx object
+*/
 const SignUpForm = ({ onSubmit, onChange, userDetails }) =>
   <div className="form-div">
     <div className="container">

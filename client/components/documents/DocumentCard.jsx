@@ -3,6 +3,12 @@ import { Link } from 'react-router';
 import truncate from 'html-truncate';
 import renderHTML from 'react-render-html';
 
+/**
+ * Document Card
+ *
+ * @param {Object} props { document, user, confirmDelete }
+ * @returns {Object} jsx object
+ */
 const DocumentCard = ({ document, user, confirmDelete }) =>
   <div className="col s12 m4">
     <div className="card">

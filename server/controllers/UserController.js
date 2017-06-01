@@ -7,15 +7,14 @@ const UserController = {
   /**
   * Get users
   * Route: GET: /users or GET: /users/?limit=[integer]&offset=[integer]&q=[username]
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
   */
   getUsers(req, res) {
     let searchKey = '%%';
-    if (req.query.q) {
-      searchKey = `%${req.query.q}%`;
-    }
+    if (req.query.q) searchKey = `%${req.query.q}%`;
 
     const offset = Number(req.query.offset) || 0;
     const limit = Number(req.query.limit) || 20;
@@ -35,7 +34,7 @@ const UserController = {
         metaData: paginate(users.count, limit, offset)
       };
 
-      res.status(200).send(response);
+      return res.status(200).send(response);
     })
     .catch(error => handleError(error, res));
   },
@@ -43,6 +42,7 @@ const UserController = {
   /**
   * Create a user
   * Route: POST: /users
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -70,6 +70,7 @@ const UserController = {
   /**
   * Get a user
   * Route: GET: /users/:id
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -87,6 +88,7 @@ const UserController = {
   /**
   * Update a user
   * Route: PUT: /users/:id
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -107,6 +109,7 @@ const UserController = {
   /**
   * Delete a user
   * Route: DELETE: /users/:id
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -123,6 +126,7 @@ const UserController = {
   /**
   * Get a user's documents
   * Route: GET: /users/:id/documents
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -143,6 +147,7 @@ const UserController = {
   /**
   * Login a user
   * Route: POST: /users/login
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -158,6 +163,7 @@ const UserController = {
           username: user.username,
           roleId: user.roleId
         });
+
         res.status(200).send({
           token,
           message: 'Login successful'
@@ -172,6 +178,7 @@ const UserController = {
   /**
   * Logout a user
   * Route: POST: /users/login
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object

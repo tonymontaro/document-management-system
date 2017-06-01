@@ -1,6 +1,14 @@
 import * as types from '../actions/types';
 import initialState from './initialState';
 
+/**
+* Documents reducer
+*
+* @export
+* @param {Object} [state=initialState.documents] initial state
+* @param {Array} action action
+* @returns {Array} reduced or initial state
+*/
 export function documents(state = initialState.documents, action) {
   const newDocument = action.document;
   let newState;
@@ -29,6 +37,14 @@ export function documents(state = initialState.documents, action) {
   }
 }
 
+/**
+* Document reducer
+*
+* @export
+* @param {Object} [state=initialState.document] initial state
+* @param {Object} action action
+* @returns {Object} reduced or initial state
+*/
 export function document(state = initialState.document, action) {
   if (action.type === types.GET_DOCUMENT_SUCCESS) {
     return action.document;

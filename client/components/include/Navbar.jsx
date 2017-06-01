@@ -2,6 +2,13 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
 
+/**
+ * Navigation Bar
+ *
+ * @param {Object} props {
+ *   username, logout, accessClass, getDocuments, getProfile, getUserDocuments }
+ * @returns {Object} jsx object
+ */
 const Navbar = ({
   username, logout, accessClass, getDocuments, getProfile, getUserDocuments }) =>
     <header className={`navbar-fixed ${accessClass}`}>
@@ -27,7 +34,8 @@ const Navbar = ({
                 Documents<i className="material-icons right">arrow_drop_down</i>
               </Link></li>
               <li><Link className="dropdown-button" to="" data-activates="profile-dropdown">
-                <span id="userName">{username}</span><i className="material-icons left">person_pin</i>
+                <span
+                  id="userName">{username}</span><i className="material-icons left">person_pin</i>
               </Link></li>
             </span>
           </ul>

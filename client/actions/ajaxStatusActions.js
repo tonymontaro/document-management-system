@@ -2,6 +2,7 @@ import * as types from './types';
 
 /**
 * Dispatch action to start an ajax call
+*
 * @returns {Object} dispatch object
 */
 export function beginAjaxCall() {
@@ -9,6 +10,7 @@ export function beginAjaxCall() {
 }
 /**
 * Dispatch action to end an ajax call
+*
 * @returns {Object} dispatch object
 */
 export function endAjaxCall() {

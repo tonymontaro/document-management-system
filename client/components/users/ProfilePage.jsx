@@ -5,6 +5,12 @@ import { deleteUser } from '../../actions/userActions';
 import { logout } from '../../actions/accessActions';
 import DeleteModal from '../common/DeleteModal';
 
+/**
+ * Profile page
+ *
+ * @class ProfilePage
+ * @extends {React.Component}
+ */
 class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
@@ -12,6 +18,12 @@ class ProfilePage extends React.Component {
     this.deleteProfile = this.deleteProfile.bind(this);
   }
 
+  /**
+  * Delete user profile
+  *
+   @param {Object} id user id
+  * @returns {Undefined} nothing
+  */
   deleteProfile(id) {
     this.props.deleteUser(id)
       .then(() => {
@@ -21,10 +33,20 @@ class ProfilePage extends React.Component {
       });
   }
 
+  /**
+  * Initiates the modal after rendering the component
+  *
+  * @returns {Undefined} nothing
+  */
   componentDidMount() {
     $('.modal').modal();
   }
 
+  /**
+  * Render the component
+  *
+  * @returns {Object} jsx component
+   */
   render() {
     const { profile, access } = this.props;
     return (
@@ -62,7 +84,9 @@ class ProfilePage extends React.Component {
 
 ProfilePage.propTypes = {
   profile: PropTypes.object.isRequired,
-  access: PropTypes.object.isRequired
+  access: PropTypes.object.isRequired,
+  deleteUser: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 ProfilePage.contextTypes = {

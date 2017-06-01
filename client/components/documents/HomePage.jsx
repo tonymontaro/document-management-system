@@ -5,6 +5,12 @@ import { getDocuments, deleteDocument, searchDocument, getUserDocuments }
 import HomePageDiv from './HomePageDiv';
 import { handleError } from '../../utilities/errorHandler';
 
+/**
+ * HomePage
+ *
+ * @class HomePage
+ * @extends {React.Component}
+ */
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
@@ -23,16 +29,32 @@ class HomePage extends React.Component {
     this.confirmDelete = this.confirmDelete.bind(this);
   }
 
+  /**
+  * Assigns updated pagination state to class state
+  *
+  * @param {Object} nextProps
+  * @returns {Undefined} nothing
+  */
   componentWillReceiveProps(nextProps) {
     if (this.props.pagination !== nextProps.pagination) {
       this.setState({ paginate: Object.assign({}, nextProps.pagination) });
     }
   }
 
+  /**
+  * Initiates the modal after rendering the component
+  *
+  * @returns {Undefined} nothing
+  */
   componentDidMount() {
     $('.modal').modal();
   }
 
+  /**
+  * Retrieves and renders the next set of documents
+  *
+  * @returns {Undefined} nothing
+  */
   nextPage() {
     if (this.props.documents.length < 9) return;
     if (this.state.paginate.query) {
@@ -41,6 +63,11 @@ class HomePage extends React.Component {
     return this.props.getDocuments(this.state.paginate.offset + 9);
   }
 
+  /**
+  * Retrieves and renders the previous set of documents
+  *
+  * @returns {Undefined} nothing
+  */
   prevPage() {
     if (this.state.paginate.offset < 1) return;
     if (this.state.paginate.query) {
@@ -49,10 +76,22 @@ class HomePage extends React.Component {
     return this.props.getDocuments(this.state.paginate.offset - 9);
   }
 
+  /**
+  * Call the delete modal and set item to be deleted to state
+  *
+   @param {Object} document
+  * @returns {Undefined} nothing
+  */
   confirmDelete(document) {
     this.setState({ toBeDeleted: { id: document.id, title: document.title } });
   }
 
+  /**
+  * Delete the document
+  *
+   @param {Object} id document id
+  * @returns {Undefined} nothing
+  */
   deleteDocument(id) {
     this.props.deleteDocument(id)
       .then(() => {
@@ -61,10 +100,22 @@ class HomePage extends React.Component {
       });
   }
 
+  /**
+  * Control input fields
+  *
+  * @param {Object} event
+  * @returns {Undefined} nothing
+  */
   onChange(event) {
     return this.setState({ [event.target.name]: event.target.value });
   }
 
+  /**
+  * Search for documents
+  *
+  * @param {Object} event
+  * @returns {Undefined} nothing
+  */
   onSearch(event) {
     event.preventDefault();
     this.props.searchDocument(this.state.search)
@@ -72,6 +123,11 @@ class HomePage extends React.Component {
       .catch(error => handleError(error));
   }
 
+  /**
+  * Render the component
+  *
+  * @returns {Object} jsx component
+   */
   render() {
     const { documents, access } = this.props;
     const { search, paginate, toBeDeleted } = this.state;

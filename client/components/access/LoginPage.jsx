@@ -6,6 +6,12 @@ import { validateLogin } from '../../utilities/validator';
 import LoginForm from './LoginForm';
 import { handleError } from '../../utilities/errorHandler';
 
+/**
+ * LoginPage container
+ *
+ * @class LoginPage
+ * @extends {React.Component}
+ */
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
@@ -15,6 +21,12 @@ class LoginPage extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  /**
+   * Validate and submit the form
+   *
+   * @param {Object} event
+   * @returns {Undefined} nothing
+   */
   onSubmit(event) {
     event.preventDefault();
     const { valid, errors } = validateLogin(this.state);
@@ -33,10 +45,22 @@ class LoginPage extends React.Component {
     }
   }
 
+  /**
+   * Control input fields
+   *
+   * @param {Object} event
+   * @returns {Undefined} nothing
+   */
   onChange(event) {
     return this.setState({ [event.target.name]: event.target.value });
   }
 
+
+  /**
+  * Render the component
+  *
+  * @returns {Object} jsx component
+   */
   render() {
     return (
       <LoginForm

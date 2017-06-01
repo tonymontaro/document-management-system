@@ -1,5 +1,11 @@
 import React, { PropTypes } from 'react';
 
+/**
+ * Delete Modal
+ *
+ * @param {Object} props { toBeDeleted, deleteItem }
+ * @returns {Object} jsx object
+ */
 const DeleteModal = ({ toBeDeleted, deleteItem }) =>
   <div id="deleteModal" className="modal delete-modal">
     <div className="modal-content">

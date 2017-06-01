@@ -7,6 +7,7 @@ const DocumentController = {
   /**
   * Get documents
   * Route: GET: /documents or GET: /documents/?limit=[integer]&offset=[integer]&q=[title]
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -20,6 +21,7 @@ const DocumentController = {
     let queryOptions = { access: 'public', title: { $iLike: searchKey } };
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
     const decoded = Authenticator.verifyToken(token);
+
     if (decoded) {
       queryOptions = (decoded.roleId === 1) ? { title: { $iLike: searchKey } } : {
         $or: [
@@ -60,6 +62,7 @@ const DocumentController = {
   /**
   * Create a document
   * Route: POST: /documents
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -91,6 +94,7 @@ const DocumentController = {
   /**
   * Get a document
   * Route: GET: /documents/:id
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -105,10 +109,12 @@ const DocumentController = {
         if (!document) {
           return res.status(404).send({ message: 'Document not found' });
         }
+
         const token = req.body.token || req.query.token || req.headers['x-access-token'];
         const decoded = Authenticator.verifyToken(token);
         const userId = decoded ? decoded.id : null;
         const userRoleId = decoded ? decoded.roleId : null;
+
         if (document.access !== 'public'
           && userRoleId !== 1
           && userId !== document.authorId
@@ -125,6 +131,7 @@ const DocumentController = {
   /**
   * Update a document
   * Route: PUT: /documents/:id
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -146,6 +153,7 @@ const DocumentController = {
   /**
   * Delete a document
   * Route: DELETE: /documents/:id
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object

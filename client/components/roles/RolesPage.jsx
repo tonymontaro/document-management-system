@@ -2,6 +2,12 @@ import React, { PropTypes } from 'react';
 import TextInput from '../common/TextInput';
 import DeleteModal from '../common/DeleteModal';
 
+/**
+ *
+ *
+ * @param {Object} props { roles, editRole, newRole, onClick, onChange, onSave, deleteRole }
+ * @returns {Object} jsx object
+ */
 const RolesPage = ({ roles, editRole, newRole, onClick, onChange, onSave, deleteRole }) =>
   <div className="form-div">
     <div className="container">
