@@ -5,6 +5,7 @@ import { handleError, throwError } from '../utilities/errorHandler';
 
 /**
 * get accessible documents
+*
 * @param {Number} offset
 * @param {Number} limit
 * @returns {Object} dispatch object
@@ -12,12 +13,15 @@ import { handleError, throwError } from '../utilities/errorHandler';
 export function getDocuments(offset = 0, limit = 9) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
+
     return axios.get(`/documents?limit=${limit}&offset=${offset}`)
       .then((res) => {
         dispatch({
           type: types.LOAD_DOCUMENTS_SUCCESS,
-          documents: res.data,
-          offset
+          documents: res.data.rows,
+          metaData: res.data.metaData,
+          offset,
+          query: ''
         });
       })
       .catch(error => handleError(error, dispatch));
@@ -26,6 +30,7 @@ export function getDocuments(offset = 0, limit = 9) {
 
 /**
 * search for accessible documents
+*
 * @param {String} query
 * @param {Number} offset
 * @param {Number} limit
@@ -34,21 +39,24 @@ export function getDocuments(offset = 0, limit = 9) {
 export function searchDocument(query, offset = 0, limit = 9) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
+
     return axios
       .get(`/search/documents?q=${query}&limit=${limit}&offset=${offset}`)
       .then((res) => {
         dispatch({
           type: types.SEARCH_SUCCESS,
-          searchResult: res.data,
+          searchResult: res.data.rows,
+          metaData: res.data.metaData,
           query,
           offset
         });
       })
-      .catch(error => handleError(error, dispatch));
+      .catch(error => throwError(error, dispatch));
   };
 }
 /**
 * Save a document
+*
 * @param {String} document
 * @returns {Object} dispatch object
 */
@@ -56,6 +64,7 @@ export function saveDocument(document) {
   if (document.updateId) {
     return (dispatch) => {
       dispatch(beginAjaxCall());
+
       return axios.put(`/documents/${document.updateId}`, document)
         .then((res) => {
           dispatch({ type: types.UPDATE_DOCUMENT_SUCCESS, document: res.data });
@@ -66,6 +75,7 @@ export function saveDocument(document) {
 
   return (dispatch) => {
     dispatch(beginAjaxCall());
+
     return axios.post('/documents', document)
       .then((res) => {
         dispatch({ type: types.CREATE_DOCUMENT_SUCCESS, document: res.data });
@@ -76,12 +86,14 @@ export function saveDocument(document) {
 
 /**
 * Delete a document
+*
 * @param {String} id document id
 * @returns {Object} dispatch object
 */
 export function deleteDocument(id) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
+
     return axios.delete(`/documents/${id}`)
       .then(() => {
         dispatch({
@@ -94,12 +106,14 @@ export function deleteDocument(id) {
 
 /**
 * retrieve a document
+*
 * @param {String} id document id
 * @returns {Object} dispatch object
 */
 export function getDocument(id) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
+
     return axios.get(`/documents/${id}`)
       .then((res) => {
         dispatch({
@@ -113,12 +127,14 @@ export function getDocument(id) {
 
 /**
 * retrieve a user's documents
+*
 * @param {String} id user id
 * @returns {Object} dispatch object
 */
 export function getUserDocuments(id) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
+
     return axios.get(`/users/${id}/documents`)
       .then((res) => {
         dispatch({

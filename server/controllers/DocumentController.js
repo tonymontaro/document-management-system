@@ -1,10 +1,13 @@
 import models from '../models';
-import authenticator from '../middlewares/authenticator';
+import Authenticator from '../helpers/Authenticator';
+import handleError from '../helpers/handleError';
+import paginate from '../helpers/paginate';
 
-const Document = {
+const DocumentController = {
   /**
   * Get documents
   * Route: GET: /documents or GET: /documents/?limit=[integer]&offset=[integer]&q=[title]
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -17,30 +20,49 @@ const Document = {
 
     let queryOptions = { access: 'public', title: { $iLike: searchKey } };
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
-    const decoded = authenticator.verifyToken(token);
+    const decoded = Authenticator.verifyToken(token);
+
     if (decoded) {
       queryOptions = (decoded.roleId === 1) ? { title: { $iLike: searchKey } } : {
         $or: [
-          { access: 'public' },
-          { authorId: decoded.id },
-          { $and: [{ authorRoleId: decoded.roleId }, { access: 'role' }] }
+          { access: { $or: ['public', 'role'] } },
+          { authorId: decoded.id }
         ],
         title: { $iLike: searchKey } };
     }
 
-    return models.Document.findAll({
-      offset: req.query.offset || 0,
-      limit: req.query.limit || 100,
+    const offset = Number(req.query.offset) || 0;
+    const limit = Number(req.query.limit) || 20;
+
+    return models.Document.findAndCount({
+      offset,
+      limit,
       where: queryOptions,
+      include: [{
+        model: models.User,
+        attributes: ['username', 'roleId'] }],
       order: [['createdAt', 'DESC']]
     })
-    .then(documents => res.status(200).send(documents))
-    .catch(error => res.status(400).send(error));
+    .then((documents) => {
+      const documentRows = decoded.roleId === 1 ? documents.rows :
+        documents.rows.filter(
+          doc => !(doc.access === 'role' && doc.User.roleId !== decoded.roleId)
+        );
+
+      const response = {
+        rows: documentRows,
+        metaData: paginate(documents.count, limit, offset)
+      };
+
+      res.status(200).send(response);
+    })
+    .catch(error => handleError(error, res));
   },
 
   /**
   * Create a document
   * Route: POST: /documents
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -49,8 +71,6 @@ const Document = {
     return models.User.findById(res.locals.decoded.id)
       .then((user) => {
         req.body.authorId = user.id;
-        req.body.authorRoleId = user.roleId;
-        req.body.author = user.username;
 
         return models.Document.create(req.body)
           .then((document) => {
@@ -59,52 +79,59 @@ const Document = {
               title: document.title,
               content: document.content,
               access: document.access,
+              User: { username: user.username, roleId: user.roleId },
               authorId: document.authorId,
-              author: document.author,
-              authorRoleId: document.authorRoleId,
               createdAt: document.createdAt,
               message: 'Document created'
             };
             return res.status(201).send(response);
           })
-          .catch(error => res.status(400).send(error));
+          .catch(error => handleError(error, res));
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => handleError(error, res));
   },
 
   /**
   * Get a document
   * Route: GET: /documents/:id
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
   */
   getDocument(req, res) {
-    return models.Document.findById(req.params.id)
+    return models.Document.findById(req.params.id, {
+      include: [{
+        model: models.User,
+        attributes: ['username', 'roleId'] }]
+    })
       .then((document) => {
         if (!document) {
           return res.status(404).send({ message: 'Document not found' });
         }
+
         const token = req.body.token || req.query.token || req.headers['x-access-token'];
-        const decoded = authenticator.verifyToken(token);
+        const decoded = Authenticator.verifyToken(token);
         const userId = decoded ? decoded.id : null;
         const userRoleId = decoded ? decoded.roleId : null;
+
         if (document.access !== 'public'
           && userRoleId !== 1
           && userId !== document.authorId
           && !(document.access === 'role'
-            && userRoleId === document.authorRoleId)) {
+            && userRoleId === document.User.roleId)) {
           return res.status(403).send({ message: 'Access denied' });
         }
 
         return res.status(200).send(document);
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => handleError(error, res));
   },
 
   /**
   * Update a document
   * Route: PUT: /documents/:id
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -112,13 +139,21 @@ const Document = {
   update(req, res) {
     return res.locals.document
       .update(req.body, { fields: Object.keys(req.body) })
-      .then(updatedDocument => res.status(200).send(updatedDocument))
-      .catch(error => res.status(400).send(error));
+      .then((updatedDocument) => {
+        return models.Document.findById(updatedDocument.id, {
+          include: [{
+            model: models.User,
+            attributes: ['username', 'roleId'] }]
+        })
+        .then(document => res.status(200).send(document));
+      })
+      .catch(error => handleError(error, res));
   },
 
   /**
   * Delete a document
   * Route: DELETE: /documents/:id
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @returns {Response} response object
@@ -130,4 +165,4 @@ const Document = {
 
 };
 
-export default Document;
+export default DocumentController;

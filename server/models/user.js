@@ -1,10 +1,15 @@
+/* eslint no-underscore-dangle: 0 */
+const bcrypt = require('bcrypt');
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     username: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
-      validate: { not: ['\\s+'] }
+      unique: { args: true, msg: 'Username already exist' },
+      validate: {
+        not: { args: ['\\s+'], msg: 'Use a valid username' },
+        notEmpty: { args: true, msg: 'Username cannot be empty' } }
     },
     fullName: {
       type: DataTypes.STRING
@@ -12,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
-      validate: { isEmail: true }
+      unique: { args: true, msg: 'Email already exist' },
+      validate: { isEmail: { args: true, msg: 'Use a valid email' } }
     },
     password: {
       type: DataTypes.STRING,
@@ -24,7 +29,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     roleId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       defaultValue: 2
     }
   }, {
@@ -36,8 +40,29 @@ module.exports = (sequelize, DataTypes) => {
         });
         User.belongsTo(models.Role, {
           foreignKey: 'roleId',
-          onDelete: 'CASCADE'
+          onDelete: 'SET NULL'
         });
+      }
+    },
+
+    instanceMethods: {
+      verifyPassword(password) {
+        return bcrypt.compareSync(password, this.password);
+      },
+      encryptPassword() {
+        this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10));
+      }
+    },
+
+    hooks: {
+      beforeCreate(user) {
+        user.encryptPassword();
+      },
+
+      beforeUpdate(user) {
+        if (user._changed.password) {
+          user.encryptPassword();
+        }
       }
     }
   });

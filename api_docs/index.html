@@ -1,0 +1,1135 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Doc-Mage API Reference</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+      <link href="../api_docs/stylesheets/screen.css" rel="stylesheet" media="screen" />
+      <link href="../api_docs/stylesheets/print.css" rel="stylesheet" media="print" />
+        <script src="../api_docs/javascripts/all.js"></script>
+    </head>
+
+    <body class="index" data-languages="[&quot;javascript&quot;]">
+      <a href="#" id="nav-button">
+        <span>
+          NAV
+          <img src="../api_docs/images/navbar.png" alt="Navbar" />
+        </span>
+      </a>
+      <div class="tocify-wrapper">
+        <img src="../api_docs/images/logo.png" alt="Logo" />
+          <div class="lang-selector">
+                <a href="#" data-language-name="javascript">javascript</a>
+          </div>
+          <div class="search">
+            <input type="text" class="search" id="input-search" placeholder="Search">
+          </div>
+          <ul class="search-results"></ul>
+        <div id="toc">
+        </div>
+          <ul class="toc-footer">
+              <li><span>&copy; Andela, developed by Anthony Ngene</span></li>
+          </ul>
+      </div>
+      <div class="page-wrapper">
+        <div class="dark-box"></div>
+        <div class="content">
+          <h1 id="introduction">Introduction</h1>
+
+<p>Document Management System API contains several API end points that allows users to create, edit, retrieve and delete documents. It also offers a way to ensure that only authorized users can perform certain operations.</p>
+
+<h2 id="development">Development</h2>
+
+<p>The application was developed with <a href="http://nodejs.org/">NodeJs</a> and <a href="http://expressjs.com/">Express</a> is used for routing. The <a href="http://postgresql.com/">Postgres</a> database was used with sequelize as the ORM</p>
+
+<h2 id="installation">Installation</h2>
+
+<p>Follow the steps below to setup a local development environment. First ensure you have <a href="https://www.postgresql.org/">Postgresql</a> installed, and a version of <a href="http://nodejs.org/">Node.js</a> equal or greater than v6.10.0.</p>
+
+<ol>
+<li>Clone the repository from a terminal <code class="prettyprint">git clone https://github.com/andela-angene/document-management-system.git</code>.</li>
+<li>Move into the project directory <code class="prettyprint">cd document-management-system</code></li>
+<li>Rename <code class="prettyprint">.env_sample</code> to <code class="prettyprint">.env</code> and add the required DATABASE URL.</li>
+<li>Install project dependencies <code class="prettyprint">npm install</code></li>
+<li>Start the express server <code class="prettyprint">npm start</code>.</li>
+</ol>
+
+<h2 id="api-summary">API Summary</h2>
+
+<h3 id="users">Users</h3>
+
+<table><thead>
+<tr>
+<th>EndPoint</th>
+<th>Functionality</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>POST /users/login</td>
+<td>Logs in a user.</td>
+</tr>
+<tr>
+<td>POST /users/logout</td>
+<td>Logs out a user.</td>
+</tr>
+<tr>
+<td>POST /users/</td>
+<td>Creates a new user.</td>
+</tr>
+<tr>
+<td>GET /users/</td>
+<td>Gets all users (available only to the Admin).</td>
+</tr>
+<tr>
+<td>GET /users/:id</td>
+<td>Finds user by id.</td>
+</tr>
+<tr>
+<td>PUT /users/:id</td>
+<td>Updates a user&rsquo;s attributes based on the id specified (available to the profile owner or admin)</td>
+</tr>
+<tr>
+<td>DELETE /users/:id</td>
+<td>Deletes user (available only to the profile owner)</td>
+</tr>
+<tr>
+<td>GET /users/:id/documents</td>
+<td>Gets all documents for a particular user</td>
+</tr>
+</tbody></table>
+
+<h3 id="documents">Documents</h3>
+
+<table><thead>
+<tr>
+<th>EndPoint</th>
+<th>Functionality</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>POST /documents/</td>
+<td>Creates a new document instance.</td>
+</tr>
+<tr>
+<td>GET /documents/</td>
+<td>Gets all documents.</td>
+</tr>
+<tr>
+<td>GET /documents/:id</td>
+<td>Find document by id.</td>
+</tr>
+<tr>
+<td>PUT /documents/:id</td>
+<td>Updates a document attributes. (available only to the author)</td>
+</tr>
+<tr>
+<td>DELETE /documents/:id</td>
+<td>Delete document. (available only to the author)</td>
+</tr>
+<tr>
+<td>GET search/documents/?q=${query}</td>
+<td>Get all documents with title containing the search query</td>
+</tr>
+</tbody></table>
+
+<h3 id="roles-available-only-to-the-admin">Roles (available only to the Admin)</h3>
+
+<table><thead>
+<tr>
+<th>EndPoint</th>
+<th>Functionality</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>GET /roles/</td>
+<td>Get all Roles.</td>
+</tr>
+<tr>
+<td>POST /roles/</td>
+<td>Create a Role.</td>
+</tr>
+<tr>
+<td>PUT /roles/:id</td>
+<td>Edit a Role.</td>
+</tr>
+<tr>
+<td>DELETE /roles/:id</td>
+<td>Delete a Role.</td>
+</tr>
+</tbody></table>
+
+          <h1 id="users">Users</h1>
+
+<h2 id="list-users">List Users</h2>
+
+<blockquote>
+<p>Sample JSON structured response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"rows"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"admin"</span><span class="p">,</span>
+      <span class="s2">"fullName"</span><span class="p">:</span> <span class="s2">"Administrator"</span><span class="p">,</span>
+      <span class="s2">"email"</span><span class="p">:</span> <span class="s2">"admin@dms.com"</span><span class="p">,</span>
+      <span class="s2">"roleId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">"about"</span><span class="p">:</span> <span class="s2">"I am the admin, better change my password and this about message."</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"montaro"</span><span class="p">,</span>
+      <span class="s2">"fullName"</span><span class="p">:</span> <span class="s2">"Tony Montaro"</span><span class="p">,</span>
+      <span class="s2">"email"</span><span class="p">:</span> <span class="s2">"bossmontaro@gmail.com"</span><span class="p">,</span>
+      <span class="s2">"roleId"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s2">"about"</span><span class="p">:</span> <span class="s2">"I love playing chess."</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">"metaData"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"page"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"pageCount"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"pageSize"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">"totalCount"</span><span class="p">:</span> <span class="mi">2</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: GET: <code class="prettyprint">/users</code></li>
+<li>Requires: Authentication</li>
+</ul>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>limit</td>
+<td>20</td>
+<td>Sets the limit.</td>
+</tr>
+<tr>
+<td>offset</td>
+<td>0</td>
+<td>Sets the offset.</td>
+</tr>
+</tbody></table>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="create-user">Create User</h2>
+
+<blockquote>
+<p>Request:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"kenpachi"</span><span class="p">,</span>
+  <span class="s2">"fullName"</span><span class="p">:</span> <span class="s2">"Kenpachi Zaraki"</span><span class="p">,</span>
+  <span class="s2">"email"</span><span class="p">:</span> <span class="s2">"bosskp@bleach.com"</span><span class="p">,</span>
+  <span class="s2">"password"</span><span class="p">:</span> <span class="s2">"bankai!"</span><span class="p">,</span>
+  <span class="s2">"about"</span><span class="p">:</span> <span class="s2">"Kenpachi Zaraki is a fictional character and an antihero"</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"id"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"kenpachi"</span><span class="p">,</span>
+  <span class="s2">"fullName"</span><span class="p">:</span> <span class="s2">"Kenpachi Zaraki"</span><span class="p">,</span>
+  <span class="s2">"email"</span><span class="p">:</span> <span class="s2">"bosskp@bleach.com"</span><span class="p">,</span>
+  <span class="s2">"roleId"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="s2">"about"</span><span class="p">:</span> <span class="s2">"Kenpachi Zaraki is a fictional character and an antihero"</span><span class="p">,</span>
+  <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"User created"</span><span class="p">,</span>
+  <span class="s2">"token"</span><span class="p">:</span> <span class="s2">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJrZW5wYWNoaSIsInJvbGVJZCI6MiwiaWF0IjoxNDk2MDAxNTE4LCJleHAiOjE0OTY2MDYzMTh9.GjmEBd_9LH9b_Gdabgdfit2HfkFBZfPshquUnAmRXV8"</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: POST: <code class="prettyprint">/users</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">201: Created</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="get-user">Get User</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"montaro"</span><span class="p">,</span>
+  <span class="s2">"fullName"</span><span class="p">:</span> <span class="s2">"Tony Montaro"</span><span class="p">,</span>
+  <span class="s2">"email"</span><span class="p">:</span> <span class="s2">"bossmontaro@gmail.com"</span><span class="p">,</span>
+  <span class="s2">"roleId"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="s2">"about"</span><span class="p">:</span> <span class="s2">"I love playing chess."</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: GET: <code class="prettyprint">/users/:id</code></li>
+<li>Requires: Authentication</li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="edit-user">Edit User</h2>
+
+<blockquote>
+<p>Request:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"roleId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"montaro"</span><span class="p">,</span>
+  <span class="s2">"fullName"</span><span class="p">:</span> <span class="s2">"Tony Montaro"</span><span class="p">,</span>
+  <span class="s2">"email"</span><span class="p">:</span> <span class="s2">"bossmontaro@gmail.com"</span><span class="p">,</span>
+  <span class="s2">"roleId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s2">"about"</span><span class="p">:</span> <span class="s2">"I love playing chess."</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: PUT: <code class="prettyprint">/users/:id</code></li>
+<li>Requires: Authentication</li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="delete-user">Delete User</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"User deleted"</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: DELETE: <code class="prettyprint">/users/:id</code></li>
+<li>Requires: Authentication</li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="login-user">Login User</h2>
+
+<blockquote>
+<p>Request:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"admin"</span><span class="p">,</span>
+  <span class="s2">"password"</span><span class="p">:</span> <span class="s2">"alpine"</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"token"</span><span class="p">:</span> <span class="s2">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGVJZCI6MSwiaWF0IjoxNDk2MDA5MjQxLCJleHAiOjE0OTY2MTQwNDF9.hkWYITDnqi7paQjhkqhh5Fe0yAiPf34Ffji9jKHQ_Ik"</span><span class="p">,</span>
+  <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Login successful"</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: POST: <code class="prettyprint">/users/login</code></li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="logout-user">Logout User</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Success, delete user token on the client"</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: POST: <code class="prettyprint">/users/logout</code></li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="list-user-documents">List User Documents</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"DMS Welcome Message"</span><span class="p">,</span>
+    <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"Magical document manager"</span><span class="p">,</span>
+    <span class="s2">"access"</span><span class="p">:</span> <span class="s2">"public"</span><span class="p">,</span>
+    <span class="s2">"authorId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-05-28T22:19:08.870Z"</span><span class="p">,</span>
+    <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-05-28T22:58:17.249Z"</span><span class="p">,</span>
+    <span class="s2">"User"</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"admin"</span><span class="p">,</span>
+      <span class="s2">"roleId"</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: GET: <code class="prettyprint">/users/:id/documents</code></li>
+<li>Requires: Authentication</li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="search-users">Search Users</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"rows"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"montaro"</span><span class="p">,</span>
+      <span class="s2">"fullName"</span><span class="p">:</span> <span class="s2">"Tony Montaro"</span><span class="p">,</span>
+      <span class="s2">"email"</span><span class="p">:</span> <span class="s2">"bossmontaro@gmail.com"</span><span class="p">,</span>
+      <span class="s2">"roleId"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s2">"about"</span><span class="p">:</span> <span class="s2">"I love playing chess."</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">"metaData"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"page"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"pageCount"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"pageSize"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"totalCount"</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: GET: <code class="prettyprint">/search/users</code></li>
+<li>Requires: Authentication</li>
+</ul>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>q</td>
+<td>&ldquo;&rdquo;</td>
+<td>Search query.</td>
+</tr>
+</tbody></table>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+          <h1 id="documents">Documents</h1>
+
+<h2 id="list-documents">List Documents</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"rows"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"A Song of Ice and Fire III"</span><span class="p">,</span>
+      <span class="s2">"content"</span><span class="p">:</span> <span class="s2">`The day was grey and bitter cold, and the dogs would not take the scent.
+        The big black bitch had taken one sniff at the bear tracks, backed off, and skulked back to the pack with her tail between her legs.
+        The dogs huddled together miserably on the riverbank as the wind snapped at them.
+        Chett felt it too, biting through his layers of black wool and boiled leather.
+        It was too bloody cold for man or beast, but here they were. His mouth twisted, and he could almost feel the boils that covered his cheeks and neck growing red and angry.
+        I should be safe back at the Wall, tending the bloody ravens and making fires for old Maester Aemon. It was the bastard Jon Snow who had taken that from him, him and his fat friend Sam Tarly.
+        It was their fault he was here, freezing his bloody balls off with a pack of hounds deep in the haunted forest.`</span><span class="p">,</span>
+      <span class="s2">"access"</span><span class="p">:</span> <span class="s2">"public"</span><span class="p">,</span>
+      <span class="s2">"authorId"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-05-28T22:19:08.871Z"</span><span class="p">,</span>
+      <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-05-28T22:19:08.871Z"</span><span class="p">,</span>
+      <span class="s2">"User"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"montaro"</span><span class="p">,</span>
+        <span class="s2">"roleId"</span><span class="p">:</span> <span class="mi">2</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Doc-Mage Welcome Message"</span><span class="p">,</span>
+      <span class="s2">"content"</span><span class="p">:</span> <span class="s2">`Hello and welcome, if this is the first time running the app,
+        you can login with the following default admin settings:
+        username: admin
+        password: alpine
+        Please login and change the default root password.`</span><span class="p">,</span>
+      <span class="s2">"access"</span><span class="p">:</span> <span class="s2">"public"</span><span class="p">,</span>
+      <span class="s2">"authorId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-05-28T22:19:08.870Z"</span><span class="p">,</span>
+      <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-05-28T22:19:08.871Z"</span><span class="p">,</span>
+      <span class="s2">"User"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"admin"</span><span class="p">,</span>
+        <span class="s2">"roleId"</span><span class="p">:</span> <span class="mi">1</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">"metaData"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"page"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"pageCount"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"pageSize"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">"totalCount"</span><span class="p">:</span> <span class="mi">2</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: GET: <code class="prettyprint">/documents</code></li>
+</ul>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>limit</td>
+<td>20</td>
+<td>Sets the limit.</td>
+</tr>
+<tr>
+<td>offset</td>
+<td>0</td>
+<td>Sets the offset.</td>
+</tr>
+</tbody></table>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="create-document">Create Document</h2>
+
+<blockquote>
+<p>Request:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Things fall apart"</span><span class="p">,</span>
+  <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"Okonkwo fought bravely against despair"</span><span class="p">,</span>
+  <span class="s2">"access"</span><span class="p">:</span> <span class="s2">"private"</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"id"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Things fall apart"</span><span class="p">,</span>
+  <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"Okonkwo fought bravely against despair"</span><span class="p">,</span>
+  <span class="s2">"access"</span><span class="p">:</span> <span class="s2">"private"</span><span class="p">,</span>
+  <span class="s2">"User"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"admin"</span><span class="p">,</span>
+    <span class="s2">"roleId"</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">},</span>
+  <span class="s2">"authorId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-05-28T22:43:37.097Z"</span><span class="p">,</span>
+  <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Document created"</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: POST: <code class="prettyprint">/documents</code></li>
+<li>Requires: Authentication</li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">201: Created</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="get-document">Get Document</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Doc-Mage Welcome Message"</span><span class="p">,</span>
+  <span class="s2">"content"</span><span class="p">:</span> <span class="s2">`Hello and welcome, if this is the first time running the app,
+    you can login with the following default admin settings:
+    username: admin
+    password: alpine
+    Please login and change the default root password.`</span><span class="p">,</span>
+  <span class="s2">"access"</span><span class="p">:</span> <span class="s2">"public"</span><span class="p">,</span>
+  <span class="s2">"authorId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-05-28T22:19:08.870Z"</span><span class="p">,</span>
+  <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-05-28T22:19:08.871Z"</span><span class="p">,</span>
+  <span class="s2">"User"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"admin"</span><span class="p">,</span>
+    <span class="s2">"roleId"</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: GET: <code class="prettyprint">/documents/:id</code></li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="edit-document">Edit Document</h2>
+
+<blockquote>
+<p>Request:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"Magical document manager"</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Doc-Mage Welcome Message"</span><span class="p">,</span>
+  <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"Magical document manager"</span><span class="p">,</span>
+  <span class="s2">"access"</span><span class="p">:</span> <span class="s2">"public"</span><span class="p">,</span>
+  <span class="s2">"authorId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-05-28T22:19:08.870Z"</span><span class="p">,</span>
+  <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-05-28T22:58:17.249Z"</span><span class="p">,</span>
+  <span class="s2">"User"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"admin"</span><span class="p">,</span>
+    <span class="s2">"roleId"</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: PUT: <code class="prettyprint">/documents/:id</code></li>
+<li>Requires: Authentication</li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="delete-document">Delete Document</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Document deleted"</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: DELETE: <code class="prettyprint">/documents/:id</code></li>
+<li>Requires: Authentication</li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="search-documents">Search Documents</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"rows"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Doc-Mage Welcome Message"</span><span class="p">,</span>
+      <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"Magical document manager"</span><span class="p">,</span>
+      <span class="s2">"access"</span><span class="p">:</span> <span class="s2">"public"</span><span class="p">,</span>
+      <span class="s2">"authorId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-05-28T22:19:08.870Z"</span><span class="p">,</span>
+      <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-05-28T22:58:17.249Z"</span><span class="p">,</span>
+      <span class="s2">"User"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"admin"</span><span class="p">,</span>
+        <span class="s2">"roleId"</span><span class="p">:</span> <span class="mi">1</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">"metaData"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"page"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"pageCount"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"pageSize"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"totalCount"</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: GET: <code class="prettyprint">/search/documents</code></li>
+</ul>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>q</td>
+<td>&ldquo;&rdquo;</td>
+<td>Search query.</td>
+</tr>
+</tbody></table>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+          <h1 id="roles">Roles</h1>
+
+<h2 id="list-roles">List Roles</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"admin"</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"regular"</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: GET: <code class="prettyprint">/roles</code></li>
+<li>Requires: Authentication</li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="create-role">Create Role</h2>
+
+<blockquote>
+<p>Request:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"editor"</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"id"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"editor"</span><span class="p">,</span>
+  <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Role created"</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: POST: <code class="prettyprint">/roles</code></li>
+<li>Requires: Authentication</li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">201: Created</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="get-role">Get Role</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"regular"</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: GET: <code class="prettyprint">/roles/:id</code></li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="edit-role">Edit Role</h2>
+
+<blockquote>
+<p>Request:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"subscriber"</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"id"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"subscriber"</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: PUT: <code class="prettyprint">/roles/:id</code></li>
+<li>Requires: Authentication</li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<h2 id="delete-role">Delete Role</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Role deleted"</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id="request">Request</h3>
+
+<ul>
+<li>Endpoint: DELETE: <code class="prettyprint">/roles/:id</code></li>
+<li>Requires: Authentication</li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<ul>
+<li>Status: <code class="prettyprint">200: OK</code></li>
+<li>Body <code class="prettyprint">(application/json)</code></li>
+</ul>
+
+<aside class="success">
+Thanks for reading this doc, Enjoy the <a href="http://doc-mage.herokuapp.com/">app!</a>
+</aside>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="javascript">javascript</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>

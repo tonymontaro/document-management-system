@@ -23,20 +23,11 @@ module.exports = {
       },
       authorId: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
         references: {
           model: 'Users',
           key: 'id'
         }
-      },
-      author: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      authorRoleId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 2
       },
       createdAt: {
         allowNull: false,
@@ -47,5 +38,5 @@ module.exports = {
         type: Sequelize.DATE
       }
     }),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Documents')
+  down: queryInterface => queryInterface.dropTable('Documents')
 };

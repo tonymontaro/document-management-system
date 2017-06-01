@@ -2,8 +2,15 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
 
+/**
+ * Navigation Bar
+ *
+ * @param {Object} props {
+ *   username, logout, accessClass, getDocuments, getProfile, getUserDocuments }
+ * @returns {Object} jsx object
+ */
 const Navbar = ({
-  username, logout, accessClass, getDocuments, getProfile, getUsers, getUserDocuments }) =>
+  username, logout, accessClass, getDocuments, getProfile, getUserDocuments }) =>
     <header className={`navbar-fixed ${accessClass}`}>
       <nav>
         <div className="nav-wrapper container">
@@ -19,7 +26,7 @@ const Navbar = ({
               <li><Link id="signup" to="signup">SignUp</Link></li>
             </span>
             <span className="forAdmin">
-              <li><Link to="" onClick={getUsers}>Users</Link></li>
+              <li><Link to="user">Users</Link></li>
               <li><Link to="role">Roles</Link></li>
             </span>
             <span className="loggedIn">
@@ -27,7 +34,8 @@ const Navbar = ({
                 Documents<i className="material-icons right">arrow_drop_down</i>
               </Link></li>
               <li><Link className="dropdown-button" to="" data-activates="profile-dropdown">
-                {username}<i className="material-icons left">person_pin</i>
+                <span
+                  id="userName">{username}</span><i className="material-icons left">person_pin</i>
               </Link></li>
             </span>
           </ul>
@@ -58,7 +66,6 @@ Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
   getProfile: PropTypes.func.isRequired,
   getDocuments: PropTypes.func.isRequired,
-  getUsers: PropTypes.func.isRequired,
   getUserDocuments: PropTypes.func.isRequired,
   username: PropTypes.string,
   accessClass: PropTypes.string.isRequired

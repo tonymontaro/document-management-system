@@ -28,14 +28,16 @@ describe('Documents Reducer', () => {
     const newDocument = { title: 'Inception' };
     const action = { type: types.CREATE_DOCUMENT_SUCCESS, document: newDocument };
 
+    const expectedState = [
+      { title: 'Inception' },
+      { title: 'A' },
+      { title: 'B' }
+    ];
+
     // act
     const newState = documents(initialState, action);
 
-    // assert
-    expect(newState.length).toEqual(3);
-    expect(newState[0].title).toEqual('Inception');
-    expect(newState[1].title).toEqual('A');
-    expect(newState[2].title).toEqual('B');
+    expect(newState).toEqual(expectedState);
   });
 
   it('should update document when passed UPDATE_DOCUMENT_SUCCESS', () => {
@@ -48,15 +50,16 @@ describe('Documents Reducer', () => {
     const document = { id: '2', title: 'New Title' };
     const action = { type: types.UPDATE_DOCUMENT_SUCCESS, document };
 
+    const expectedState = [
+      { id: '2', title: 'New Title' },
+      { id: '1', title: 'A' },
+      { id: '3', title: 'C' }
+    ];
+
     // act
     const newState = documents(initialState, action);
-    const updatedDocument = newState.find(doc => doc.id === document.id);
-    const untouchedDocument = newState.find(doc => doc.id === '1');
 
-    // assert
-    expect(updatedDocument.title).toEqual('New Title');
-    expect(untouchedDocument.title).toEqual('A');
-    expect(newState.length).toEqual(initialState.length);
+    expect(newState).toEqual(expectedState);
   });
 
   it('should set search result when passed SEARCH_SUCCESS', () => {
@@ -90,6 +93,19 @@ describe('Documents Reducer', () => {
 
     expect(newState).toEqual(userDocuments);
   });
+
+  it('should return the state when not affected', () => {
+    // arrange
+    const currentState = {
+      iAmInitialState: true,
+    };
+    const action = { type: 'AFFECT_NO_ONE' };
+
+    // act
+    const newState = documents(currentState, action);
+
+    expect(newState).toEqual(currentState);
+  });
 });
 
 describe('Document Reducer', () => {
@@ -104,5 +120,18 @@ describe('Document Reducer', () => {
 
     // assert
     expect(newState).toEqual(loadedDocument);
+  });
+
+  it('should return the state when not affected', () => {
+    // arrange
+    const currentState = {
+      iAmInitialState: true,
+    };
+    const action = { type: 'AFFECT_NO_ONE' };
+
+    // act
+    const newState = documentReducer(currentState, action);
+
+    expect(newState).toEqual(currentState);
   });
 });

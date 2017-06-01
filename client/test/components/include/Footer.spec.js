@@ -8,6 +8,7 @@ describe('Footer', () => {
     const wrapper = shallow(<Footer />);
     expect(wrapper.find('footer').length).toEqual(1);
   });
+
   it('renders the footer content', () => {
     const wrapper = shallow(<Footer />);
     expect(wrapper.find('.container').text())

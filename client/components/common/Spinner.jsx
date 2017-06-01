@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * Spinner
+ *
+ * @returns {Object} jsx object
+ */
 const Spinner = () =>
   <div className="preloader-wrapper big active">
     <div className="spinner-layer">

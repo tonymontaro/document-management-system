@@ -8,14 +8,14 @@ function setup() {
     search: 'doc',
     onSearch: () => {},
     onChange: () => {},
-    access: { loggedIn: true, user: 'tony' },
-    documents: [],
+    access: { loggedIn: true, user: { username: 'tony' } },
+    documents: [{ title: 'Manny' }, {}, {}],
+    toBeDeleted: {},
+    confirmDelete: () => {},
     deleteDocument: () => {},
-    editMode: false,
     nextPage: () => {},
     prevPage: () => {},
-    currentPage: 1,
-    query: ''
+    paginate: { page: 1, pageCount: 3, pageSize: 9, totalCount: 26 }
   };
 
   return shallow(<HomePageDiv {...props} />);
@@ -26,18 +26,27 @@ describe('HomePageDiv', () => {
     const wrapper = setup();
     expect(wrapper.find('.documents-div').length).toEqual(1);
   });
+
   it('renders search form', () => {
     const wrapper = setup();
     expect(wrapper.find('.search-form').length).toEqual(1);
   });
-  it('renders the switch button if the user is logged in', () => {
+
+  it('renders correct number of documents', () => {
     const wrapper = setup();
-    expect(wrapper.find('.edit-mode').length).toEqual(1);
+    expect(wrapper.find('DocumentCard').length).toEqual(3);
   });
+
+  it('correctly passes in props when rendering a DocumentCard', () => {
+    const wrapper = setup();
+    expect(wrapper.find('DocumentCard').first().prop('document')).toEqual({ title: 'Manny' });
+  });
+
   it('renders recent-documents container', () => {
     const wrapper = setup();
     expect(wrapper.find('.recent-documents').length).toEqual(1);
   });
+
   it('renders the pagination', () => {
     const wrapper = setup();
     expect(wrapper.find('Pagination').length).toEqual(1);

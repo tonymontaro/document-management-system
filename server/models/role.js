@@ -3,8 +3,8 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
-      validate: { notEmpty: true }
+      unique: { args: true, msg: 'Role already exist' },
+      validate: { notEmpty: { args: true, msg: 'Name cannot be empty' } }
     }
   }, {
     classMethods: {

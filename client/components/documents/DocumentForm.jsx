@@ -3,6 +3,12 @@ import TinyMCE from 'react-tinymce';
 import SelectInput from '../common/SelectInput';
 import TextInput from '../common/TextInput';
 
+/**
+ * Document Form
+ *
+ * @param {Object} props { accessOptions, getContent, onChange, document, onSubmit }
+ * @returns {Object} jsx object
+ */
 const DocumentForm = ({ accessOptions, getContent, onChange, document, onSubmit }) =>
   <div className="form-div new-document">
     <div className="container">
@@ -36,13 +42,6 @@ const DocumentForm = ({ accessOptions, getContent, onChange, document, onSubmit 
         />
         {document.errors.content &&
           <div className="card-panel error white-text">{document.errors.content}</div>}
-
-        <textarea
-          name="content"
-          id="hiddenContentArea"
-          onChange={onChange}
-          value={document.content} />
-
 
         <div className="input-field center">
           <button className="waves-effect btn">Save</button>

@@ -1,26 +1,39 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { signup } from '../../actions/accessActions';
+import { saveUser } from '../../actions/accessActions';
 import { validateSignUp } from '../../utilities/validator';
 import SignUpForm from './SignUpForm';
 import { handleError } from '../../utilities/errorHandler';
 
+/**
+ * SignUpPage component
+ *
+ * @class SignUpPage
+ * @extends {React.Component}
+ */
 class SignUpPage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = Object.assign({ password: '', errors: {} }, props.profile);
+    this.state = Object.assign({ password: '', confirmPassword: '', errors: {} }, props.profile);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
+  /**
+  * Validate and submit the form
+  *
+  * @param {Object} event
+   * @returns {Undefined} nothing
+   */
   onSubmit(event) {
     event.preventDefault();
     const { valid, errors } = validateSignUp(this.state);
     if (valid) {
       this.setState({ errors: {} });
-      this.props.signup(this.state)
+      this.props.saveUser(this.state)
       .then(() => {
+        Materialize.toast('Success!', 2000);
         this.context.router.push('/');
       })
       .catch(error => handleError(error));
@@ -29,31 +42,33 @@ class SignUpPage extends React.Component {
     }
   }
 
+  /**
+  * Control input fields
+  *
+  * @param {Object} event
+  * @returns {Undefined} nothing
+  */
   onChange(event) {
     return this.setState({ [event.target.name]: event.target.value });
   }
 
+  /**
+  * Render the component
+  *
+  * @returns {Object} jsx component
+   */
   render() {
-    const roleOptions = [];
-    this.props.roles.forEach((role) => {
-      if (role.id !== 1 || this.state.roleId === 1) {
-        roleOptions.push({ value: role.id, text: role.name });
-      }
-    });
-
     return (
       <SignUpForm
       onSubmit={this.onSubmit}
       onChange={this.onChange}
-      userDetails={this.state}
-      options={roleOptions} />
+      userDetails={this.state} />
     );
   }
 }
 
 SignUpPage.propTypes = {
-  signup: PropTypes.func.isRequired,
-  roles: PropTypes.array.isRequired,
+  saveUser: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired
 };
 
@@ -62,6 +77,5 @@ SignUpPage.contextTypes = {
 };
 
 export default connect(state => ({
-  roles: state.roles,
   profile: state.users.userProfile
-}), { signup })(SignUpPage);
+}), { saveUser })(SignUpPage);

@@ -8,6 +8,7 @@ describe('Spinner', () => {
     const wrapper = shallow(<Spinner />);
     expect(wrapper.find('.preloader-wrapper').length).toEqual(1);
   });
+
   it('renders the spinner', () => {
     const wrapper = shallow(<Spinner />);
     expect(wrapper.find('.circle').length).toEqual(3);

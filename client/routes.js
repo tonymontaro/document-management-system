@@ -9,19 +9,28 @@ import ManageDocument from './components/documents/ManageDocument';
 import ProfilePage from './components/users/ProfilePage';
 import ManageRoles from './components/roles/ManageRoles';
 import ManageUsers from './components/users/ManageUsers';
+import EnsureUserIsAdmin from './components/access/EnsureUserIsAdmin';
+import EnsureLoggedIn from './components/access/EnsureLoggedIn';
 
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={HomePage} />
     <Route path="login" component={LoginPage} />
-    <Route path="mydocuments" component={HomePage} />
-    <Route path="user/edit" component={SignUpPage} />
     <Route path="signup" component={SignUpPage} />
-    <Route path="profile" component={ProfilePage} />
-    <Route path="role" component={ManageRoles} />
-    <Route path="user" component={ManageUsers} />
+
+    <Route component={EnsureLoggedIn}>
+      <Route path="mydocuments" component={HomePage} />
+      <Route path="user/edit" component={SignUpPage} />
+      <Route path="profile" component={ProfilePage} />
+      <Route path="document/:id" component={ManageDocument} />
+    </Route>
+
+    <Route component={EnsureUserIsAdmin}>
+      <Route path="user" component={ManageUsers} />
+      <Route path="role" component={ManageRoles} />
+    </Route>
+
     <Route path="document" component={ManageDocument} />
-    <Route path="document/:id" component={ManageDocument} />
     <Route path="/:id" component={DocumentPage} />
     <Route path="*" component={HomePage} />
   </Route>

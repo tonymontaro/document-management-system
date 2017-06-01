@@ -21,10 +21,12 @@ describe('TextInput', () => {
     const wrapper = setup();
     expect(wrapper.find('.input-field').length).toEqual(1);
   });
+
   it('renders the input component', () => {
     const wrapper = setup();
     expect(wrapper.find('input').length).toEqual(1);
   });
+
   it('correctly initializes the input component', () => {
     const wrapper = setup();
     expect(wrapper.find('input').prop('value')).toBe('tony');

@@ -1,66 +1,69 @@
 import React, { PropTypes } from 'react';
 import Pagination from '../common/Pagination';
 import DocumentCard from './DocumentCard';
+import DeleteModal from '../common/DeleteModal';
 
+/**
+ * Home page component
+ *
+ * @param {Object} props {
+ *   search,
+ *   onSearch,
+ *   onChange,
+ *   access,
+ *   documents,
+ *   toBeDeleted,
+ *   confirmDelete,
+ *   deleteDocument,
+ *   nextPage,
+ *   prevPage,
+ *   paginate }
+ * @returns {Object} jsx object
+ */
 const HomePageDiv = ({
   search,
   onSearch,
   onChange,
   access,
   documents,
+  toBeDeleted,
+  confirmDelete,
   deleteDocument,
-  editMode,
   nextPage,
   prevPage,
-  currentPage,
-  query }) =>
+  paginate }) =>
     <div className="documents-div">
 
-      <div className="fixed-action-btn horizontal click-to-toggle">
-        <a className="btn-floating btn-large">
-          <i className="large material-icons">search</i>
-        </a>
-        <ul>
-          <form id="searchForm" className="search-form" onSubmit={onSearch}>
-            <div className="input-field">
-              <input
-                id="search"
-                type="text"
-                name="search"
-                value={search}
-                onChange={onChange} />
-              <label htmlFor="search" data-success="right">Search</label>
-            </div>
-          </form>
-        </ul>
-      </div>
-
-      {access.loggedIn && <div className="edit-mode">
-        <span className="switch">
-          <label>
-            <input
-              type="checkbox"
-              name="editMode"
-              onChange={onChange} />
-            <span className="lever" />
-            Edit Mode
-          </label>
-        </span>
-      </div>}
-
       <div className="container documents">
-        {query ? <h3 className="recent-documents">
-          Search result for: <span className="teal-text">{query}</span></h3> :
+        {paginate.query ? <h3 className="recent-documents">
+          Search result for: <span className="teal-text">{paginate.query}</span></h3> :
         <h3 className="recent-documents">Recently Added Documents</h3>}
+
+        <form id="searchForm" className="search-form" onSubmit={onSearch}>
+          <div className="row">
+            <div className="input-field col s10">
+              <input
+              id="search"
+              type="text"
+              name="search"
+              placeholder="Search"
+              value={search}
+              onChange={onChange} />
+            </div>
+            <div className="input-field col s2">
+              <button className="waves-effect btn">Go</button>
+            </div>
+          </div>
+        </form>
+
         <div className="row">
 
           {documents.map(document =>
             <DocumentCard
               key={document.id}
               document={document}
-              user={access.user}
-              deleteDocument={deleteDocument}
-              editMode={editMode} />
+              confirmDelete={confirmDelete}
+              user={access.user} />
           )}
 
         </div>
@@ -69,8 +72,13 @@ const HomePageDiv = ({
           collection={documents}
           nextPage={nextPage}
           prevPage={prevPage}
-          currentPage={currentPage} />
+          paginate={paginate} />
       </div>
+
+      <DeleteModal
+      toBeDeleted={toBeDeleted}
+      deleteItem={deleteDocument} />
+
     </div>;
 
 HomePageDiv.propTypes = {
@@ -78,13 +86,13 @@ HomePageDiv.propTypes = {
   search: PropTypes.string.isRequired,
   onSearch: PropTypes.func.isRequired,
   access: PropTypes.object.isRequired,
-  query: PropTypes.string.isRequired,
+  toBeDeleted: PropTypes.object.isRequired,
+  paginate: PropTypes.object.isRequired,
   documents: PropTypes.array.isRequired,
   deleteDocument: PropTypes.func.isRequired,
-  editMode: PropTypes.bool.isRequired,
   nextPage: PropTypes.func.isRequired,
-  prevPage: PropTypes.func.isRequired,
-  currentPage: PropTypes.number.isRequired
+  confirmDelete: PropTypes.func.isRequired,
+  prevPage: PropTypes.func.isRequired
 };
 
 export default HomePageDiv;

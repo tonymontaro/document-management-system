@@ -1,8 +1,13 @@
 import React, { PropTypes } from 'react';
 import TextInput from '../common/TextInput';
-import SelectInput from '../common/SelectInput';
 
-const SignUpForm = ({ onSubmit, onChange, userDetails, options }) =>
+/**
+* Login Form
+*
+* @param {Object} props { onSubmit, onChange, userDetails }
+* @returns {Object} jsx object
+*/
+const SignUpForm = ({ onSubmit, onChange, userDetails }) =>
   <div className="form-div">
     <div className="container">
       <h3 className="center">Sign Up</h3>
@@ -46,24 +51,25 @@ const SignUpForm = ({ onSubmit, onChange, userDetails, options }) =>
           error={userDetails.errors.password}
         />
 
-        <SelectInput
-          value={userDetails.roleId}
-          name="roleId"
-          label="Choose Role"
+        <TextInput
+          name="confirmPassword"
+          label="Confirm&nbsp;Password"
           onChange={onChange}
-          error={userDetails.errors.roleId}
-          options={options}
-          icon="user-plus" />
+          value={userDetails.confirmPassword}
+          type="password"
+          icon="unlock-alt"
+          error={userDetails.errors.confirmPassword}
+        />
 
         <div className="input-field">
           <i className="fa fa-comments-o prefix" />
+          <label htmlFor="about">About</label>
           <textarea
             name="about"
             id="textarea1"
             className="materialize-textarea"
             onChange={onChange}
-            value={userDetails.about}
-            placeholder="About" />
+            value={userDetails.about} />
         </div>
 
         <div className="input-field center">
@@ -77,8 +83,7 @@ const SignUpForm = ({ onSubmit, onChange, userDetails, options }) =>
 SignUpForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  userDetails: PropTypes.object,
-  options: PropTypes.array,
+  userDetails: PropTypes.object
 };
 
 export default SignUpForm;

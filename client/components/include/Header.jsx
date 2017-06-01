@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import truncate from 'html-truncate';
 import { logout } from '../../actions/accessActions';
-import { getProfile, getUsers } from '../../actions/userActions';
+import { getProfile } from '../../actions/userActions';
 import { getDocuments, getUserDocuments } from '../../actions/documentActions';
 import Navbar from './Navbar';
 import { handleError } from '../../utilities/errorHandler';
@@ -14,7 +14,6 @@ class Header extends React.Component {
     this.getProfile = this.getProfile.bind(this);
     this.logout = this.logout.bind(this);
     this.getDocuments = this.getDocuments.bind(this);
-    this.getUsers = this.getUsers.bind(this);
     this.getUserDocuments = this.getUserDocuments.bind(this);
   }
 
@@ -46,20 +45,13 @@ class Header extends React.Component {
       .catch(error => handleError(error));
   }
 
-  getUsers() {
-    this.props.getUsers()
-      .then(() => {
-        this.context.router.push('/user');
-      });
-  }
-
   render() {
     const { access } = this.props;
     let accessClass;
     let username;
     if (access.loggedIn) {
       accessClass = 'regularUser';
-      username = truncate(access.user.username, 20);
+      username = truncate(access.user.username, 30);
       if (access.user.roleId === 1) {
         accessClass = 'administrator';
       }
@@ -74,7 +66,6 @@ class Header extends React.Component {
         accessClass={accessClass}
         getDocuments={this.getDocuments}
         getProfile={this.getProfile}
-        getUsers={this.getUsers}
         getUserDocuments={this.getUserDocuments} />
     );
   }
@@ -85,8 +76,7 @@ Header.propTypes = {
   getProfile: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   getUserDocuments: PropTypes.func.isRequired,
-  getDocuments: PropTypes.func.isRequired,
-  getUsers: PropTypes.func.isRequired
+  getDocuments: PropTypes.func.isRequired
 };
 
 Header.contextTypes = {
@@ -94,5 +84,5 @@ Header.contextTypes = {
 };
 
 export default connect(state => ({ access: state.access }),
-  { logout, getProfile, getDocuments, getUsers, getUserDocuments })(Header);
+  { logout, getProfile, getDocuments, getUserDocuments })(Header);
 

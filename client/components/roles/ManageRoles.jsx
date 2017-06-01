@@ -5,6 +5,12 @@ import { saveRole, deleteRole, getRoles } from '../../actions/roleActions';
 import { validateRequiredFields } from '../../utilities/validator';
 import { handleError } from '../../utilities/errorHandler';
 
+/**
+ * Manage Role container
+ *
+ * @class ManageRoles
+ * @extends {React.Component}
+ */
 class ManageRoles extends React.Component {
   constructor(props) {
     super(props);
@@ -20,16 +26,42 @@ class ManageRoles extends React.Component {
     this.onClick = this.onClick.bind(this);
   }
 
+  /**
+  * Assigns updated roles state to class state
+  *
+  * @param {Object} nextProps
+  * @returns {Undefined} nothing
+  */
   componentWillReceiveProps(nextProps) {
     if (this.props.roles !== nextProps.roles) {
       this.setState({ roles: [...nextProps.roles] });
     }
   }
 
+  /**
+  * Initiates the modal after rendering the component
+  *
+  * @returns {Undefined} nothing
+  */
   componentDidMount() {
     $('.modal').modal();
   }
 
+  /**
+  * Retrieve roles before redering the component
+  *
+  * @returns {Undefined} nothing
+  */
+  componentWillMount() {
+    this.props.getRoles();
+  }
+
+  /**
+  * Delete the role
+  *
+   @param {Object} id role id
+  * @returns {Undefined} nothing
+  */
   deleteRole(id) {
     this.props.deleteRole(id)
       .then(() => {
@@ -38,6 +70,13 @@ class ManageRoles extends React.Component {
       });
   }
 
+  /**
+  * Control input fields
+  *
+  * @param {Object} event
+  * @param {String} type type of change
+  * @returns {Undefined} nothing
+  */
   onChange(event, type) {
     if (type === 'new') return this.setState({ newRole: { name: event.target.value } });
     return this.setState({
@@ -45,14 +84,29 @@ class ManageRoles extends React.Component {
     });
   }
 
+  /**
+  * Set the role to be edited to state
+  *
+  * @param {Object} event
+  * @param {String} role
+  * @returns {Undefined} nothing
+  */
   onClick(event, role) {
     this.setState({ editRole: role });
   }
 
+  /**
+  * Validate input fields and submit the form
+  *
+  * @param {Object} event
+  * @param {String} type type of change
+  * @returns {Object} state
+  */
   onSave(event, type) {
     event.preventDefault();
     if (type === 'new') {
       const { valid, errors } = validateRequiredFields([this.state.newRole.name], ['name']);
+
       if (valid) {
         return this.props.saveRole(this.state.newRole)
           .then(() => {
@@ -65,6 +119,7 @@ class ManageRoles extends React.Component {
     }
 
     const { valid, errors } = validateRequiredFields([this.state.editRole.name], ['name']);
+
     if (valid) {
       return this.props.saveRole(this.state.editRole)
         .then(() => {
@@ -79,6 +134,11 @@ class ManageRoles extends React.Component {
     });
   }
 
+  /**
+  * Render the component
+  *
+  * @returns {Object} jsx component
+   */
   render() {
     const { roles, editRole, newRole } = this.state;
 

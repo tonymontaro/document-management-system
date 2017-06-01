@@ -1,8 +1,8 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import server from '../app';
-import models from '../models';
-import testData from './testData';
+import server from '../../app';
+import models from '../../models/';
+import testData from '../testData';
 
 const {
   userOne, userTwo, invalidUserDetails, admin, regularUser, userThree
@@ -13,6 +13,11 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('User', () => {
+  after((done) => {
+    models.User.destroy({ where: { id: { $notIn: [1, 2] } } });
+    done();
+  });
+
   // POST /users/login
   describe('/POST/login user', () => {
     it('can login a user and return a token', (done) => {
@@ -83,7 +88,7 @@ describe('User', () => {
       .send(userOne)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.errors[0].message).to.eql('username must be unique');
+        expect(res.body.message).to.eql('Username already exist');
         done();
       });
     });
@@ -95,7 +100,7 @@ describe('User', () => {
       .send(userTwo)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.errors[0].message).to.eql('email must be unique');
+        expect(res.body.message).to.eql('Email already exist');
         done();
       });
     });
@@ -131,7 +136,7 @@ describe('User', () => {
       .send(invalidUserDetails)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.errors[0].message).to.eql('Validation isEmail failed');
+        expect(res.body.message).to.eql('Use a valid email');
         done();
       });
     });
@@ -145,8 +150,8 @@ describe('User', () => {
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('array');
-          expect(res.body.length).to.be.greaterThan(2);
+          expect(res.body.rows).to.be.a('array');
+          expect(res.body.rows.length).to.be.greaterThan(2);
           done();
         });
     });
@@ -180,8 +185,8 @@ describe('User', () => {
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('array');
-          expect(res.body[0].username).to.eql('admin');
+          expect(res.body.rows).to.be.a('array');
+          expect(res.body.rows[0].username).to.eql('admin');
           done();
         });
     });
@@ -192,9 +197,9 @@ describe('User', () => {
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('array');
-          expect(res.body.length).to.equal(2);
-          secondId = res.body[1].id;
+          expect(res.body.rows).to.be.a('array');
+          expect(res.body.rows.length).to.equal(2);
+          secondId = res.body.rows[1].id;
           done();
         });
     });
@@ -205,8 +210,8 @@ describe('User', () => {
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('array');
-          expect(res.body[0].id).to.eql(secondId);
+          expect(res.body.rows).to.be.a('array');
+          expect(res.body.rows[0].id).to.eql(secondId);
           done();
         });
     });
@@ -323,7 +328,7 @@ describe('User', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.be.a('object');
-        expect(res.body.errors[0].message).to.eql('email must be unique');
+        expect(res.body.message).to.eql('Email already exist');
         done();
       });
     });
@@ -400,14 +405,14 @@ describe('User', () => {
       });
     });
 
-    it("should allow admin to delete a user's profile", (done) => {
+    it("should not allow admin to delete a user's profile", (done) => {
       chai.request(server)
       .delete(`/users/${userOne.userId}`)
       .set({ 'x-access-token': adminToken })
       .end((err, res) => {
-        expect(res.status).to.equal(200);
+        expect(res.status).to.equal(403);
         expect(res.body).to.be.a('object');
-        expect(res.body.message).to.eql('User deleted');
+        expect(res.body.message).to.eql('Access denied');
         done();
       });
     });

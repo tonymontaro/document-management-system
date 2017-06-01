@@ -1,21 +1,25 @@
 import jwt from 'jsonwebtoken';
 import models from '../models';
+import handleError from '../helpers/handleError';
 
 const secret = process.env.SECRET || 'winter is coming';
 
 const Authenticator = {
-   /**
-   * @param {Object} userDetails user details
-   * @returns {String} token
-   */
+  /**
+  * Generate a token
+  *
+  * @param {Object} userDetails user details
+  * @returns {String} token
+  */
   generateToken(userDetails) {
     return jwt.sign(userDetails, secret, {
-      expiresIn: 60 * 60 * 24
+      expiresIn: 60 * 60 * 24 * 7
     });
   },
 
   /**
-  * Verify user token
+  * Verify a user
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @param {Function} next next function
@@ -25,13 +29,15 @@ const Authenticator = {
     const token = req.body.token
       || req.query.token
       || req.headers['x-access-token'];
+
     if (token) {
       jwt.verify(token, secret, (err, decoded) => {
         if (err) {
           return res.status(403).send({ message: 'Authentication failed' });
         }
+
         res.locals.decoded = decoded;
-        next();
+        return next();
       });
     } else {
       return res.status(403).send({
@@ -39,7 +45,10 @@ const Authenticator = {
       });
     }
   },
-  /**
+
+ /**
+  * Verify user token
+  *
   * @param {String} token the token
   * @returns {Object|Boolean} decoded token or false
   */
@@ -50,8 +59,9 @@ const Authenticator = {
       return false;
     }
   },
-  /**
+/**
   * Allow access for an admin only
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @param {Function} next next function
@@ -61,17 +71,19 @@ const Authenticator = {
     if (res.locals.decoded.roleId === 1) {
       return next();
     }
+
     return res.status(403).send({ message: 'Access denied' });
   },
 
   /**
-  * Allow access for an admin or profile owner
+  * Permit an admin or profile owner
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @param {Function} next next function
   * @returns {Response} response object
   */
-  permitProfileOwner(req, res, next) {
+  permitOwnerOrAdmin(req, res, next) {
     return models.User.findById(req.params.id)
       .then((user) => {
         if (!user) return res.status(404).send({ message: 'User not found' });
@@ -82,13 +94,14 @@ const Authenticator = {
         }
 
         res.locals.user = user;
-        next();
+        return next();
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => handleError(error, res));
   },
 
   /**
-  * Allow access for an admin or document owner
+  * Allow access for the document author
+  *
   * @param {Object} req request object
   * @param {Object} res response object
   * @param {Function} next next function
@@ -100,18 +113,20 @@ const Authenticator = {
         if (!document) {
           return res.status(404).send({ message: 'Document not found' });
         }
-        if (res.locals.decoded.roleId !== 1
-          && res.locals.decoded.id !== document.authorId) {
+
+        if (res.locals.decoded.id !== document.authorId) {
           return res.status(403).send({ message: 'Access denied' });
         }
 
         res.locals.document = document;
-        next();
+        return next();
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => handleError(error, res));
   },
 
-  /** Return secure user details
+  /**
+  * Return secure user details
+  *
   * @param {String} user user details
   * @returns {Object} secure data
   */

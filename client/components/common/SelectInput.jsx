@@ -1,5 +1,11 @@
 import React, { PropTypes } from 'react';
 
+/**
+ * Select input
+ *
+ * @param {Object} props { name, onChange, value, error, icon = 'user', options, label }
+ * @returns {Object} jsx object
+ */
 const SelectInput = ({ name, onChange, value, error, icon = 'user', options, label }) =>
   <div className="input-field">
     <i className={`fa fa-${icon} prefix`} />

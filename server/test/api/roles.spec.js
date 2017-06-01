@@ -1,8 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import server from '../app';
-import models from '../models';
-import testData from './testData';
+import server from '../../app';
+import testData from '../testData';
 
 const { admin, regularUser, roleOne } = testData;
 let regularToken, adminToken;
@@ -69,7 +68,7 @@ describe('Role', () => {
       .send(roleOne)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.errors[0].message).to.eql('name must be unique');
+        expect(res.body.message).to.eql('Role already exist');
         done();
       });
     });
@@ -167,7 +166,7 @@ describe('Role', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.be.a('object');
-        expect(res.body.errors[0].message).to.eql('name must be unique');
+        expect(res.body.message).to.eql('Role already exist');
         done();
       });
     });

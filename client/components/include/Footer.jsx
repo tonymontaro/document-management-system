@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * Footer
+ *
+ * @returns {Object} jsx object
+ */
 const Footer = () =>
   <footer className="page-footer">
     <div className="footer-copyright">

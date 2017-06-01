@@ -43,6 +43,7 @@ nav {
   .dropdown-content {
     margin-top: 64px;
     min-width: 140px;
+    z-index: 999;
 
     li {
       a {

@@ -38,14 +38,22 @@ label {
   margin-bottom: 30px;
 }
 
-#hiddenContentArea {
-  opacity: 0;
-}
-
 p, span, h1, h2, h3 {
   word-wrap: break-word;
 }
 .collection .collection-item {
   background-color: transparent;
   color: $white;
+}
+
+.input-field label {
+    top: 0.1rem;
+}
+
+.delete-btn {
+  background-color: $primary-color;
+  margin-left: 15px;
+  &:hover {
+    background-color: darken($primary-color, 15%);
+  }
 }

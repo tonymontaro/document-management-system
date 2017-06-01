@@ -1,6 +1,13 @@
 import React, { PropTypes } from 'react';
 import TextInput from '../common/TextInput';
+import DeleteModal from '../common/DeleteModal';
 
+/**
+ *
+ *
+ * @param {Object} props { roles, editRole, newRole, onClick, onChange, onSave, deleteRole }
+ * @returns {Object} jsx object
+ */
 const RolesPage = ({ roles, editRole, newRole, onClick, onChange, onSave, deleteRole }) =>
   <div className="form-div">
     <div className="container">
@@ -12,9 +19,9 @@ const RolesPage = ({ roles, editRole, newRole, onClick, onChange, onSave, delete
             {role.name}
             {(role.id !== 1) && <span>
               <a
-                href="#!"
-                className="secondary-content"
-                onClick={() => { if (confirm(`Delete: ${role.name}?`)) deleteRole(role.id); }} >
+                href="#deleteModal"
+                className="secondary-content delete-role"
+                onClick={e => onClick(e, role)} >
                 <i className="material-icons">delete</i>
               </a>
               <a
@@ -65,6 +72,10 @@ const RolesPage = ({ roles, editRole, newRole, onClick, onChange, onSave, delete
         </form>
       </div>
     </div>
+
+    <DeleteModal
+    toBeDeleted={{ id: editRole.id, title: editRole.name }}
+    deleteItem={deleteRole} />
 
   </div>;
 

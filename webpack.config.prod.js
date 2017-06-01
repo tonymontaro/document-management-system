@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+process.env.NODE_ENV = 'production';
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('production')
 };

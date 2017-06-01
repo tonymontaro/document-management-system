@@ -1,14 +1,14 @@
-import roleController from '../controllers/Role';
-import authenticator from '../middlewares/authenticator';
+import RoleController from '../controllers/RoleController';
+import Authenticator from '../helpers/Authenticator';
 
 export default (app) => {
-  app.get('/roles', roleController.getRoles);
-  app.post('/roles', authenticator.verifyUser,
-  authenticator.permitAdmin, roleController.create);
+  app.get('/roles', RoleController.getRoles);
+  app.post('/roles', Authenticator.verifyUser,
+  Authenticator.permitAdmin, RoleController.create);
 
-  app.get('/roles/:id', roleController.getRole);
-  app.put('/roles/:id', authenticator.verifyUser,
-  authenticator.permitAdmin, roleController.upadte);
-  app.delete('/roles/:id', authenticator.verifyUser,
-  authenticator.permitAdmin, roleController.delete);
+  app.get('/roles/:id', RoleController.getRole);
+  app.put('/roles/:id', Authenticator.verifyUser,
+  Authenticator.permitAdmin, RoleController.upadte);
+  app.delete('/roles/:id', Authenticator.verifyUser,
+  Authenticator.permitAdmin, RoleController.delete);
 };

@@ -1,8 +1,8 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import server from '../app';
-import models from '../models';
-import testData from './testData';
+import server from '../../app';
+import models from '../../models';
+import testData from '../testData';
 
 const {
   editorOne, editorTwo, admin, regularUser,
@@ -70,8 +70,7 @@ describe('Documents', () => {
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body).to.have.keys(
-          ['id', 'title', 'content', 'access', 'authorId',
-            'authorRoleId', 'createdAt', 'message', 'author']
+          ['id', 'title', 'content', 'access', 'createdAt', 'message', 'authorId', 'User']
         );
         expect(res.body.authorId).to.equal(2);
         expect(res.body.title).to.equal(privateDocument.title);
@@ -88,12 +87,12 @@ describe('Documents', () => {
       .set({ 'x-access-token': regularToken })
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.errors[0].message).to.eql('title must be unique');
+        expect(res.body.message).to.eql('Title already exist');
         done();
       });
     });
 
-    it('can create a new document with the correct authorRoleId', (done) => {
+    it('can create a new document and store the correct author', (done) => {
       chai.request(server)
       .post('/documents')
       .send(roleDocument)
@@ -101,10 +100,9 @@ describe('Documents', () => {
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body).to.have.keys(
-          ['id', 'title', 'content', 'access', 'authorId',
-            'authorRoleId', 'createdAt', 'message', 'author']
+          ['id', 'title', 'content', 'access', 'createdAt', 'message', 'authorId', 'User']
         );
-        expect(res.body.authorRoleId).to.equal(editorOne.roleId);
+        expect(res.body.User.roleId).to.equal(editorOne.roleId);
         expect(res.body.message).to.eql('Document created');
         roleDocument.docId = res.body.id;
         done();
@@ -120,8 +118,8 @@ describe('Documents', () => {
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('array');
-          expect(res.body.length).to.equal(4);
+          expect(res.body.rows).to.be.a('array');
+          expect(res.body.rows.length).to.equal(4);
           done();
         });
     });
@@ -131,42 +129,25 @@ describe('Documents', () => {
       .get('/documents')
       .end((err, res) => {
         let allPublicDocuments = true;
-        res.body.forEach((document) => {
+        res.body.rows.forEach((document) => {
           if (document.access !== 'public') allPublicDocuments = false;
         });
         expect(res.status).to.equal(200);
-        expect(res.body).to.be.a('array');
-        expect(res.body.length).to.equal(2);
+        expect(res.body.rows).to.be.a('array');
+        expect(res.body.rows.length).to.equal(2);
         expect(allPublicDocuments).to.be.true;
         done();
       });
     });
 
-    it('should return only documents accessible by a given user', (done) => {
-      chai.request(server)
-        .get('/documents')
-        .set({ 'x-access-token': regularToken })
-        .end((err, res) => {
-          let noRoleDocument = true;
-          res.body.forEach((document) => {
-            if (document.access === 'role') noRoleDocument = false;
-          });
-          expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('array');
-          expect(res.body.length).to.equal(3);
-          expect(noRoleDocument).to.be.true;
-          done();
-        });
-    });
-
     it('should return correct documents(s) for a query', (done) => {
       chai.request(server)
-        .get('/documents?q=DMS')
+        .get('/documents?q=Doc-Mage')
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('array');
-          expect(res.body[0].title).to.eql('DMS Welcome Message');
+          expect(res.body.rows).to.be.a('array');
+          expect(res.body.rows[0].title).to.eql('Doc-Mage Welcome Message');
           done();
         });
     });
@@ -177,9 +158,9 @@ describe('Documents', () => {
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('array');
-          expect(res.body.length).to.equal(2);
-          secondId = res.body[1].id;
+          expect(res.body.rows).to.be.a('array');
+          expect(res.body.rows.length).to.equal(2);
+          secondId = res.body.rows[1].id;
           done();
         });
     });
@@ -190,8 +171,8 @@ describe('Documents', () => {
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('array');
-          expect(res.body[0].id).to.eql(secondId);
+          expect(res.body.rows).to.be.a('array');
+          expect(res.body.rows[0].id).to.eql(secondId);
           done();
         });
     });
@@ -218,8 +199,8 @@ describe('Documents', () => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.keys(['id', 'title', 'content', 'access',
-            'authorId', 'authorRoleId', 'createdAt', 'updatedAt', 'author']);
-          expect(res.body.title).to.equal('DMS Welcome Message');
+            'authorId', 'createdAt', 'updatedAt', 'User']);
+          expect(res.body.title).to.equal('Doc-Mage Welcome Message');
           done();
         });
     });
@@ -230,7 +211,7 @@ describe('Documents', () => {
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.a('object');
-        expect(res.body.title).to.equal('DMS Welcome Message');
+        expect(res.body.title).to.equal('Doc-Mage Welcome Message');
         done();
       });
     });
@@ -257,8 +238,8 @@ describe('Documents', () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.a('object');
         expect(res.body).to.have.keys(['id', 'title', 'content', 'access',
-          'authorId', 'authorRoleId', 'createdAt', 'updatedAt', 'author']);
-        expect(res.body.authorRoleId).to.equal(editorTwo.roleId);
+          'authorId', 'createdAt', 'updatedAt', 'User']);
+        expect(res.body.User.roleId).to.equal(editorTwo.roleId);
         done();
       });
     });
@@ -320,29 +301,16 @@ describe('Documents', () => {
       });
     });
 
-    it("should allow admin to update a user's document", (done) => {
-      chai.request(server)
-      .put('/documents/2')
-      .set({ 'x-access-token': adminToken })
-      .send({ title: 'A Song of Ice and Fire III' })
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.be.a('object');
-        expect(res.body.title).to.eql('A Song of Ice and Fire III');
-        done();
-      });
-    });
-
     it('should not allow a user to use an existing document title',
     (done) => {
       chai.request(server)
       .put(`/documents/${privateDocument.docId}`)
-      .set({ 'x-access-token': adminToken })
-      .send({ title: 'A Song of Ice and Fire III' })
+      .set({ 'x-access-token': regularToken })
+      .send({ title: 'Chess GrandMaster from Mars' })
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.be.a('object');
-        expect(res.body.errors[0].message).to.eql('title must be unique');
+        expect(res.body.message).to.eql('Title already exist');
         done();
       });
     });
@@ -359,18 +327,6 @@ describe('Documents', () => {
         expect(res.status).to.equal(403);
         expect(res.body).to.be.a('object');
         expect(res.body.message).to.eql('Access denied');
-        done();
-      });
-    });
-
-    it("should allow admin to delete a user's document", (done) => {
-      chai.request(server)
-      .delete(`/documents/${roleDocument.docId}`)
-      .set({ 'x-access-token': adminToken })
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.be.a('object');
-        expect(res.body.message).to.eql('Document deleted');
         done();
       });
     });
