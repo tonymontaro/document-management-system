@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { signup } from '../../actions/accessActions';
+import { saveUser } from '../../actions/accessActions';
 import { validateSignUp } from '../../utilities/validator';
 import SignUpForm from './SignUpForm';
 import { handleError } from '../../utilities/errorHandler';
@@ -19,7 +19,7 @@ class SignUpPage extends React.Component {
     const { valid, errors } = validateSignUp(this.state);
     if (valid) {
       this.setState({ errors: {} });
-      this.props.signup(this.state)
+      this.props.saveUser(this.state)
       .then(() => {
         Materialize.toast('Success!', 2000);
         this.context.router.push('/');
@@ -45,7 +45,7 @@ class SignUpPage extends React.Component {
 }
 
 SignUpPage.propTypes = {
-  signup: PropTypes.func.isRequired,
+  saveUser: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired
 };
 
@@ -55,4 +55,4 @@ SignUpPage.contextTypes = {
 
 export default connect(state => ({
   profile: state.users.userProfile
-}), { signup })(SignUpPage);
+}), { saveUser })(SignUpPage);

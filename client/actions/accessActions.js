@@ -8,7 +8,8 @@ import { throwError } from '../utilities/errorHandler';
 
 /**
 * Dispatch action to login a user via the client
-* @param {String} token
+* @param {String} token user token
+* @param {String} type action type
 * @returns {Object} dispatch object
 */
 export function clientLogin(token, type) {
@@ -44,7 +45,7 @@ export function login(userDetails) {
 * @param {Object} userDetails
 * @returns {Object} dispatch object
 */
-export function signup(userDetails) {
+export function saveUser(userDetails) {
   if (userDetails.id) {
     return (dispatch) => {
       dispatch(beginAjaxCall());
@@ -62,12 +63,8 @@ export function signup(userDetails) {
     return axios.post('/users', userDetails)
       .then((res) => {
         const token = res.data.token;
-        localStorage.setItem('jwToken', token);
-        setHeaderToken(token);
-        dispatch({
-          type: types.LOGIN_SUCCESS,
-          user: jwt.decode(token)
-        });
+
+        dispatch(clientLogin(token, types.LOGIN_SUCCESS));
       })
       .catch(error => throwError(error, dispatch));
   };
@@ -82,6 +79,6 @@ export function logout() {
     localStorage.removeItem('jwToken');
     setHeaderToken(null);
     dispatch({ type: types.LOGOUT });
-    dispatch(getDocuments());
+    return dispatch(getDocuments());
   };
 }
