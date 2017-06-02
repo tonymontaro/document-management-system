@@ -18,6 +18,7 @@ class HomePage extends React.Component {
     this.state = {
       search: '',
       toBeDeleted: {},
+      isMyDocuments: false,
       paginate: Object.assign({}, props.pagination)
     };
 
@@ -39,6 +40,17 @@ class HomePage extends React.Component {
     if (this.props.pagination !== nextProps.pagination) {
       this.setState({ paginate: Object.assign({}, nextProps.pagination) });
     }
+    if (nextProps.location.pathname === '/mydocuments') this.setState({ isMyDocuments: true });
+  }
+
+  /**
+  * Disables pagination for myDocuments
+  *
+  * @returns {Function} function to set state
+  */
+  componentWillMount() {
+    return (this.props.location.pathname === '/mydocuments') ?
+    this.setState({ isMyDocuments: true }) : this.setState({ isMyDocuments: false });
   }
 
   /**
@@ -130,7 +142,7 @@ class HomePage extends React.Component {
    */
   render() {
     const { documents, access } = this.props;
-    const { search, paginate, toBeDeleted } = this.state;
+    const { search, paginate, toBeDeleted, isMyDocuments } = this.state;
 
     return (
       <HomePageDiv
@@ -144,7 +156,8 @@ class HomePage extends React.Component {
       deleteDocument={this.deleteDocument}
       nextPage={this.nextPage}
       prevPage={this.prevPage}
-      paginate={paginate} />
+      paginate={paginate}
+      isMyDocuments={isMyDocuments} />
     );
   }
 }
@@ -153,6 +166,7 @@ HomePage.propTypes = {
   pagination: PropTypes.object.isRequired,
   documents: PropTypes.array.isRequired,
   access: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   getDocuments: PropTypes.func.isRequired,
   deleteDocument: PropTypes.func.isRequired,
   searchDocument: PropTypes.func.isRequired,
