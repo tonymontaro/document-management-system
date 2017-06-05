@@ -15,7 +15,8 @@ const props = {
   getDocuments: () => {},
   access: {},
   documents: [],
-  pagination: {}
+  pagination: {},
+  location: { pathname: '/' }
 };
 
 describe('HomePage', () => {
