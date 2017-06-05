@@ -12,7 +12,7 @@ import { handleError } from '../../utilities/errorHandler';
  * @class LoginPage
  * @extends {React.Component}
  */
-class LoginPage extends React.Component {
+export class LoginPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -77,7 +77,7 @@ LoginPage.propTypes = {
 };
 
 LoginPage.contextTypes = {
-  router: PropTypes.object.isRequired
+  router: PropTypes.array
 };
 
 export default connect(null, { login, getDocuments })(LoginPage);

@@ -11,7 +11,7 @@ import DeleteModal from '../common/DeleteModal';
  * @class ProfilePage
  * @extends {React.Component}
  */
-class ProfilePage extends React.Component {
+export class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -90,7 +90,7 @@ ProfilePage.propTypes = {
 };
 
 ProfilePage.contextTypes = {
-  router: PropTypes.object.isRequired
+  router: PropTypes.array
 };
 
 

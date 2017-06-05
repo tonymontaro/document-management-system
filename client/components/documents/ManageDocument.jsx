@@ -11,7 +11,7 @@ import { handleError } from '../../utilities/errorHandler';
  * @class ManageDocument
  * @extends {React.Component}
  */
-class ManageDocument extends React.Component {
+export class ManageDocument extends React.Component {
   constructor(props) {
     super(props);
     this.state = Object.assign({ errors: {} }, props.document);
@@ -58,6 +58,7 @@ class ManageDocument extends React.Component {
   * @returns {Undefined} nothing
   */
   getContent(event) {
+    console.log('get content');
     this.setState({ content: event.target.getContent() });
   }
 
@@ -82,10 +83,6 @@ class ManageDocument extends React.Component {
     );
   }
 }
-
-ManageDocument.contextTypes = {
-  router: PropTypes.object.isRequired
-};
 
 /**
  * Filter and map the correct document to props
@@ -118,6 +115,10 @@ function mapStateTopProps(state, ownProps) {
 ManageDocument.propTypes = {
   document: PropTypes.object.isRequired,
   saveDocument: PropTypes.func.isRequired
+};
+
+ManageDocument.contextTypes = {
+  router: PropTypes.array
 };
 
 export default connect(mapStateTopProps, { saveDocument })(ManageDocument);

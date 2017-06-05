@@ -11,7 +11,7 @@ import { handleError } from '../../utilities/errorHandler';
  * @class ManageRoles
  * @extends {React.Component}
  */
-class ManageRoles extends React.Component {
+export class ManageRoles extends React.Component {
   constructor(props) {
     super(props);
 

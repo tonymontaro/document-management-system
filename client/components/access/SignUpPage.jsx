@@ -11,7 +11,7 @@ import { handleError } from '../../utilities/errorHandler';
  * @class SignUpPage
  * @extends {React.Component}
  */
-class SignUpPage extends React.Component {
+export class SignUpPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -73,7 +73,7 @@ SignUpPage.propTypes = {
 };
 
 SignUpPage.contextTypes = {
-  router: PropTypes.object.isRequired
+  router: PropTypes.array
 };
 
 export default connect(state => ({

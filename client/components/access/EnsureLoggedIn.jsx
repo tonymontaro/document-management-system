@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
  * @class EnsureLoggedIn
  * @extends {React.Component}
  */
-class EnsureLoggedIn extends React.Component {
+export class EnsureLoggedIn extends React.Component {
   /**
    * redirects user if he/she is not logged in
    *
@@ -37,7 +37,7 @@ EnsureLoggedIn.propTypes = {
 };
 
 EnsureLoggedIn.contextTypes = {
-  router: PropTypes.object.isRequired
+  router: PropTypes.array
 };
 
 export default connect(state => ({ access: state.access }))(EnsureLoggedIn);

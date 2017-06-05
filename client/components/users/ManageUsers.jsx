@@ -10,7 +10,7 @@ import { handleError } from '../../utilities/errorHandler';
  * @class ManageUsers
  * @extends {React.Component}
  */
-class ManageUsers extends React.Component {
+export class ManageUsers extends React.Component {
   constructor(props) {
     super(props);
 
@@ -176,7 +176,7 @@ ManageUsers.propTypes = {
 };
 
 ManageUsers.contextTypes = {
-  router: PropTypes.object.isRequired
+  router: PropTypes.array
 };
 
 

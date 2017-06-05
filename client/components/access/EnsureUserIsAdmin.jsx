@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
  * @class EnsureUserIsAdmin
  * @extends {React.Component}
  */
-class EnsureUserIsAdmin extends React.Component {
+export class EnsureUserIsAdmin extends React.Component {
   /**
    * redirects user if he/she is not an admin
    *
@@ -36,7 +36,7 @@ EnsureUserIsAdmin.propTypes = {
 };
 
 EnsureUserIsAdmin.contextTypes = {
-  router: PropTypes.object.isRequired
+  router: PropTypes.array
 };
 
 export default connect(state => ({ access: state.access }))(EnsureUserIsAdmin);

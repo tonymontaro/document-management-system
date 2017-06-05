@@ -7,7 +7,7 @@ import { getDocuments, getUserDocuments } from '../../actions/documentActions';
 import Navbar from './Navbar';
 import { handleError } from '../../utilities/errorHandler';
 
-class Header extends React.Component {
+export class Header extends React.Component {
   constructor(props) {
     super(props);
 
@@ -80,7 +80,7 @@ Header.propTypes = {
 };
 
 Header.contextTypes = {
-  router: PropTypes.object.isRequired
+  router: PropTypes.array
 };
 
 export default connect(state => ({ access: state.access }),

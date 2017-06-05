@@ -9,7 +9,7 @@ import { getDocument } from '../../actions/documentActions';
  * @class DocumentPage
  * @extends {React.Component}
  */
-class DocumentPage extends React.Component {
+export class DocumentPage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -59,7 +59,7 @@ DocumentPage.propTypes = {
 };
 
 DocumentPage.contextTypes = {
-  router: PropTypes.object.isRequired,
+  router: PropTypes.array,
 };
 
 export default connect(state => ({ document: state.document }), { getDocument })(DocumentPage);
