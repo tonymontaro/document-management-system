@@ -19,7 +19,7 @@ describe('Access Actions', () => {
       };
 
       const action = accessActions.clientLogin(token, 'CLIENT_LOGIN');
-      expect(action.type).toEqual(expectedAction.type);
+      expect(action).toEqual(expectedAction);
     });
   });
 
