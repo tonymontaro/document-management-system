@@ -52,5 +52,6 @@ global.localStorage = {
   setItem: () => {},
   removeItem: () => {},
 };
+global.$ = () => ({ modal: () => {} });
 
 var documentRef = document;  //eslint-disable-line no-undef
