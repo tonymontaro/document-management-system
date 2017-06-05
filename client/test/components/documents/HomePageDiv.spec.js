@@ -15,7 +15,8 @@ function setup() {
     deleteDocument: () => {},
     nextPage: () => {},
     prevPage: () => {},
-    paginate: { page: 1, pageCount: 3, pageSize: 9, totalCount: 26 }
+    paginate: { page: 1, pageCount: 3, pageSize: 9, totalCount: 26 },
+    isMyDocuments: false
   };
 
   return shallow(<HomePageDiv {...props} />);

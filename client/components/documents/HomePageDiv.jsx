@@ -31,7 +31,8 @@ const HomePageDiv = ({
   deleteDocument,
   nextPage,
   prevPage,
-  paginate }) =>
+  paginate,
+  isMyDocuments }) =>
     <div className="documents-div">
 
       <div className="container documents">
@@ -68,11 +69,11 @@ const HomePageDiv = ({
 
         </div>
 
-        <Pagination
+        {!isMyDocuments && <Pagination
           collection={documents}
           nextPage={nextPage}
           prevPage={prevPage}
-          paginate={paginate} />
+          paginate={paginate} />}
       </div>
 
       <DeleteModal
@@ -92,7 +93,8 @@ HomePageDiv.propTypes = {
   deleteDocument: PropTypes.func.isRequired,
   nextPage: PropTypes.func.isRequired,
   confirmDelete: PropTypes.func.isRequired,
-  prevPage: PropTypes.func.isRequired
+  prevPage: PropTypes.func.isRequired,
+  isMyDocuments: PropTypes.bool.isRequired
 };
 
 export default HomePageDiv;
