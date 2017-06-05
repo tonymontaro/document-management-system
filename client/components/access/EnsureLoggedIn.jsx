@@ -17,7 +17,6 @@ export class EnsureLoggedIn extends React.Component {
     if (!this.props.access.user.username) return this.context.router.push('/');
   }
 
-
   /**
    * Render the component
    *
