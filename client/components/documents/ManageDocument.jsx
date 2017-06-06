@@ -58,7 +58,6 @@ export class ManageDocument extends React.Component {
   * @returns {Undefined} nothing
   */
   getContent(event) {
-    console.log('get content');
     this.setState({ content: event.target.getContent() });
   }
 
