@@ -45,7 +45,7 @@ export class ProfilePage extends React.Component {
   /**
   * Render the component
   *
-  * @returns {Object} jsx component
+  * @returns {Object} jsx object
    */
   render() {
     const { profile, access } = this.props;
@@ -53,7 +53,8 @@ export class ProfilePage extends React.Component {
       <div className="form-div">
         <div className="container">
           <h3>Name: {profile.fullName}</h3>
-          <h4>username: {profile.username}</h4>
+          <h4>Username: {profile.username}</h4>
+          <h4>Email: {profile.email}</h4>
 
           <div className="row">
             <div className="col s12">
