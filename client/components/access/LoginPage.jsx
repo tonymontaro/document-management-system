@@ -25,7 +25,7 @@ export class LoginPage extends React.Component {
    * Validate and submit the form
    *
    * @param {Object} event
-   * @returns {Undefined} nothing
+   * @returns {Void} returns nothing
    */
   onSubmit(event) {
     event.preventDefault();
@@ -49,7 +49,7 @@ export class LoginPage extends React.Component {
    * Control input fields
    *
    * @param {Object} event
-   * @returns {Undefined} nothing
+   * @returns {Void} returns nothing
    */
   onChange(event) {
     return this.setState({ [event.target.name]: event.target.value });
@@ -77,7 +77,7 @@ LoginPage.propTypes = {
 };
 
 LoginPage.contextTypes = {
-  router: PropTypes.array
+  router: PropTypes.object
 };
 
 export default connect(null, { login, getDocuments })(LoginPage);

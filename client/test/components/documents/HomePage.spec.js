@@ -22,13 +22,13 @@ const props = {
 describe('HomePage', () => {
   it('renders the homepage', () => {
     const wrapper = mount(<HomePage {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
     expect(wrapper.find('h3').text()).toEqual('Recently Added Documents');
   });
 
   it('controls the search form input field', () => {
     const wrapper = mount(<HomePage {...props} />,
-    { context: { router: [] } });
+    { context: { router: { push: () => {} } } });
 
     wrapper.find('input[name="search"]')
       .simulate('change', { target: { name: 'search', value: 'Doc' } });
@@ -38,7 +38,7 @@ describe('HomePage', () => {
 
   it('can perform a search', () => {
     const wrapper = mount(<HomePage {...props} />,
-    { context: { router: [] } });
+    { context: { router: { push: () => {} } } });
 
     wrapper.find('input[name="search"]')
     .simulate('change', { target: { name: 'search', value: 'Doc' } });

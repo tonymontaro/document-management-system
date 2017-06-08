@@ -44,14 +44,21 @@ const DocumentController = {
       order: [['createdAt', 'DESC']]
     })
     .then((documents) => {
+      let removedDocs = 0;
       const documentRows = decoded.roleId === 1 ? documents.rows :
         documents.rows.filter(
-          doc => !(doc.access === 'role' && doc.User.roleId !== decoded.roleId)
+          (doc) => {
+            if (!(doc.access === 'role' && doc.User.roleId !== decoded.roleId)) {
+              return true;
+            }
+            removedDocs += 1;
+            return false;
+          }
         );
 
       const response = {
         rows: documentRows,
-        metaData: paginate(documents.count, limit, offset)
+        metaData: paginate(documents.count - removedDocs, limit, offset)
       };
 
       res.status(200).send(response);

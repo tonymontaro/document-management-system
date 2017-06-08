@@ -17,13 +17,13 @@ const props = {
 describe('ProfilePage', () => {
   it('renders the UsersPage', () => {
     const wrapper = shallow(<ProfilePage {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
     expect(wrapper.find('.form-div').length).toBe(1);
   });
 
   it("correctly displays user's profile", () => {
     const wrapper = shallow(<ProfilePage {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
 
     expect(wrapper.find('h3').first().text())
       .toEqual('Name: Tony Montaro');
@@ -31,7 +31,7 @@ describe('ProfilePage', () => {
 
   it("can delete a user's profile", () => {
     const wrapper = shallow(<ProfilePage {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
 
     wrapper.instance().deleteProfile(3);
 

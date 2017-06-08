@@ -24,7 +24,7 @@ export class ManageDocument extends React.Component {
   * Validate and submit the form
   *
   * @param {Object} event
-   * @returns {Undefined} nothing
+   * @returns {Void} returns nothing
    */
   onSubmit(event) {
     event.preventDefault();
@@ -45,7 +45,7 @@ export class ManageDocument extends React.Component {
   * Control input fields
   *
   * @param {Object} event
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   onChange(event) {
     return this.setState({ [event.target.name]: event.target.value });
@@ -55,7 +55,7 @@ export class ManageDocument extends React.Component {
   * Get the content of the TinyMCE editor
   *
   * @param {Object} event
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   getContent(event) {
     this.setState({ content: event.target.getContent() });
@@ -117,7 +117,7 @@ ManageDocument.propTypes = {
 };
 
 ManageDocument.contextTypes = {
-  router: PropTypes.array
+  router: PropTypes.object
 };
 
 export default connect(mapStateTopProps, { saveDocument })(ManageDocument);

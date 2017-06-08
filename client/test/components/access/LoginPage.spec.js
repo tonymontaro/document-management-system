@@ -14,13 +14,13 @@ const props = {
 describe('LoginPage Component', () => {
   it('renders the login input fields', () => {
     const wrapper = mount(<LoginPage {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
     expect(wrapper.find('input').length).toBe(2);
   });
 
   it('controls the login input fields', () => {
     const wrapper = mount(<LoginPage {...props} />,
-    { context: { router: [] } });
+    { context: { router: { push: () => {} } } });
 
     wrapper.find('input[name="username"]')
       .simulate('change', { target: { name: 'username', value: 'montaro' } });
@@ -30,7 +30,7 @@ describe('LoginPage Component', () => {
 
   it('can submit the form and log the user in', () => {
     const wrapper = mount(<LoginPage {...props} />,
-    { context: { router: [] } });
+    { context: { router: { push: () => {} } } });
 
     wrapper.find('input[name="username"]')
       .simulate('change', { target: { name: 'username', value: 'tony' } });
@@ -43,7 +43,7 @@ describe('LoginPage Component', () => {
 
   it('can does not submit the form if a required field was not filled', () => {
     const wrapper = mount(<LoginPage {...props} />,
-    { context: { router: [] } });
+    { context: { router: { push: () => {} } } });
 
     wrapper.find('input[name="username"]')
       .simulate('change', { target: { name: 'username', value: 'tony' } });

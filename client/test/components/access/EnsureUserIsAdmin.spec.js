@@ -11,7 +11,7 @@ const props = {
 describe('EnsureUserIsAdmin Component', () => {
   it('renders the children if the user is an admin', () => {
     const wrapper = shallow(<EnsureUserIsAdmin {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
     expect(wrapper.find('input').length).toBe(1);
   });
 
@@ -19,7 +19,7 @@ describe('EnsureUserIsAdmin Component', () => {
     props.access.user.roleId = 2;
 
     const wrapper = shallow(<EnsureUserIsAdmin {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
     expect(wrapper.find('input').length).toBe(0);
   });
 });

@@ -22,7 +22,7 @@ export class ProfilePage extends React.Component {
   * Delete user profile
   *
    @param {Object} id user id
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   deleteProfile(id) {
     this.props.deleteUser(id)
@@ -36,7 +36,7 @@ export class ProfilePage extends React.Component {
   /**
   * Initiates the modal after rendering the component
   *
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   componentDidMount() {
     $('.modal').modal();
@@ -91,7 +91,7 @@ ProfilePage.propTypes = {
 };
 
 ProfilePage.contextTypes = {
-  router: PropTypes.array
+  router: PropTypes.object
 };
 
 

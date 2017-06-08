@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import renderHTML from 'react-render-html';
 import { getDocument } from '../../actions/documentActions';
 
@@ -19,7 +20,7 @@ export class DocumentPage extends React.Component {
   /**
   * Retrieves the document before rendering the component
   *
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   componentWillMount() {
     this.props.getDocument(this.props.params.id)
@@ -47,6 +48,9 @@ export class DocumentPage extends React.Component {
             by: <span className="teal-text">{document.User ? document.User.username : ''}</span></p>
           <div>{document.content && renderHTML(document.content)}</div>
         </div>
+        <div className="center">
+          <Link to="/" className="waves-effect btn back-button">Back</Link>
+        </div>
       </div>
     );
   }
@@ -59,7 +63,7 @@ DocumentPage.propTypes = {
 };
 
 DocumentPage.contextTypes = {
-  router: PropTypes.array,
+  router: PropTypes.object,
 };
 
 export default connect(state => ({ document: state.document }), { getDocument })(DocumentPage);

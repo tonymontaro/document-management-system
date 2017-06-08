@@ -24,7 +24,7 @@ export class SignUpPage extends React.Component {
   * Validate and submit the form
   *
   * @param {Object} event
-   * @returns {Undefined} nothing
+   * @returns {Void} returns nothing
    */
   onSubmit(event) {
     event.preventDefault();
@@ -46,7 +46,7 @@ export class SignUpPage extends React.Component {
   * Control input fields
   *
   * @param {Object} event
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   onChange(event) {
     return this.setState({ [event.target.name]: event.target.value });
@@ -73,7 +73,7 @@ SignUpPage.propTypes = {
 };
 
 SignUpPage.contextTypes = {
-  router: PropTypes.array
+  router: PropTypes.object
 };
 
 export default connect(state => ({

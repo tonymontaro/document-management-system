@@ -34,7 +34,7 @@ export class HomePage extends React.Component {
   * Assigns updated pagination state to class state
   *
   * @param {Object} nextProps
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   componentWillReceiveProps(nextProps) {
     if (this.props.pagination !== nextProps.pagination) {
@@ -56,7 +56,7 @@ export class HomePage extends React.Component {
   /**
   * Initiates the modal after rendering the component
   *
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   componentDidMount() {
     $('.modal').modal();
@@ -65,7 +65,7 @@ export class HomePage extends React.Component {
   /**
   * Retrieves and renders the next set of documents
   *
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   nextPage() {
     if (this.props.documents.length < 9) return;
@@ -78,7 +78,7 @@ export class HomePage extends React.Component {
   /**
   * Retrieves and renders the previous set of documents
   *
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   prevPage() {
     if (this.state.paginate.offset < 1) return;
@@ -92,7 +92,7 @@ export class HomePage extends React.Component {
   * Call the delete modal and set item to be deleted to state
   *
    @param {Object} document
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   confirmDelete(document) {
     this.setState({ toBeDeleted: { id: document.id, title: document.title } });
@@ -102,7 +102,7 @@ export class HomePage extends React.Component {
   * Delete the document
   *
    @param {Object} id document id
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   deleteDocument(id) {
     this.props.deleteDocument(id)
@@ -116,7 +116,7 @@ export class HomePage extends React.Component {
   * Control input fields
   *
   * @param {Object} event
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   onChange(event) {
     return this.setState({ [event.target.name]: event.target.value });
@@ -126,7 +126,7 @@ export class HomePage extends React.Component {
   * Search for documents
   *
   * @param {Object} event
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   onSearch(event) {
     event.preventDefault();
@@ -173,7 +173,7 @@ HomePage.propTypes = {
 };
 
 HomePage.contextTypes = {
-  router: PropTypes.array
+  router: PropTypes.object
 };
 
 export default connect(state => ({

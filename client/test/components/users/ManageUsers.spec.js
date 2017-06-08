@@ -21,20 +21,20 @@ const props = {
 describe('ManageUsers', () => {
   it('renders the UsersPage', () => {
     const wrapper = shallow(<ManageUsers {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
     expect(wrapper.find('UsersPage').length).toBe(1);
   });
 
   it('correctly passes in props', () => {
     const wrapper = shallow(<ManageUsers {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
     expect(wrapper.find('UsersPage').prop('users'))
       .toEqual([{ username: 'tony' }]);
   });
 
   it('perform a search', () => {
     const wrapper = shallow(<ManageUsers {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
 
     wrapper.instance().onSearch({ preventDefault: () => {} });
     expect(searchUsers.callCount).toBe(1);
@@ -42,7 +42,7 @@ describe('ManageUsers', () => {
 
   it('can update a user', () => {
     const wrapper = shallow(<ManageUsers {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
 
     wrapper.setState({ user: { id: 3, error: '', roleId: '2' } });
     wrapper.instance().onSubmit({ preventDefault: () => {} }, 'new');

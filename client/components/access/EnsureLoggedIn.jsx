@@ -11,7 +11,7 @@ export class EnsureLoggedIn extends React.Component {
   /**
    * redirects user if he/she is not logged in
    *
-   * @returns {Undefined} nothing
+   * @returns {Void} returns nothing
    */
   componentWillMount() {
     if (!this.props.access.user.username) return this.context.router.push('/');
@@ -36,7 +36,7 @@ EnsureLoggedIn.propTypes = {
 };
 
 EnsureLoggedIn.contextTypes = {
-  router: PropTypes.array
+  router: PropTypes.object
 };
 
 export default connect(state => ({ access: state.access }))(EnsureLoggedIn);

@@ -21,13 +21,13 @@ const props = {
 describe('SignUpPage', () => {
   it('renders the signup input fields', () => {
     const wrapper = mount(<SignUpPage {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
     expect(wrapper.find('input').length).toBe(5);
   });
 
   it('controls the signup input fields', () => {
     const wrapper = mount(<SignUpPage {...props} />,
-    { context: { router: [] } });
+    { context: { router: { push: () => {} } } });
 
     wrapper.find('input[name="username"]')
       .simulate('change', { target: { name: 'username', value: 'montaro' } });
@@ -37,7 +37,7 @@ describe('SignUpPage', () => {
 
   it('can submit the form', () => {
     const wrapper = mount(<SignUpPage {...props} />,
-    { context: { router: [] } });
+    { context: { router: { push: () => {} } } });
 
     wrapper.setState({
       fullName: 'Zaraki Kenpachi',
@@ -54,7 +54,7 @@ describe('SignUpPage', () => {
 
   it('can does not submit the form if a required field was not filled', () => {
     const wrapper = mount(<SignUpPage {...props} />,
-    { context: { router: [] } });
+    { context: { router: { push: () => {} } } });
 
     wrapper.setState({
       fullName: 'Zaraki Kenpachi',

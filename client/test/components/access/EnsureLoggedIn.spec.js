@@ -11,7 +11,7 @@ const props = {
 describe('EnsureLoggedIn Component', () => {
   it('renders the children if the user is logged in', () => {
     const wrapper = shallow(<EnsureLoggedIn {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
     expect(wrapper.find('input').length).toBe(1);
   });
 
@@ -19,7 +19,7 @@ describe('EnsureLoggedIn Component', () => {
     props.access.user = {};
 
     const wrapper = shallow(<EnsureLoggedIn {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
     expect(wrapper.find('input').length).toBe(0);
   });
 });

@@ -19,20 +19,20 @@ const props = {
 describe('ManageRoles Component', () => {
   it('renders the RolesPage', () => {
     const wrapper = shallow(<ManageRoles {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
     expect(wrapper.find('RolesPage').length).toBe(1);
   });
 
   it('correctly passes in props', () => {
     const wrapper = shallow(<ManageRoles {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
     expect(wrapper.find('RolesPage').prop('roles'))
       .toEqual([{ name: 'admin', id: 1 }]);
   });
 
   it('can delete a role', () => {
     const wrapper = shallow(<ManageRoles {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
 
     wrapper.instance().deleteRole(2);
     expect(deleteRole.callCount).toBe(1);
@@ -40,7 +40,7 @@ describe('ManageRoles Component', () => {
 
   it('can save a new role', () => {
     const wrapper = shallow(<ManageRoles {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
 
     wrapper.setState({ newRole: { name: 'editor' } });
     wrapper.instance().onSave({ preventDefault: () => {} }, 'new');
@@ -49,7 +49,7 @@ describe('ManageRoles Component', () => {
 
   it('can update a role', () => {
     const wrapper = shallow(<ManageRoles {...props} />,
-      { context: { router: [] } });
+      { context: { router: { push: () => {} } } });
 
     wrapper.setState({ editRole: { name: 'editors', id: 3 } });
     wrapper.instance().onSave({ preventDefault: () => {} });

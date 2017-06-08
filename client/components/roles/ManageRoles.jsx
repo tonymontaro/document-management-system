@@ -30,7 +30,7 @@ export class ManageRoles extends React.Component {
   * Assigns updated roles state to class state
   *
   * @param {Object} nextProps
-  * @returns {Undefined} nothing
+  * @returns {Void}
   */
   componentWillReceiveProps(nextProps) {
     if (this.props.roles !== nextProps.roles) {
@@ -41,7 +41,7 @@ export class ManageRoles extends React.Component {
   /**
   * Initiates the modal after rendering the component
   *
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   componentDidMount() {
     $('.modal').modal();
@@ -50,7 +50,7 @@ export class ManageRoles extends React.Component {
   /**
   * Retrieve roles before redering the component
   *
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   componentWillMount() {
     this.props.getRoles();
@@ -59,8 +59,8 @@ export class ManageRoles extends React.Component {
   /**
   * Delete the role
   *
-   @param {Object} id role id
-  * @returns {Undefined} nothing
+  * @param {Object} id - id of the role
+  * @returns {Void} returns nothing
   */
   deleteRole(id) {
     this.props.deleteRole(id)
@@ -75,7 +75,7 @@ export class ManageRoles extends React.Component {
   *
   * @param {Object} event
   * @param {String} type type of change
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   onChange(event, type) {
     if (type === 'new') return this.setState({ newRole: { name: event.target.value } });
@@ -89,7 +89,7 @@ export class ManageRoles extends React.Component {
   *
   * @param {Object} event
   * @param {String} role
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   onClick(event, role) {
     this.setState({ editRole: role });
