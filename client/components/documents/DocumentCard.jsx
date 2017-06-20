@@ -33,7 +33,7 @@ const DocumentCard = ({ document, user, confirmDelete }) =>
         <div className="card-content">
           <span className="card-title">{truncate(document.title, 50)}</span>
           <hr />
-          <div>{renderHTML(truncate(document.content, 150))}</div>
+          <div>{renderHTML(document.content, 150)}</div>
         </div>
       </Link>
     </div>
