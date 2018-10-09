@@ -1,0 +1,80 @@
+{
+  "root": true,
+  "extends": "airbnb",
+  "env": {
+    "node": true,
+    "es6": true,
+    "mocha": true,
+    "browser": true,
+    "jquery": true
+  },
+  "globals": {
+    "Materialize": true
+  },
+  "rules": {
+    "one-var": 0,
+    "max-len":[2, 100, 2],
+    "indent": [1, 2],
+    "one-var-declaration-per-line": 0,
+    "new-cap": 0,
+    "consistent-return": 0,
+    "no-param-reassign": 0,
+    "comma-dangle": 0,
+    "curly": ["error", "multi-line"],
+    "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
+    "valid-jsdoc": ["error", {
+      "requireReturn": true,
+      "requireReturnType": true,
+      "requireParamDescription": false,
+      "requireReturnDescription": true
+    }],
+    "require-jsdoc": [1, {
+      "require": {
+        "FunctionDeclaration": true,
+        "MethodDefinition": false,
+        "ClassDeclaration": false
+      }
+    }],
+    "import/no-dynamic-require": 0,
+    "import/no-unresolved": 0,
+    "class-methods-use-this": 0,
+    "no-script-url": 0,
+    "jsx-quotes": 1,
+    "jsx-a11y/label-has-for": 0,
+    "react/display-name": [ 1, {"ignoreTranspilerName": false }],
+    "react/forbid-prop-types": [1, {"forbid": ["any"]}],
+    "react/jsx-boolean-value": 1,
+    "react/jsx-closing-bracket-location": 0,
+    "react/jsx-curly-spacing": 1,
+    "react/jsx-indent-props": 0,
+    "react/jsx-key": 1,
+    "react/jsx-max-props-per-line": 0,
+    "react/jsx-no-bind": 0,
+    "react/jsx-no-duplicate-props": 1,
+    "react/jsx-no-literals": 0,
+    "react/jsx-no-undef": 1,
+    "react/jsx-pascal-case": 1,
+    "react/jsx-sort-prop-types": 0,
+    "react/jsx-sort-props": 0,
+    "react/jsx-uses-react": 1,
+    "react/jsx-uses-vars": 1,
+    "react/no-danger": 1,
+    "react/no-did-mount-set-state": 1,
+    "react/no-did-update-set-state": 1,
+    "react/no-direct-mutation-state": 1,
+    "react/no-multi-comp": 1,
+    "react/no-set-state": 0,
+    "react/no-unknown-property": 1,
+    "react/prefer-es6-class": 1,
+    "react/prop-types": 1,
+    "react/react-in-jsx-scope": 1,
+    "react/require-extension": 1,
+    "react/self-closing-comp": 1,
+    "react/sort-comp": 0,
+    "react/wrap-multilines": 1,
+    "react/prefer-stateless-function": 0,
+    "react/jsx-filename-extension": 0,
+    "arrow-body-style": 0,
+    "react/require-default-props": 0
+  }
+}

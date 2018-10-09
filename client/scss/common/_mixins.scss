@@ -1,0 +1,23 @@
+@mixin google-font($font) {
+  $font: unquote($font);
+  @import url(https://fonts.googleapis.com/css?family=#{$font});
+}
+
+// === SCREENS ===
+@mixin small-screen() {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
+
+@mixin medium-screen() {
+  @media (max-width: 680px) {
+    @content;
+  }
+}
+
+@mixin large-screen() {
+  @media (max-width: 960px) {
+    @content;
+  }
+}

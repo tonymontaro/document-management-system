@@ -1,0 +1,63 @@
+.primary {
+  background-color: $primary-color;
+}
+.error {
+  background-color: $primary-color;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  margin-top: -10px;
+}
+.toast {
+  background-color: $primary-color;
+}
+
+h1, h2, h3 {
+  font-family: $header-font;
+}
+
+a {
+  cursor: pointer;
+}
+
+select {
+  background: transparent;
+}
+
+table tr{
+  color: $white;
+}
+
+strong {
+  font-weight: bold;
+}
+label {
+  max-width: 100px;
+}
+
+.new-document select {
+  margin-bottom: 30px;
+}
+
+p, span, h1, h2, h3 {
+  word-wrap: break-word;
+}
+.collection .collection-item {
+  background-color: transparent;
+  color: $white;
+}
+
+.input-field label {
+    top: 0.1rem;
+}
+
+.delete-btn {
+  background-color: $primary-color;
+  margin-left: 15px;
+  &:hover {
+    background-color: darken($primary-color, 15%);
+  }
+}
+
+.back-button {
+  margin-top: 30px;
+}

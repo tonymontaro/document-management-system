@@ -1,0 +1,9 @@
+/node_modules/**
+lib/**
+seeders/*
+server/test/*
+client/test/**
+webpack.config.dev.js
+webpack.config.prod.js
+server/index.js
+api_docs/**

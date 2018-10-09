@@ -1,0 +1,99 @@
+/*
+* Developed by Anthony Ngene
+*/
+
+@import 'common/mixins';
+@import 'common/variables';
+@include google-font('Lato');
+@include google-font('Montserrat');
+
+* {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+@import 'extras';
+
+body {
+  color: $text-color;
+  font-family: $text-font;
+  font-size: $text-size;
+}
+#app {
+  background-image: url('../img/background.jpg');
+  background-color: $text-color;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: fixed;
+  color: $white;
+}
+
+// HEADER
+nav {
+  background-color: $primary-color;
+
+  .brand-logo {
+    font-family: $header-font;
+  }
+
+  .dropdown-content {
+    margin-top: 64px;
+    min-width: 140px;
+    z-index: 999;
+
+    li {
+      a {
+        color: $primary-color;
+        text-align: center;
+      }
+    }
+    li .fa {
+      margin-right: 0;
+    }
+  }
+
+  #documents-dropdown {
+    min-width: 200px;
+  }
+  @include small-screen() {
+    li a {
+      font-size: 13px;
+    }
+    i.right {
+      display: none;
+    }
+  }
+}
+
+@import 'content';
+
+// FOOTER
+.page-footer {
+  background-color: $primary-color;
+  padding: 10px 0px;
+}
+
+// nav control
+.guest {
+  .loggedIn,
+  .forAdmin {
+    display: none
+  }
+}
+
+.regularUser {
+  .notLoggedIn,
+  .forAdmin {
+    display: none
+  }
+}
+
+.administrator {
+  .notLoggedIn {
+    display: none
+  }
+}
