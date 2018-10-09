@@ -12,7 +12,7 @@ The application utilizes RESTFUL API architecture for managing documents, users 
 ## Features
 
 The app has three levels of authorization;
-- Guest can
+- A guest can
     - view public documents on the website
     - create an account
 
@@ -25,7 +25,7 @@ The app has three levels of authorization;
     - view `role` documents created users with the same or lesser role level.
     - login/logout.
 
-- An admin user has all the previlages of a regular user and do the following too:
+- An admin user has all the previlages of a regular user but he/she can also perform the following actions:
     - view all users.
     - update a user's role e.g upgrade another user to admin.
     - create roles.

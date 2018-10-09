@@ -7,16 +7,15 @@ import { connect } from 'react-redux';
  * @class EnsureLoggedIn
  * @extends {React.Component}
  */
-class EnsureLoggedIn extends React.Component {
+export class EnsureLoggedIn extends React.Component {
   /**
    * redirects user if he/she is not logged in
    *
-   * @returns {Undefined} nothing
+   * @returns {Void} returns nothing
    */
   componentWillMount() {
     if (!this.props.access.user.username) return this.context.router.push('/');
   }
-
 
   /**
    * Render the component
@@ -37,7 +36,7 @@ EnsureLoggedIn.propTypes = {
 };
 
 EnsureLoggedIn.contextTypes = {
-  router: PropTypes.object.isRequired
+  router: PropTypes.object
 };
 
 export default connect(state => ({ access: state.access }))(EnsureLoggedIn);

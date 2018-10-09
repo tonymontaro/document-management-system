@@ -10,7 +10,7 @@ import { handleError } from '../../utilities/errorHandler';
  * @class ManageUsers
  * @extends {React.Component}
  */
-class ManageUsers extends React.Component {
+export class ManageUsers extends React.Component {
   constructor(props) {
     super(props);
 
@@ -31,7 +31,7 @@ class ManageUsers extends React.Component {
   * Assigns updated pagination state to class state
   *
   * @param {Object} nextProps
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   componentWillReceiveProps(nextProps) {
     if (this.props.pagination !== nextProps.pagination) {
@@ -42,7 +42,7 @@ class ManageUsers extends React.Component {
   /**
   * Retrieve users before redering the component
   *
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   componentWillMount() {
     this.props.getUsers();
@@ -51,7 +51,7 @@ class ManageUsers extends React.Component {
   /**
   * Initiates the modal after rendering the component
   *
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   componentDidMount() {
     $('.modal').modal();
@@ -60,7 +60,7 @@ class ManageUsers extends React.Component {
   /**
   * Retrieves and renders the next set of users
   *
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   nextPage() {
     if (this.props.users.length < 9) return;
@@ -73,7 +73,7 @@ class ManageUsers extends React.Component {
   /**
   * Retrieves and renders the previous set of users
   *
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   prevPage() {
     if (this.state.paginate.offset < 1) return;
@@ -87,7 +87,7 @@ class ManageUsers extends React.Component {
   * Search for users
   *
   * @param {Object} event
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   onSearch(event) {
     event.preventDefault();
@@ -116,7 +116,7 @@ class ManageUsers extends React.Component {
   * Control input fields
   *
   * @param {Object} event
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   onChange(event) {
     if (event.target.name === 'search') {
@@ -132,7 +132,7 @@ class ManageUsers extends React.Component {
   *
   * @param {Object} event
   * @param {String} user
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   onClick(event, user) {
     this.setState({ user: { id: user.id, roleId: user.roleId } });
@@ -176,7 +176,7 @@ ManageUsers.propTypes = {
 };
 
 ManageUsers.contextTypes = {
-  router: PropTypes.object.isRequired
+  router: PropTypes.object
 };
 
 

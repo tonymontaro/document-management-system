@@ -7,7 +7,13 @@ import { getDocuments, getUserDocuments } from '../../actions/documentActions';
 import Navbar from './Navbar';
 import { handleError } from '../../utilities/errorHandler';
 
-class Header extends React.Component {
+/**
+* Header
+*
+* @class Header
+* @extends {React.Component}
+*/
+export class Header extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,6 +23,11 @@ class Header extends React.Component {
     this.getUserDocuments = this.getUserDocuments.bind(this);
   }
 
+  /**
+  * Retrieves the user's profile and redirects to the profile page
+  *
+  * @returns {Void} returns nothing
+  */
   getProfile() {
     if (this.props.access.loggedIn) {
       this.props.getProfile(this.props.access.user.id)
@@ -27,11 +38,21 @@ class Header extends React.Component {
     }
   }
 
+  /**
+  * Logs the user out
+  *
+  * @returns {Void} returns nothing
+  */
   logout() {
     this.props.logout();
     this.context.router.push('/');
   }
 
+  /**
+  * Retrieves recent documents and redirects to the home page
+  *
+  * @returns {Void} returns nothing
+  */
   getDocuments() {
     this.props.getDocuments()
       .then(() => {
@@ -39,12 +60,22 @@ class Header extends React.Component {
       });
   }
 
+  /**
+  * Retrieves a user's documents and redirects to the myDocuments page
+  *
+  * @returns {Void} returns nothing
+  */
   getUserDocuments() {
     this.props.getUserDocuments(this.props.access.user.id)
       .then(() => this.context.router.push('/mydocuments'))
       .catch(error => handleError(error));
   }
 
+  /**
+  * Render the component
+  *
+  * @returns {Object} jsx component
+   */
   render() {
     const { access } = this.props;
     let accessClass;
@@ -80,7 +111,7 @@ Header.propTypes = {
 };
 
 Header.contextTypes = {
-  router: PropTypes.object.isRequired
+  router: PropTypes.object
 };
 
 export default connect(state => ({ access: state.access }),

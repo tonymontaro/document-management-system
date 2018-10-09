@@ -10,7 +10,7 @@ import TextInput from '../common/TextInput';
 const SignUpForm = ({ onSubmit, onChange, userDetails }) =>
   <div className="form-div">
     <div className="container">
-      <h3 className="center">Sign Up</h3>
+      <h3 className="center">{userDetails.id ? 'Update Profile' : 'Sign Up'}</h3>
 
       <form onSubmit={onSubmit}>
 

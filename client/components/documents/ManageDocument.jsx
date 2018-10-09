@@ -11,7 +11,7 @@ import { handleError } from '../../utilities/errorHandler';
  * @class ManageDocument
  * @extends {React.Component}
  */
-class ManageDocument extends React.Component {
+export class ManageDocument extends React.Component {
   constructor(props) {
     super(props);
     this.state = Object.assign({ errors: {} }, props.document);
@@ -24,7 +24,7 @@ class ManageDocument extends React.Component {
   * Validate and submit the form
   *
   * @param {Object} event
-   * @returns {Undefined} nothing
+   * @returns {Void} returns nothing
    */
   onSubmit(event) {
     event.preventDefault();
@@ -45,7 +45,7 @@ class ManageDocument extends React.Component {
   * Control input fields
   *
   * @param {Object} event
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   onChange(event) {
     return this.setState({ [event.target.name]: event.target.value });
@@ -55,7 +55,7 @@ class ManageDocument extends React.Component {
   * Get the content of the TinyMCE editor
   *
   * @param {Object} event
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   getContent(event) {
     this.setState({ content: event.target.getContent() });
@@ -82,10 +82,6 @@ class ManageDocument extends React.Component {
     );
   }
 }
-
-ManageDocument.contextTypes = {
-  router: PropTypes.object.isRequired
-};
 
 /**
  * Filter and map the correct document to props
@@ -118,6 +114,10 @@ function mapStateTopProps(state, ownProps) {
 ManageDocument.propTypes = {
   document: PropTypes.object.isRequired,
   saveDocument: PropTypes.func.isRequired
+};
+
+ManageDocument.contextTypes = {
+  router: PropTypes.object
 };
 
 export default connect(mapStateTopProps, { saveDocument })(ManageDocument);

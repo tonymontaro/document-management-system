@@ -11,7 +11,7 @@ import DeleteModal from '../common/DeleteModal';
  * @class ProfilePage
  * @extends {React.Component}
  */
-class ProfilePage extends React.Component {
+export class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -22,7 +22,7 @@ class ProfilePage extends React.Component {
   * Delete user profile
   *
    @param {Object} id user id
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   deleteProfile(id) {
     this.props.deleteUser(id)
@@ -36,7 +36,7 @@ class ProfilePage extends React.Component {
   /**
   * Initiates the modal after rendering the component
   *
-  * @returns {Undefined} nothing
+  * @returns {Void} returns nothing
   */
   componentDidMount() {
     $('.modal').modal();
@@ -45,7 +45,7 @@ class ProfilePage extends React.Component {
   /**
   * Render the component
   *
-  * @returns {Object} jsx component
+  * @returns {Object} jsx object
    */
   render() {
     const { profile, access } = this.props;
@@ -53,7 +53,8 @@ class ProfilePage extends React.Component {
       <div className="form-div">
         <div className="container">
           <h3>Name: {profile.fullName}</h3>
-          <h4>username: {profile.username}</h4>
+          <h4>Username: {profile.username}</h4>
+          <h4>Email: {profile.email}</h4>
 
           <div className="row">
             <div className="col s12">
@@ -90,7 +91,7 @@ ProfilePage.propTypes = {
 };
 
 ProfilePage.contextTypes = {
-  router: PropTypes.object.isRequired
+  router: PropTypes.object
 };
 
 

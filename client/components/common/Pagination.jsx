@@ -6,18 +6,18 @@ import React, { PropTypes } from 'react';
  * @param {Object} props { collection, nextPage, prevPage, paginate }
  * @returns {Object} jsx object
  */
-const Pagination = ({ collection, nextPage, prevPage, paginate }) =>
+const Pagination = ({ nextPage, prevPage, paginate }) =>
   <div>
     <ul className="pagination center">
       <li className={paginate.page < 2 ? 'disabled' : 'waves-effect'}>
         <a onClick={prevPage} href="javascript:void(0)">
-          <i className="material-icons">chevron_left</i>
+          <i className="material-icons paginate-prev">chevron_left</i>
         </a>
       </li>
       <li>page {paginate.page} of {paginate.pageCount}</li>
-      <li className={collection.length < 9 ? 'disabled' : 'waves-effect'}>
+      <li className={(paginate.offset + 9 >= paginate.totalCount) ? 'disabled' : 'waves-effect'}>
         <a onClick={nextPage} href="javascript:void(0)">
-          <i className="material-icons">chevron_right</i>
+          <i className="material-icons paginate-next">chevron_right</i>
         </a>
       </li>
     </ul>
@@ -28,7 +28,6 @@ const Pagination = ({ collection, nextPage, prevPage, paginate }) =>
   ;
 
 Pagination.propTypes = {
-  collection: PropTypes.array.isRequired,
   paginate: PropTypes.object.isRequired,
   nextPage: PropTypes.func.isRequired,
   prevPage: PropTypes.func.isRequired,
