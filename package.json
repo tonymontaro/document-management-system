@@ -63,7 +63,7 @@
     "express": "^4.15.2",
     "faker": "^4.1.0",
     "html-truncate": "^1.2.2",
-    "jquery": "2.2.3",
+    "jquery": "3.5.0",
     "jsonwebtoken": "^7.4.0",
     "morgan": "^1.8.1",
     "pg": "^6.1.5",
