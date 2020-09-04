@@ -77,7 +77,7 @@
     "react-tinymce": "^0.5.1",
     "redux": "3.5.2",
     "redux-thunk": "2.0.1",
-    "sequelize": "^3.30.4",
+    "sequelize": "^6.3.5",
     "sequelize-cli": "^2.7.0",
     "validator": "^7.0.0",
     "webpack": "1.13.0",
